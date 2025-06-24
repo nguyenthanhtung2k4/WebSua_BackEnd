@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/css/Auth.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
+
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    @*  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">  *@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4EADD3', // Xanh dương dịu
+                        secondary: '#E0F7FA', // Xanh nhạt tương đồng
+                        accent: '#398CA3' // Màu nhấn cho hover
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    @RenderBody()
+
+    @* Đây là nội dung footer mà bạn đã cung cấp. Tôi sẽ di chuyển nó ra khỏi View chính
+       để nó hiển thị trên mọi trang dùng _LayoutAccount.cshtml, nhưng sẽ không sửa lại
+       các class Tailwind CSS vì không có Bootstrap hay Tailwind trong _Layout này.
+       Bạn cần đảm bảo thư viện CSS (Tailwind) phù hợp được nhúng để các class này hoạt động. *@
+    <footer class="bg-gray-800 text-white pt-16 pb-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <a href="#" class="text-3xl font-['Pacifico'] text-white mb-6 block">MilkCo.</a>
+                    <p class="text-gray-400 mb-6">
+                        Chúng tôi cung cấp các sản phẩm sữa tươi nguyên chất, giàu dinh dưỡng từ những trang trại được chứng nhận hữu cơ.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-all duration-300">
+                            <i class="ri-facebook-fill"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-all duration-300">
+                            <i class="ri-instagram-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-all duration-300">
+                            <i class="ri-youtube-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-all duration-300">
+                            <i class="ri-tiktok-line"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Sản phẩm</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Sữa tươi nguyên chất</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Sữa chua</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Phô mai</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Bơ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Sữa hương vị</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Hỗ trợ</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Câu hỏi thường gặp</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Chính sách đổi trả</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Chính sách bảo mật</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Điều khoản sử dụng</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Đăng ký nhận tin</h3>
+                    <p class="text-gray-400 mb-4">Đăng ký để nhận thông tin về sản phẩm mới và khuyến mãi.</p>
+                    <form class="mb-4">
+                        <div class="flex">
+                            <input type="email" placeholder="Địa chỉ email của bạn" class="px-4 py-2 w-full rounded-l-button text-gray-800 border-none focus:outline-none">
+                            <button type="submit" class="bg-primary px-4 py-2 rounded-r-button hover:bg-accent transition-all duration-300 whitespace-nowrap">Đăng ký</button>
+                        </div>
+                    </form>
+                    <h3 class="text-lg font-semibold mb-4">Phương thức thanh toán</h3>
+                    <div class="flex space-x-3">
+                        <span class="w-10 h-10 flex items-center justify-center bg-white rounded"><i class="ri-visa-fill text-blue-800 ri-lg"></i></span>
+                        <span class="w-10 h-10 flex items-center justify-center bg-white rounded"><i class="ri-mastercard-fill text-red-500 ri-lg"></i></span>
+                        <span class="w-10 h-10 flex items-center justify-center bg-white rounded"><i class="ri-paypal-fill text-blue-600 ri-lg"></i></span>
+                        <span class="w-10 h-10 flex items-center justify-center bg-white rounded"><i class="ri-bank-card-fill text-gray-700 ri-lg"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p class="text-gray-400">© 2025 MilkCo. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    @* Script của bạn sẽ nằm ở đây, sau khi toàn bộ HTML được tải *@
+    <script src="~/js/Auth.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,161 @@
+﻿
+.scroll-to-top {
+    position: fixed;
+    right: 20px;
+    bottom: -60px;
+    width: 40px;
+    height: 40px;
+    background-color: #4EADD3;
+    /* Primary color */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* Mượt mà hơn */
+    opacity: 0;
+    z-index: 999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+    .scroll-to-top.visible {
+        bottom: 20px;
+        opacity: 1;
+    }
+
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    /* Mượt mà hơn */
+}
+
+    .fade-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+.hero-section {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.9) 40%, rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 0.4) 80%, rgba(255, 255, 255, 0) 100%), url('https://readdy.ai/api/search-image?query=A%20glass%20of%20fresh%20milk%20being%20poured%20with%20splashes%2C%20bright%20and%20clean%20white%20background%2C%20soft%20blue%20accents%2C%20dairy%20product%20photography%2C%20high-key%20lighting%2C%20fresh%20and%20pure%20feeling%2C%20professional%20product%20shot%2C%20ultra%20high%20resolution&width=1600&height=800&seq=milk-hero&orientation=landscape');
+    background-size: cover;
+    background-position: center;
+}
+
+.slider-container {
+    overflow: hidden;
+    position: relative;
+}
+
+.slider {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* Smooth cubic-bezier */
+}
+
+.slider-item {
+    min-width: 100%;
+    flex-shrink: 0;
+    /* Ensures items don't shrink */
+    transition: opacity 0.5s;
+}
+
+.product-card {
+    transition: all 0.4s ease-out;
+    /* Mượt mà hơn */
+}
+
+    .product-card:hover {
+        transform: translateY(-8px);
+        /* Nhấc nhẹ lên thay vì scale */
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        /* Bóng đổ rõ hơn */
+    }
+
+        .product-card:hover .product-img {
+            transform: scale(1.03);
+            /* Phóng to nhẹ ảnh */
+        }
+
+.product-img {
+    transition: transform 0.4s ease-out;
+    /* Mượt mà hơn */
+}
+
+.dot {
+    height: 10px;
+    width: 10px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    /* Thêm hiệu ứng transform */
+    cursor: pointer;
+}
+
+    .dot.active {
+        background-color: #4EADD3;
+        /* Primary color */
+        transform: scale(1.2);
+        /* Phóng to nhẹ khi active */
+    }
+
+input,
+textarea {
+    transition: border-color 0.3s;
+}
+
+    input:focus,
+    textarea:focus {
+        border-color: #4EADD3;
+        /* Primary color */
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(78, 173, 211, 0.2);
+        /* Thêm shadow khi focus */
+    }
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    /* Đổi từ translateX sang translateY cho hiệu ứng đồng bộ hơn */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+/* Header specific styles for dynamic padding */
+/* .header-compact {
+        padding-top: 0.7rem !important;
+        padding-bottom: 0.5rem !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); 
+    } 
+    */
+.header-compact {
+    padding-top: 0.70rem;
+    padding-bottom: 0.70rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    /* Thêm bóng đổ nhẹ khi cuộn */
+}
+
+
+/*  Style  bo  sung  */
+
+
+header {
+    transition: transform 0.3s ease-out, padding 0.3s ease-out;
+}
+
+#menu {
+    transition: transform 0.3s ease-out, padding 0.3s ease-out;
+}
+
+.nav-item {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}

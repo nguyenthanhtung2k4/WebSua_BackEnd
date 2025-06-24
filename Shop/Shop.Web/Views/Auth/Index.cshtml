@@ -1,0 +1,101 @@
+﻿@model Shop.Application.DTOs.RegisterDTOs
+
+
+
+@{
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+    ViewData["Title"] = "Tài khoản";
+}
+
+<video class="background-video" autoplay muted loop playsinline>
+    <source src="~/Video/videoMilk.mp4" type="video/mp4">
+    Trình duyệt của bạn không hỗ trợ video.
+</video>
+
+<div class="overlay"></div>
+<div class="main-content">
+    <div class="container-form">
+        <div class="form-toggle-container">
+            <button id="loginToggle" class="toggle-button active">Đăng nhập</button>
+            <button id="registerToggle" class="toggle-button">Đăng ký</button>
+        </div>
+
+        <!-- Login-->
+        <div class="form-wrapper">
+            <form asp-controller="Auth" asp-action="Login" id="loginForm" class="auth-form active" method="post">
+                <h2>Đăng nhập</h2>
+                <p>Truy cập tài khoản của bạn để khám phá sản phẩm sữa tươi sạch.</p>
+                <div class="input-group">
+                    <label>Email</label>
+                    <input class="emailInput" type="email" name="email" required value="@ViewBag.EmailValue" />
+                    @if (ViewBag.Email != null)
+                    {
+                        <p class="emailCheck tung">@ViewBag.Email</p>
+                    }
+                </div>
+                <div class="input-group">
+                    <label>Mật khẩu</label>
+                    <input class="passInput" type="password" name="password" required />
+                    <p class="passCheck tung" style="color:red">@ViewBag.Pass</p> @* Changed: Removed commented-out block and directly used ViewBag.Pass *@
+                </div>
+                @if (ViewBag.Error != null)
+                {
+                    <div class="message error">@ViewBag.Error</div>
+                }
+                @if (TempData["Success"] != null)
+                {
+                    <div class="message success">@TempData["Success"]</div>
+                }
+                @if (TempData["RegisterSuccess"] != null) // Added for register success message
+                {
+                    <div class="message success">@TempData["RegisterSuccess"]</div>
+                }
+                <button type="submit" class="submit-button submit-login">Đăng nhập</button>
+                <p class="switch-text">Chưa có tài khoản? <a href="#" id="switchToRegister">Đăng ký ngay</a></p>
+            </form>
+
+
+            <!-- Register -->
+            <form asp-controller="Auth" asp-action="Register" id="registerForm" class="auth-form" method="post">
+                <h2>Tham gia cùng chúng tôi!</h2>
+                <p>Tham gia để nhận ưu đãi và cập nhật sản phẩm mới.</p>
+                <div class="input-group">
+                    <label for="register-username"><i class="ri-user-line"></i> Tên người dùng</label>
+                    <input type="text" id="register-username" name="TenDangNhap" required value="@Model?.TenDangNhap" />
+                </div>
+                <div class="input-group">
+                    <label for="register-email"><i class="ri-mail-line"></i> Email</label>
+                    <input type="email" id="register-email" name="Email" required value="@Model?.Email" />
+                </div>
+                <div class="input-group">
+                    <label for="register-password"><i class="ri-lock-line"></i> Mật khẩu</label>
+                    <input class="passInput passInput-Reg" type="password" id="register-password" name="MatKhau" required />
+                </div>
+                <div class="input-group">
+                    <label for="register-confirm-password"><i class="ri-lock-password-line"></i> Xác nhận mật khẩu</label>
+                    <input class="passInput-Reg2" type="password" id="register-confirm-password" name="comfirmPass" required />
+                    @* <p class="passCheck-Reg"></p> *@
+                </div>
+                <p class="passCheck passCheck-Reg tung" style="color:red">@ViewBag.Pass</p> @* Changed: Removed commented-out block and directly used ViewBag.Pass *@
+
+                @if (ViewBag.Error_2 != null)
+                {
+                    <div class="message error">@ViewBag.Error_2</div>
+                }
+                @if (ViewBag.Error_3 != null)
+                {
+                    <div class="message error">@ViewBag.Error_3</div>
+                }
+                @if (TempData["RegisterSuccess"] != null) // Added for register success message
+                {
+                    <div class="message success">@TempData["RegisterSuccess"]</div>
+                }
+                <button type="submit" class="submit-button">Đăng ký</button>
+                <p class="switch-text">Đã có tài khoản? <a href="#" id="switchToLogin">Đăng nhập</a></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+}

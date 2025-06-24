@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Sữa Tươi MilkCo.</title>
+    <link href="~/css/Notification.css" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4EADD3', // Xanh dương dịu
+                        secondary: '#E0F7FA', // Xanh nhạt tương đồng
+                        accent: '#398CA3' // Màu nhấn cho hover
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <header id="nav_header"
+            class="nav_header fixed top-0 left-0 right-0 bg-white shadow-sm z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="text-3xl font-['Pacifico'] text-primary">MilkCo.</a>
+            <nav id="menu" class="  hidden md:flex space-x-8">
+                <a href="#" class="nav-item text-gray-800 hover:text-primary transition-colors duration-300 font-medium">
+                    Trang
+                    chủ
+                </a>
+                <a href="#products"
+                   class="nav-item text-gray-800 hover:text-primary transition-colors duration-300 font-medium">Sản phẩm</a>
+                <a href="#about" class="nav-item text-gray-800 hover:text-primary transition-colors duration-300 font-medium">
+                    Về
+                    chúng tôi
+                </a>
+                <a href="#contact"
+                   class="nav-item text-gray-800 hover:text-primary transition-colors duration-300 font-medium">Liên hệ</a>
+            </nav>
+            <div class=" flex items-center space-x-4">
+                <div class="relative hidden md:block">
+                    <input type="text" placeholder="Tìm kiếm sản phẩm..."
+                           class="pl-10 pr-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:border-primary w-[200px] transition-all duration-300">
+                    <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button class="px-4 py-2 text-sm text-gray-700 hover:text-primary transition-colors duration-300 whitespace-nowrap font-medium">
+                        Đăng
+                        nhập
+                    </button>
+                    <button class="px-4 py-2 text-sm bg-primary text-white rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap font-medium">
+                        Đăng
+                        ký
+                    </button>
+                </div>
+                <a href="#"
+                   class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary transition-colors duration-300 relative">
+                    <i class="ri-shopping-cart-line ri-lg"></i>
+                    <span class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full font-bold">3</span>
+                </a>
+                <button class="md:hidden w-10 h-10 flex items-center justify-center">
+                    <i class="ri-menu-line ri-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    @RenderBody()
+    <footer class="bg-gray-800 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <a href="#" class="text-3xl font-['Pacifico'] text-white mb-6 block">MilkCo.</a>
+                    <p class="text-gray-400 mb-6">
+                        Chúng tôi cung cấp các sản phẩm sữa tươi nguyên chất, giàu dinh dưỡng
+                        từ những trang trại được chứng nhận hữu cơ.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#"
+                           class="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-all duration-300">
+                            <i class="ri-facebook-fill"></i>
+                        </a>
+                        <a href="#"
+                           class="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-all duration-300">
+                            <i class="ri-instagram-line"></i>
+                        </a>
+                        <a href="#"
+                           class="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-all duration-300">
+                            <i class="ri-youtube-line"></i>
+                        </a>
+                        <a href="#"
+                           class="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full hover:bg-primary transition-all duration-300">
+                            <i class="ri-tiktok-line"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Sản phẩm</h3>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                                Sữa tươi
+                                nguyên chất
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                                Sữa
+                                chua
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                                Phô
+                                mai
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Bơ</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                                Sữa hương
+                                vị
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Hỗ trợ</h3>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                                Câu hỏi
+                                thường gặp
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                                Chính sách
+                                đổi trả
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                                Chính sách
+                                bảo mật
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                                Điều khoản
+                                sử dụng
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                                Liên
+                                hệ
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Đăng ký nhận tin</h3>
+                    <p class="text-gray-400 mb-4">Đăng ký để nhận thông tin về sản phẩm mới và khuyến mãi.</p>
+                    <form class="mb-4">
+                        <div class="flex">
+                            <input type="email" placeholder="Địa chỉ email của bạn"
+                                   class="px-4 py-2 w-full rounded-l-button text-gray-800 border-none focus:outline-none">
+                            <button type="submit"
+                                    class="bg-primary px-4 py-2 rounded-r-button hover:bg-accent transition-all duration-300 whitespace-nowrap">
+                                Đăng
+                                ký
+                            </button>
+                        </div>
+                    </form>
+                    <h3 class="text-lg font-semibold mb-4">Phương thức thanh toán</h3>
+                    <div class="flex space-x-3">
+                        <span class="w-10 h-10 flex items-center justify-center bg-white rounded">
+                            <i class="ri-visa-fill text-blue-800 ri-lg"></i>
+                        </span>
+                        <span class="w-10 h-10 flex items-center justify-center bg-white rounded">
+                            <i class="ri-mastercard-fill text-red-500 ri-lg"></i>
+                        </span>
+                        <span class="w-10 h-10 flex items-center justify-center bg-white rounded">
+                            <i class="ri-paypal-fill text-blue-600 ri-lg"></i>
+                        </span>
+                        <span class="w-10 h-10 flex items-center justify-center bg-white rounded">
+                            <i class="ri-bank-card-fill text-gray-700 ri-lg"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p class="text-gray-400">© 2025 MilkCo. Tất cả các quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+    @* Script của bạn sẽ nằm ở đây, sau khi toàn bộ HTML được tải *@
+    <script src="~/js/Home.js"></script>
+    
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

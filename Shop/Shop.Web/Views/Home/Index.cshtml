@@ -1,0 +1,705 @@
+﻿@{
+    ViewData["Title"] = "Trang Chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="hero-section pt-24 min-h-[600px] flex items-center">
+    <div class="container mx-auto px-4 py-16">
+        <div class="w-full md:w-1/2 fade-in">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                Sữa tươi sạch từ <span class="text-primary">thiên nhiên</span>
+            </h1>
+            <p class="text-lg text-gray-600 mb-8">
+                Chúng tôi cung cấp các sản phẩm sữa tươi nguyên chất, giàu dinh
+                dưỡng từ những trang trại được chứng nhận hữu cơ.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="#products"
+                   class="bg-primary text-white px-8 py-3 rounded-button font-medium hover:bg-accent transition-all duration-300 text-center whitespace-nowrap shadow-md hover:shadow-lg">
+                    Khám
+                    phá ngay
+                </a>
+                <a href="#contact"
+                   class="border border-primary text-primary px-8 py-3 rounded-button font-medium hover:bg-primary hover:text-white transition-all duration-300 text-center whitespace-nowrap shadow-md hover:shadow-lg">
+                    Tư
+                    vấn miễn phí
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Sản phẩm nổi bật</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Khám phá những sản phẩm sữa chất lượng cao, được yêu thích
+                nhất của chúng tôi.
+            </p>
+        </div>
+        <div class="slider-container relative fade-in">
+            <div class="slider flex">
+                <div class="slider-item p-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md product-card">
+                            <div class="p-4">
+                                <img src="https://readdy.ai/api/search-image?query=A%20bottle%20of%20organic%20fresh%20milk%20with%20blue%20label%2C%20isolated%20on%20white%20background%2C%20professional%20product%20photography%2C%20high%20resolution%2C%20clean%20and%20minimalist%20design&width=400&height=400&seq=milk-product1&orientation=squarish"
+                                     alt="Sữa tươi nguyên chất" class="w-full h-64 object-contain product-img">
+                                <h3 class="text-xl font-semibold mt-4 text-gray-800">Sữa tươi nguyên chất</h3>
+                                <p class="text-gray-600 mt-2">
+                                    Sữa tươi 100% từ bò ăn cỏ tự nhiên, không chất bảo
+                                    quản.
+                                </p>
+                                <div class="flex justify-between items-center mt-4">
+                                    <div class="flex flex-col">
+                                        <span class="text-gray-400 line-through text-sm">89.000₫</span>
+                                        <span class="text-red-500 font-bold text-xl">75.000₫</span>
+                                    </div>
+                                    <button class="bg-primary text-white px-4 py-2 rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap shadow-sm">
+                                        Mua
+                                        ngay
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md product-card">
+                            <div class="p-4">
+                                <img src="https://readdy.ai/api/search-image?query=A%20yogurt%20cup%20with%20fresh%20berries%20on%20top%2C%20light%20blue%20packaging%2C%20isolated%20on%20white%20background%2C%20professional%20product%20photography%2C%20high%20resolution%2C%20clean%20and%20minimalist%20design&width=400&height=400&seq=milk-product2&orientation=squarish"
+                                     alt="Sữa chua trái cây" class="w-full h-64 object-contain product-img">
+                                <h3 class="text-xl font-semibold mt-4 text-gray-800">Sữa chua trái cây</h3>
+                                <p class="text-gray-600 mt-2">
+                                    Sữa chua tự nhiên kết hợp với các loại trái cây tươi
+                                    ngon.
+                                </p>
+                                <div class="flex justify-between items-center mt-4">
+                                    <div class="flex flex-col">
+                                        <span class="text-gray-400 line-through text-sm">32.000₫</span>
+                                        <span class="text-red-500 font-bold text-xl">25.000₫</span>
+                                    </div>
+                                    <button class="bg-primary text-white px-4 py-2 rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap shadow-sm">
+                                        Mua
+                                        ngay
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md product-card">
+                            <div class="p-4">
+                                <img src="https://readdy.ai/api/search-image?query=A%20cheese%20wheel%20with%20a%20slice%20cut%20out%2C%20creamy%20texture%2C%20isolated%20on%20white%20background%2C%20professional%20product%20photography%2C%20high%20resolution%2C%20clean%20and%20minimalist%20design&width=400&height=400&seq=milk-product3&orientation=squarish"
+                                     alt="Phô mai tươi" class="w-full h-64 object-contain product-img">
+                                <h3 class="text-xl font-semibold mt-4 text-gray-800">Phô mai tươi</h3>
+                                <p class="text-gray-600 mt-2">
+                                    Phô mai mềm mịn được làm từ sữa bò tươi nguyên chất.
+                                </p>
+                                <div class="flex justify-between items-center mt-4">
+                                    <div class="flex flex-col">
+                                        <span class="text-gray-400 line-through text-sm">150.000₫</span>
+                                        <span class="text-red-500 font-bold text-xl">120.000₫</span>
+                                    </div>
+                                    <button class="bg-primary text-white px-4 py-2 rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap shadow-sm">
+                                        Mua
+                                        ngay
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-item p-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md product-card">
+                            <div class="p-4">
+                                <img src="https://readdy.ai/api/search-image?query=A%20bottle%20of%20chocolate%20milk%20with%20blue%20accents%20on%20packaging%2C%20isolated%20on%20white%20background%2C%20professional%20product%20photography%2C%20high%20resolution%2C%20clean%20and%20minimalist%20design&width=400&height=400&seq=milk-product4&orientation=squarish"
+                                     alt="Sữa socola" class="w-full h-64 object-contain product-img">
+                                <h3 class="text-xl font-semibold mt-4 text-gray-800">Sữa socola</h3>
+                                <p class="text-gray-600 mt-2">
+                                    Sữa tươi kết hợp với socola thượng hạng, thơm ngon bổ
+                                    dưỡng.
+                                </p>
+                                <div class="flex justify-between items-center mt-4">
+                                    <div class="flex flex-col">
+                                        <span class="text-gray-400 line-through text-sm">35.000₫</span>
+                                        <span class="text-red-500 font-bold text-xl">28.000₫</span>
+                                    </div>
+                                    <button class="bg-primary text-white px-4 py-2 rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap shadow-sm">
+                                        Mua
+                                        ngay
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md product-card">
+                            <div class="p-4">
+                                <img src="https://readdy.ai/api/search-image?query=A%20bottle%20of%20strawberry%20milk%20with%20blue%20accents%20on%20packaging%2C%20isolated%20on%20white%20background%2C%20professional%20product%20photography%2C%20high%20resolution%2C%20clean%20and%20minimalist%20design&width=400&height=400&seq=milk-product5&orientation=squarish"
+                                     alt="Sữa dâu tây" class="w-full h-64 object-contain product-img">
+                                <h3 class="text-xl font-semibold mt-4 text-gray-800">Sữa dâu tây</h3>
+                                <p class="text-gray-600 mt-2">
+                                    Sữa tươi hòa quyện với hương vị dâu tây tự nhiên, thơm
+                                    ngọt.
+                                </p>
+                                <div class="flex justify-between items-center mt-4">
+                                    <div class="flex flex-col">
+                                        <span class="text-gray-400 line-through text-sm">35.000₫</span>
+                                        <span class="text-red-500 font-bold text-xl">28.000₫</span>
+                                    </div>
+                                    <button class="bg-primary text-white px-4 py-2 rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap shadow-sm">
+                                        Mua
+                                        ngay
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md product-card">
+                            <div class="p-4">
+                                <img src="https://readdy.ai/api/search-image?query=A%20pack%20of%20butter%20with%20blue%20accents%20on%20packaging%2C%20isolated%20on%20white%20background%2C%20professional%20product%20photography%2C%20high%20resolution%2C%20clean%20and%20minimalist%20design&width=400&height=400&seq=milk-product6&orientation=squarish"
+                                     alt="Bơ tươi" class="w-full h-64 object-contain product-img">
+                                <h3 class="text-xl font-semibold mt-4 text-gray-800">Bơ tươi</h3>
+                                <p class="text-gray-600 mt-2">
+                                    Bơ tươi được làm từ kem sữa tươi nguyên chất, béo
+                                    ngậy.
+                                </p>
+                                <div class="flex justify-between items-center mt-4">
+                                    <span class="text-primary font-bold text-xl">85.000₫</span>
+                                    <button class="bg-primary text-white px-4 py-2 rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap shadow-sm">
+                                        Mua
+                                        ngay
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white w-10 h-10 rounded-full shadow-md flex items-center justify-center z-10 hover:bg-gray-100 transition-colors duration-300 slider-prev">
+                <i class="ri-arrow-left-s-line ri-lg"></i>
+            </button>
+            <button class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white w-10 h-10 rounded-full shadow-md flex items-center justify-center z-10 hover:bg-gray-100 transition-colors duration-300 slider-next">
+                <i class="ri-arrow-right-s-line ri-lg"></i>
+            </button>
+            <div class="flex justify-center mt-8 dots-container">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="products" class="py-16">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Tất cả sản phẩm</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Khám phá đầy đủ các sản phẩm sữa chất lượng cao của chúng
+                tôi.
+            </p>
+        </div>
+        <div class="mb-8 fade-in">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="px-6 py-2 rounded-full bg-primary text-white font-medium hover:bg-accent transition-all duration-300 whitespace-nowrap shadow-sm">
+                    Tất
+                    cả
+                </button>
+                <button class="px-6 py-2 rounded-full bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 transition-all duration-300 whitespace-nowrap">
+                    Sữa
+                    tươi
+                </button>
+                <button class="px-6 py-2 rounded-full bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 transition-all duration-300 whitespace-nowrap">
+                    Sữa
+                    chua
+                </button>
+                <button class="px-6 py-2 rounded-full bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 transition-all duration-300 whitespace-nowrap">
+                    Phô
+                    mai
+                </button>
+                <button class="px-6 py-2 rounded-full bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 transition-all duration-300 whitespace-nowrap">
+                    Bơ
+                </button>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 fade-in">
+            <div class="bg-white rounded-lg overflow-hidden shadow-md product-card">
+                <div class="p-4">
+                    <img src="https://readdy.ai/api/search-image?query=A%20bottle%20of%20organic%20fresh%20milk%20with%20blue%20label%2C%20isolated%20on%20white%20background%2C%20professional%20product%20photography%2C%20high%20resolution%2C%20clean%20and%20minimalist%20design&width=400&height=400&seq=milk-product1&orientation=squarish"
+                         alt="Sữa tươi nguyên chất" class="w-full h-64 object-contain product-img">
+                    <h3 class="text-xl font-semibold mt-4 text-gray-800">Sữa tươi nguyên chất</h3>
+                    <div class="flex items-center mt-2">
+                        <div class="flex text-yellow-400">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-half-fill"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm ml-2">(120)</span>
+                    </div>
+                    <div class="flex justify-between items-center mt-4">
+                        <div class="flex flex-col">
+                            <span class="text-gray-400 line-through text-sm">89.000₫</span>
+                            <span class="text-red-500 font-bold text-xl">75.000₫</span>
+                        </div>
+                        <button class="bg-primary text-white px-4 py-2 rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap shadow-sm">
+                            Mua
+                            ngay
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg overflow-hidden shadow-md product-card">
+                <div class="p-4">
+                    <img src="https://readdy.ai/api/search-image?query=A%20yogurt%20cup%20with%20fresh%20berries%20on%20top%2C%20light%20blue%20packaging%2C%20isolated%20on%20white%20background%2C%20professional%20product%20photography%2C%20high%20resolution%2C%20clean%20and%20minimalist%20design&width=400&height=400&seq=milk-product2&orientation=squarish"
+                         alt="Sữa chua trái cây" class="w-full h-64 object-contain product-img">
+                    <h3 class="text-xl font-semibold mt-4 text-gray-800">Sữa chua trái cây</h3>
+                    <div class="flex items-center mt-2">
+                        <div class="flex text-yellow-400">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm ml-2">(89)</span>
+                    </div>
+                    <div class="flex justify-between items-center mt-4">
+                        <div class="flex flex-col">
+                            <span class="text-gray-400 line-through text-sm">32.000₫</span>
+                            <span class="text-red-500 font-bold text-xl">25.000₫</span>
+                        </div>
+                        <button class="bg-primary text-white px-4 py-2 rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap shadow-sm">
+                            Mua
+                            ngay
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg overflow-hidden shadow-md product-card">
+                <div class="p-4">
+                    <img src="https://readdy.ai/api/search-image?query=A%20cheese%20wheel%20with%20a%20slice%20cut%20out%2C%20creamy%20texture%2C%20isolated%20on%20white%20background%2C%20professional%20product%20photography%2C%20high%20resolution%2C%20clean%20and%20minimalist%20design&width=400&height=400&seq=milk-product3&orientation=squarish"
+                         alt="Phô mai tươi" class="w-full h-64 object-contain product-img">
+                    <h3 class="text-xl font-semibold mt-4 text-gray-800">Phô mai tươi</h3>
+                    <div class="flex items-center mt-2">
+                        <div class="flex text-yellow-400">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-line"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm ml-2">(56)</span>
+                    </div>
+                    <div class="flex justify-between items-center mt-4">
+                        <div class="flex flex-col">
+                            <span class="text-gray-400 line-through text-sm">150.000₫</span>
+                            <span class="text-red-500 font-bold text-xl">120.000₫</span>
+                        </div>
+                        <button class="bg-primary text-white px-4 py-2 rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap shadow-sm">
+                            Mua
+                            ngay
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg overflow-hidden shadow-md product-card">
+                <div class="p-4">
+                    <img src="https://readdy.ai/api/search-image?query=A%20bottle%20of%20chocolate%20milk%20with%20blue%20accents%20on%20packaging%2C%20isolated%20on%20white%20background%2C%20professional%20product%20photography%2C%20high%20resolution%2C%20clean%20and%20minimalist%20design&width=400&height=400&seq=milk-product4&orientation=squarish"
+                         alt="Sữa socola" class="w-full h-64 object-contain product-img">
+                    <h3 class="text-xl font-semibold mt-4 text-gray-800">Sữa socola</h3>
+                    <div class="flex items-center mt-2">
+                        <div class="flex text-yellow-400">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-half-fill"></i>
+                            <i class="ri-star-line"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm ml-2">(42)</span>
+                    </div>
+                    <div class="flex justify-between items-center mt-4">
+                        <div class="flex flex-col">
+                            <span class="text-gray-400 line-through text-sm">35.000₫</span>
+                            <span class="text-red-500 font-bold text-xl">28.000₫</span>
+                        </div>
+                        <button class="bg-primary text-white px-4 py-2 rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap shadow-sm">
+                            Mua
+                            ngay
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg overflow-hidden shadow-md product-card">
+                <div class="p-4">
+                    <img src="https://readdy.ai/api/search-image?query=A%20bottle%20of%20strawberry%20milk%20with%20blue%20accents%20on%20packaging%2C%20isolated%20on%20white%20background%2C%20professional%20product%20photography%2C%20high%20resolution%2C%20clean%20and%20minimalist%20design&width=400&height=400&seq=milk-product5&orientation=squarish"
+                         alt="Sữa dâu tây" class="w-full h-64 object-contain product-img">
+                    <h3 class="text-xl font-semibold mt-4 text-gray-800">Sữa dâu tây</h3>
+                    <div class="flex items-center mt-2">
+                        <div class="flex text-yellow-400">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-line"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm ml-2">(78)</span>
+                    </div>
+                    <div class="flex justify-between items-center mt-4">
+                        <div class="flex flex-col">
+                            <span class="text-gray-400 line-through text-sm">35.000₫</span>
+                            <span class="text-red-500 font-bold text-xl">28.000₫</span>
+                        </div>
+                        <button class="bg-primary text-white px-4 py-2 rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap shadow-sm">
+                            Mua
+                            ngay
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg overflow-hidden shadow-md product-card">
+                <div class="p-4">
+                    <img src="https://readdy.ai/api/search-image?query=A%20pack%20of%20butter%20with%20blue%20accents%20on%20packaging%2C%20isolated%20on%20white%20background%2C%20professional%20product%20photography%2C%20high%20resolution%2C%20clean%20and%20minimalist%20design&width=400&height=400&seq=milk-product6&orientation=squarish"
+                         alt="Bơ tươi" class="w-full h-64 object-contain product-img">
+                    <h3 class="text-xl font-semibold mt-4 text-gray-800">Bơ tươi</h3>
+                    <div class="flex items-center mt-2">
+                        <div class="flex text-yellow-400">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-half-fill"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm ml-2">(64)</span>
+                    </div>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-primary font-bold text-xl">85.000₫</span>
+                        <button class="bg-primary text-white px-4 py-2 rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap shadow-sm">
+                            Mua
+                            ngay
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg overflow-hidden shadow-md product-card">
+                <div class="p-4">
+                    <img src="https://readdy.ai/api/search-image?query=A%20bottle%20of%20vanilla%20milk%20with%20blue%20accents%20on%20packaging%2C%20isolated%20on%20white%20background%2C%20professional%20product%20photography%2C%20high%20resolution%2C%20clean%20and%20minimalist%20design&width=400&height=400&seq=milk-product7&orientation=squarish"
+                         alt="Sữa vani" class="w-full h-64 object-contain product-img">
+                    <h3 class="text-xl font-semibold mt-4 text-gray-800">Sữa vani</h3>
+                    <div class="flex items-center mt-2">
+                        <div class="flex text-yellow-400">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-line"></i>
+                            <i class="ri-star-line"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm ml-2">(35)</span>
+                    </div>
+                    <div class="flex justify-between items-center mt-4">
+                        <div class="flex flex-col">
+                            <span class="text-gray-400 line-through text-sm">35.000₫</span>
+                            <span class="text-red-500 font-bold text-xl">28.000₫</span>
+                        </div>
+                        <button class="bg-primary text-white px-4 py-2 rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap shadow-sm">
+                            Mua
+                            ngay
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg overflow-hidden shadow-md product-card">
+                <div class="p-4">
+                    <img src="https://readdy.ai/api/search-image?query=A%20container%20of%20cream%20cheese%20with%20blue%20accents%20on%20packaging%2C%20isolated%20on%20white%20background%2C%20professional%20product%20photography%2C%20high%20resolution%2C%20clean%20and%20minimalist%20design&width=400&height=400&seq=milk-product8&orientation=squarish"
+                         alt="Kem phô mai" class="w-full h-64 object-contain product-img">
+                    <h3 class="text-xl font-semibold mt-4 text-gray-800">Kem phô mai</h3>
+                    <div class="flex items-center mt-2">
+                        <div class="flex text-yellow-400">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-line"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm ml-2">(51)</span>
+                    </div>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-primary font-bold text-xl">65.000₫</span>
+                        <button class="bg-primary text-white px-4 py-2 rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap shadow-sm">
+                            Mua
+                            ngay
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-12 fade-in">
+            <button class="bg-white border border-primary text-primary px-8 py-3 rounded-button font-medium hover:bg-primary hover:text-white transition-all duration-300 whitespace-nowrap shadow-md hover:shadow-lg">
+                Xem
+                thêm sản phẩm
+            </button>
+        </div>
+    </div>
+</section>
+<section id="about" class="py-16 bg-secondary">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="fade-in">
+                <img src="https://readdy.ai/api/search-image?query=Modern%20dairy%20farm%20with%20happy%20cows%20in%20green%20pasture%2C%20clean%20facility%2C%20blue%20sky%2C%20professional%20photography%2C%20high%20resolution%2C%20showcasing%20sustainable%20farming%20practices&width=600&height=500&seq=milk-farm&orientation=landscape"
+                     alt="Trang trại sữa" class="w-full h-auto rounded-lg shadow-lg">
+            </div>
+            <div class="fade-in">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Về chúng tôi</h2>
+                <p class="text-gray-600 mb-4">
+                    Chúng tôi là nhà sản xuất sữa và các sản phẩm từ sữa hàng đầu Việt
+                    Nam, với hơn 15 năm kinh nghiệm trong ngành.
+                </p>
+                <p class="text-gray-600 mb-4">
+                    Tất cả sản phẩm của chúng tôi đều được sản xuất từ nguồn sữa tươi
+                    nguyên chất, được lấy từ những trang trại đạt chuẩn quốc tế về chăn nuôi bò sữa.
+                </p>
+                <p class="text-gray-600 mb-6">
+                    Chúng tôi cam kết mang đến cho khách hàng những sản phẩm sữa chất
+                    lượng cao, giàu dinh dưỡng và an toàn cho sức khỏe.
+                </p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-10 rounded-full text-primary mr-4">
+                            <i class="ri-leaf-line ri-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Tự nhiên 100%</h3>
+                            <p class="text-gray-600 text-sm">Không chất bảo quản, không hóa chất</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-10 rounded-full text-primary mr-4">
+                            <i class="ri-award-line ri-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Chứng nhận chất lượng</h3>
+                            <p class="text-gray-600 text-sm">Đạt tiêu chuẩn ISO, HACCP</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-10 rounded-full text-primary mr-4">
+                            <i class="ri-heart-line ri-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Giàu dinh dưỡng</h3>
+                            <p class="text-gray-600 text-sm">Cung cấp canxi, protein và vitamin</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 flex items-center justify-center bg-primary bg-opacity-10 rounded-full text-primary mr-4">
+                            <i class="ri-recycle-line ri-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Thân thiện môi trường</h3>
+                            <p class="text-gray-600 text-sm">Bao bì có thể tái chế</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-16">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Khách hàng nói gì về chúng tôi</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Những đánh giá chân thực từ khách hàng đã sử dụng sản phẩm
+                của chúng tôi.
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-6 rounded-lg shadow-md fade-up">
+                <div class="flex text-yellow-400 mb-4">
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                </div>
+                <p class="text-gray-600 mb-6 text-base leading-relaxed">
+                    "Sữa tươi nguyên chất của công ty thực sự
+                    rất ngon và tươi. Tôi có thể cảm nhận được sự khác biệt so với các loại sữa khác trên thị
+                    trường. Gia đình tôi đã sử dụng sản phẩm này hơn 2 năm và rất hài lòng."
+                </p>
+                <div class="flex items-center mt-auto">
+                    <div class="w-12 h-12 bg-gray-200 rounded-full overflow-hidden mr-4">
+                        <img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20Vietnamese%20woman%20in%20her%2030s%2C%20smiling%2C%20business%20casual%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait&width=100&height=100&seq=testimonial1&orientation=squarish"
+                             alt="Nguyễn Thị Hương" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Nguyễn Thị Hương</h4>
+                        <p class="text-gray-500 text-sm">Khách hàng thân thiết</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md fade-up">
+                <div class="flex text-yellow-400 mb-4">
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-half-fill"></i>
+                </div>
+                <p class="text-gray-600 mb-6 text-base leading-relaxed">
+                    "Sữa chua trái cây là món ăn vặt yêu thích
+                    của con tôi. Tôi rất yên tâm khi cho bé ăn vì biết đây là sản phẩm sạch, không chứa chất bảo
+                    quản và hương liệu nhân tạo. Đặc biệt là dịch vụ giao hàng rất nhanh và tiện lợi."
+                </p>
+                <div class="flex items-center mt-auto">
+                    <div class="w-12 h-12 bg-gray-200 rounded-full overflow-hidden mr-4">
+                        <img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20Vietnamese%20man%20in%20his%2040s%2C%20smiling%2C%20business%20casual%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait&width=100&height=100&seq=testimonial2&orientation=squarish"
+                             alt="Trần Văn Minh" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Trần Văn Minh</h4>
+                        <p class="text-gray-500 text-sm">Phụ huynh</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md fade-up">
+                <div class="flex text-yellow-400 mb-4">
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                </div>
+                <p class="text-gray-600 mb-6 text-base leading-relaxed">
+                    "Tôi là một người rất kỹ tính về thực phẩm,
+                    đặc biệt là sữa. Sau khi tìm hiểu về quy trình sản xuất và tham quan trang trại của công ty, tôi
+                    hoàn toàn tin tưởng vào chất lượng sản phẩm. Phô mai tươi là món không thể thiếu trong tủ lạnh
+                    nhà tôi."
+                </p>
+                <div class="flex items-center mt-auto">
+                    <div class="w-12 h-12 bg-gray-200 rounded-full overflow-hidden mr-4">
+                        <img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20Vietnamese%20woman%20in%20her%2020s%2C%20smiling%2C%20casual%20attire%2C%20neutral%20background%2C%20high%20quality%20portrait&width=100&height=100&seq=testimonial3&orientation=squarish"
+                             alt="Lê Thị Mai Anh" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Lê Thị Mai Anh</h4>
+                        <p class="text-gray-500 text-sm">Chuyên gia dinh dưỡng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="contact" class="py-16 bg-secondary">
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2">
+                <div class="p-8 fade-in">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Đăng ký tư vấn</h2>
+                    <p class="text-gray-600 mb-6">
+                        Để lại thông tin, chúng tôi sẽ liên hệ với bạn trong thời gian sớm
+                        nhất.
+                    </p>
+                    <form>
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Họ và tên</label>
+                            <input type="text" id="name"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded focus:border-primary focus:ring-0"
+                                   placeholder="Nhập họ và tên của bạn">
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                            <input type="email" id="email"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded focus:border-primary focus:ring-0"
+                                   placeholder="Nhập địa chỉ email của bạn">
+                        </div>
+                        <div class="mb-4">
+                            <label for="phone" class="block text-gray-700 font-medium mb-2">Số điện thoại</label>
+                            <input type="tel" id="phone"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded focus:border-primary focus:ring-0"
+                                   placeholder="Nhập số điện thoại của bạn">
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 font-medium mb-2">
+                                Nội dung cần tư
+                                vấn
+                            </label>
+                            <textarea id="message" rows="4"
+                                      class="w-full px-4 py-2 border border-gray-300 rounded focus:border-primary focus:ring-0"
+                                      placeholder="Nhập nội dung bạn cần tư vấn"></textarea>
+                        </div>
+                        <button type="submit"
+                                class="w-full bg-primary text-white py-3 rounded-button font-medium hover:bg-accent transition-all duration-300 whitespace-nowrap shadow-md hover:shadow-lg">
+                            Gửi
+                            yêu cầu tư vấn
+                        </button>
+                    </form>
+                </div>
+                <div class="bg-primary text-white p-8 flex flex-col justify-between fade-in">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">Thông tin liên hệ</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full mr-4">
+                                    <i class="ri-map-pin-line ri-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">Địa chỉ</h4>
+                                    <p class="text-white text-opacity-80">
+                                        123 Nguyễn Văn Linh, Quận 7, TP. Hồ Chí
+                                        Minh
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full mr-4">
+                                    <i class="ri-phone-line ri-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">Điện thoại</h4>
+                                    <p class="text-white text-opacity-80">+84 28 1234 5678</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full mr-4">
+                                    <i class="ri-mail-line ri-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">Email</h4>
+                                    <p class="text-white text-opacity-80">info@suatuoisach.vn</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full mr-4">
+                                    <i class="ri-time-line ri-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">Giờ làm việc</h4>
+                                    <p class="text-white text-opacity-80">
+                                        Thứ 2 - Thứ 6: 8:00 - 17:30<br>Thứ 7: 8:00
+                                        - 12:00
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <h4 class="font-semibold mb-4">Kết nối với chúng tôi</h4>
+                        <div class="flex space-x-4">
+                            <a href="#"
+                               class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full hover:bg-opacity-30 transition-all duration-300">
+                                <i class="ri-facebook-fill ri-lg"></i>
+                            </a>
+                            <a href="#"
+                               class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full hover:bg-opacity-30 transition-all duration-300">
+                                <i class="ri-instagram-line ri-lg"></i>
+                            </a>
+                            <a href="#"
+                               class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full hover:bg-opacity-30 transition-all duration-300">
+                                <i class="ri-youtube-line ri-lg"></i>
+                            </a>
+                            <a href="#"
+                               class="w-10 h-10 flex items-center justify-center bg-white bg-opacity-20 rounded-full hover:bg-opacity-30 transition-all duration-300">
+                                <i class="ri-tiktok-line ri-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

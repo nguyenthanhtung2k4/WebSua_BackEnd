@@ -1,0 +1,88 @@
+/* CSS Dành cho thông báo chào mừng */
+        .welcome-notification {
+            position: fixed;
+            top: 15%;
+            left: 0;
+            transform: translateY(-50%) translateX(-100%);
+            
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 15px; 
+            border-radius: 0 6px 6px 0; 
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15); 
+            z-index: 1000;
+            font-family: Arial, sans-serif;
+            font-size: 16px; 
+            white-space: nowrap;
+            overflow: hidden; 
+            
+            transition: transform 0.5s ease-in-out; /* Chỉnh thời gian transition nhanh hơn chút */
+        }
+
+        .welcome-notification.hidden {
+            display: none;
+        }
+
+        .welcome-notification.show {
+            transform: translateY(-50%) translateX(0);
+        }
+
+        .welcome-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .welcome-notification p {
+            margin: 0;
+            flex-grow: 1;
+            padding-right: 10px; /* Giảm padding phải */
+            line-height: 1.3; /* Giảm khoảng cách dòng */
+        }
+
+        /* Nút đóng (X) */
+        .close-btn {
+            font-size: 20px; /* Giảm kích thước dấu X */
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0 3px; /* Giảm padding nút X */
+            line-height: 1;
+            z-index: 10; /* Đảm bảo nút X nằm trên progress bar */
+        }
+
+        .close-btn:hover {
+            color: #f0f0f0;
+        }
+
+        /* CSS cho thanh thời gian chạy ngược (Progress Bar) */
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px; /* Chiều cao của thanh progress */
+            background-color: #388E3C; /* Màu xanh lá đậm hơn cho thanh progress */
+            width: 100%; /* Bắt đầu từ 100% */
+            transition: width 0s linear; /* Ban đầu không có transition */
+        }
+        .welcome-notification.show .progress-bar {
+            transition: width 5s linear; /* Thời gian chuyển động của progress bar */
+            width: 0%; /* Kết thúc ở 0% */
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 80px;
+        }
+
+
+
+
+
+
+        
