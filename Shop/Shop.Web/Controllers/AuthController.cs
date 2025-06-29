@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using Shop.Application.DTOs;
 using Shop.Application.Interfaces;
 
@@ -45,6 +46,11 @@ namespace Shop.Web.Controllers
             if (dtos.MatKhau != comfirmPass)
             {
                 ViewBag.Error_3 = "Mật khẩu và xác nhận mật khẩu không khớp.";
+                return View("Index", dtos); // Quay lại view kèm dữ liệu
+            }
+            if (dtos.MatKhau != comfirmPass ||  dtos.MatKhau.Length <= 6 )
+            {
+                ViewBag.Error_3 = "Đặt Mật khẩu lớn hơn 6 kí tự ! ";
                 return View("Index", dtos); // Quay lại view kèm dữ liệu
             }
             var result = await _nguoiDungService.Register(dtos);

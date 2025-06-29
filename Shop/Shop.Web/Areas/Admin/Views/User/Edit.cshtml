@@ -1,0 +1,75 @@
+﻿@model Shop.Application.DTOs.GetUserAdminDTO 
+
+@{
+    ViewBag.Title = "Chỉnh sửa Người Dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<main id="main" class="main">
+<div class="pagetitle">
+    <h1>Chỉnh sửa Người Dùng</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Trang chủ Admin</a></li>
+            <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="User" asp-action="Index">Người Dùng</a></li>
+            <li class="breadcrumb-item active">Chỉnh sửa</li>
+        </ol>
+    </nav>
+</div>
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Thông tin Người Dùng</h5>
+
+                        <form asp-area="Admin" asp-controller="User" asp-action="Edit" method="post">
+                            <input type="hidden" asp-for="MaNd" />
+
+                            <div class="mb-3">
+                                <label asp-for="TenDangNhap" class="form-label">Tên đăng nhập</label>
+                                <input asp-for="TenDangNhap" class="form-control" />
+                                <span asp-validation-for="TenDangNhap" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Email" class="form-label">Email</label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                           @*  <div class="mb-3">
+                                <label asp-for="MatKhau" class="form-label">Mật khẩu</label>
+                                <input asp-for="MatKhau" class="form-control" />
+                                <span asp-validation-for="MatKhau" class="text-danger"></span>
+                            </div> *@
+
+                            <div class="mb-3">
+                                <label asp-for="VaiTro" class="form-label">Vai trò</label>
+                                <select asp-for="VaiTro" class="form-select">
+                                    <option value="KhachHang">Khách Hàng</option> <option value="Admin">Admin</option>       </select>
+                                <span asp-validation-for="VaiTro" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="status" class="form-label">Trạng thái</label>
+                                <select asp-for="status" class="form-select">
+                                    <option value="active">Hoạt động</option>    <option value="inactive">Vô hiệu hóa</option> </select>
+                                <span asp-validation-for="status" class="text-danger"></span>
+                            </div>
+
+                            <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+                            <a asp-area="Admin" asp-controller="User" asp-action="Index" class="btn btn-secondary">Quay lại</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

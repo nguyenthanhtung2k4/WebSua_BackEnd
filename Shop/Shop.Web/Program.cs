@@ -25,6 +25,9 @@ builder.Services.AddDbContext<ShopDbContext>(options =>
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAdminUserService, AdminUserService>();
+builder.Services.AddScoped<IAdminUserService, AdminUserService>();
+builder.Services.AddScoped<IAdminCustomerService, AdminCustomerService>();
+builder.Services.AddScoped<IAdminProductsService, AdminProductsService>();
 
 var app = builder.Build();
 
@@ -39,10 +42,17 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 
+
+//app.MapStaticAssets();
+app.MapAreaControllerRoute(
+    name: "Admin",
+    areaName: "Admin",
+    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+//.WithStaticAssets();
 
 
 app.Run();

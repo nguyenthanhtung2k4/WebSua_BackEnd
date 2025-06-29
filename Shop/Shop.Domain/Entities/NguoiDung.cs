@@ -17,7 +17,7 @@ public partial class NguoiDung
 
     public DateTime? NgayTao { get; set; }
 
-    public string? avata { get; set; }
+    //public string? avata { get; set; }
     public string? status  { get; set; }
     public virtual ICollection<DanhGium> DanhGia { get; set; } = new List<DanhGium>();
 

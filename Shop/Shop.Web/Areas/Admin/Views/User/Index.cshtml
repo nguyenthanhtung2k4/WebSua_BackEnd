@@ -1,0 +1,90 @@
+﻿@model List<Shop.Application.DTOs.GetUserAdminDTO>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Quản lý Tài khoản"; // Đổi tiêu đề cho rõ ràng hơn
+}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Quản lý Tài khoản</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/Admin">Trang chủ</a></li> 
+                <li class="breadcrumb-item active">Người dùng</li>
+            </ol>
+        </nav>
+    </div><section class="section dashboard">
+        <div class="row">
+            <div class="col-12">
+                <div class="card recent-sales overflow-auto">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Danh sách Người dùng <span>| Quản trị</span></h5>
+
+                        <div class="mb-3">
+                            <a href="~/Admin/User/Create" class="btn btn-primary">Thêm Người dùng mới</a>
+                        </div>
+
+                        <table class="table table-borderless datatable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Tên đăng nhập</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Vai trò</th>
+                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col">Ngày tạo</th>
+                                    <th scope="col">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @if (Model != null && Model.Any())
+                                {
+                                    @foreach (var user in Model)
+                                    {
+                                        <tr>
+                                            <th scope="row">@user.MaNd</th>
+                                            <td>@user.TenDangNhap</td> 
+                                            <td>@user.Email</td>    
+                                            <td>@user.VaiTro</td>
+                                            <td>@user.status</td>
+                                            <td>@(user.NgayTao.HasValue ? user.NgayTao.Value.ToString("dd/MM/yyyy HH:mm") : "N/A")</td> 
+                                            <td>
+                                                <a href="~/Admin/User/Edit/@user.MaNd" class="btn btn-warning btn-sm">Sửa</a>
+                                                @* <a href="~/Admin/User/Details/@user.MaNd" class="btn btn-info btn-sm">Chi tiết</a> *@
+                                                @* <a href="~/Admin/User/Delete/@user.MaNd" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?');">Xóa</a> *@
+                                                <form asp-area="Admin" asp-controller="User" asp-action="Delete" method="post" style="display:inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa người dùng này?');">
+                                                    <input type="hidden" name="id" value="@user.MaNd" />
+                                                    <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                                                </form>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6" class="text-center py-4">Không có người dùng nào để hiển thị.</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div></div>
+    </section>
+
+</main>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('.datatable').DataTable();
+        });
+    </script>
+}

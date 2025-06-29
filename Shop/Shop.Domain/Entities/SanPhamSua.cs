@@ -19,6 +19,8 @@ public partial class SanPhamSua
 
     public string? HinhAnh { get; set; }
 
+    public string? Status { get; set; }
+    public DateTime? NgayTao { get; set; }
     public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; } = new List<ChiTietDonHang>();
 
     public virtual ICollection<DanhGium> DanhGia { get; set; } = new List<DanhGium>();

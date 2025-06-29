@@ -1,0 +1,162 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+}
+@model List<Shop.Application.DTOs.GetUserAdminDTO>
+
+@{
+    ViewBag.Title = "Quản lý Người Dùng"; // Updated title for clarity
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@* Removed the <main id="main" class="main"> tag because it's already in _Layout.cshtml *@
+
+<div class="pagetitle">
+    <h1>Danh sách Người Dùng</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Trang chủ Admin</a></li>
+            <li class="breadcrumb-item">Bảng</li>
+            <li class="breadcrumb-item active">Dữ liệu Người Dùng</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Quản lý Người Dùng</h5>
+                    <p>Danh sách các tài khoản người dùng trong hệ thống.</p>
+
+                    @* Display TempData messages for success/error *@
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["SuccessMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["ErrorMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <div class="mb-3">
+                        <a asp-area="Admin" asp-controller="User" asp-action="Create" class="btn btn-primary">
+                            <i class="bi bi-plus-circle me-1"></i> Thêm Người Dùng Mới
+                        </a>
+                    </div>
+
+                    <!-- Table with stripped rows -->
+                    <table class="table datatable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên Đăng Nhập</th>
+                                <th>Email</th>
+                                <th>Vai Trò</th>
+                                <th>Trạng Thái</th> @* Uncommented: "Trạng Thái" matches GetUserAdminDTO.status *@
+                                <th>Ngày Tạo</th>
+                                <th>Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Any())
+                            {
+                                @foreach (var user in Model)
+                                {
+                                    <tr>
+                                        <td>@user.MaNd</td>
+                                        <td>@user.TenDangNhap</td>
+                                        <td>@user.Email</td>
+                                        <td>@user.VaiTro</td>
+                                        <td>@user.status</td> @* Display user.status as per DTO *@
+                                        <td>@(user.NgayTao?.ToString("yyyy/MM/dd") ?? "N/A")</td>
+                                        <td>
+                                            @* <a asp-area="Admin" asp-controller="User" asp-action="Edit" asp-route-id="@user.MaNd" class="btn btn-sm btn-info" title="Chỉnh sửa">
+                                                <i class="bi bi-pencil"></i>
+                                            </a> *@
+
+                                            <a asp-area="Admin" asp-controller="User" asp-action="Edit" asp-route-id="@user.MaNd" class="btn btn-sm btn-info" title="Chỉnh sửa">
+    <i class="bi bi-pencil"></i>
+</a>
+
+
+
+                                            <a asp-area="Admin" asp-controller="User" asp-action="Details" asp-route-id="@user.MaNd" class="btn btn-sm btn-secondary ms-1" title="Chi tiết">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-sm btn-danger delete-btn ms-1" data-id="@user.MaNd" title="Xóa">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="7" class="text-center">Không có dữ liệu người dùng nào.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    var userId = this.getAttribute('data-id');
+                    if (confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
+                        fetch(`/Admin/User/Delete/${userId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                // If you enabled Anti-Forgery Token for POST delete:
+                                // 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                            },
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            }
+                            throw new Error('Network response was not ok.');
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                alert(data.message);
+                                this.closest('tr').remove();
+                            } else {
+                                alert('Lỗi: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Đã xảy ra lỗi khi xóa người dùng.');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

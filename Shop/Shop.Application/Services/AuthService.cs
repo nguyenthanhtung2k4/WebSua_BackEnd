@@ -1,63 +1,70 @@
-﻿using System.Threading.Tasks;
+﻿using System; 
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Shop.Application.DTOs;
 using Shop.Application.Interfaces;
-using Shop.Infrastructure;
-using Shop.Infrastructure.Data;
+using Shop.Domain.Interfaces;
+using Shop.Infrastructure; 
 
 namespace Shop.Application.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly ShopDbContext _context;
+        private readonly IRepository<NguoiDung> _repository; 
         public readonly PasswordHasher<string> _hashPass = new();
 
-        public AuthService(ShopDbContext context)
+        public AuthService(IRepository<NguoiDung> repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
-        // Đăng ký tài khoản mới
+        
         public async Task<bool> Register(RegisterDTOs dtos)
         {
-            // Kiểm tra trùng tên đăng nhập
-            var existingUser = await _context.NguoiDungs
-                .FirstOrDefaultAsync(x => x.Email == dtos.Email);
+           
+            var existingUser = await _repository.FirstOrDefaultAsync(x => x.Email == dtos.Email);
 
             if (existingUser != null)
-                return false; // Đã tồn tại
+            {
+                
+                return false;
+            }
 
-            // Ma Hoa pass 
+          
             string hashedPassword = _hashPass.HashPassword(null, dtos.MatKhau);
 
-            var nguoiDung = new NguoiDung
+
+            var newUser = new NguoiDung
             {
                 TenDangNhap = dtos.TenDangNhap,
-                MatKhau = hashedPassword, // ma hoa  passs
+                // HASH MẬT KHẨU TRƯỚC KHI LƯU
+                MatKhau = hashedPassword,
                 Email = dtos.Email,
-                VaiTro = dtos.VaiTro ?? "KhachHang",
-                NgayTao = DateTime.Now
+                VaiTro = dtos.VaiTro,
+                status = dtos.status,
+                //avata = dtos.avata,
             };
-
-            _context.NguoiDungs.Add(nguoiDung);
-            await _context.SaveChangesAsync();
-            return true;
+            await _repository.AddAsync(newUser);
+            int savedChanges  = await _repository.SaveChangesAsync();
+            return savedChanges > 0; 
         }
 
-        // Đăng nhập
+        
         public async Task<bool> Login(string email, string password)
         {
-            var user = await _context.NguoiDungs
-                .FirstOrDefaultAsync(x => x.Email == email);
+            
+            var user = await _repository.FirstOrDefaultAsync(x => x.Email == email);
 
-            if (user == null) return false;
+            if (user == null)
+            {
+                return false; 
+            }
 
-            // Kiểm tra mật khẩu
+            
             var result = _hashPass.VerifyHashedPassword(null, user.MatKhau, password);
 
+            
             return result == PasswordVerificationResult.Success;
         }
-
     }
 }

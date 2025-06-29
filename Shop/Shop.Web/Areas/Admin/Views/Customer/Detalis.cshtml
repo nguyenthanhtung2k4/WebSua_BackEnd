@@ -1,0 +1,100 @@
+﻿@model Shop.Application.DTOs.GetCustomerAdminDTO
+
+@{
+    ViewBag.Title = "Chi tiết Khách hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Chi tiết Khách hàng</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Trang chủ Admin</a></li>
+                <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Customer" asp-action="Index">Khách hàng</a></li>
+                <li class="breadcrumb-item active">Chi tiết</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Thông tin Khách hàng</h5>
+
+                        @if (Model == null)
+                        {
+                                <div class="alert alert-warning" role="alert">
+                                    Không tìm thấy thông tin khách hàng.
+                                </div>
+                        }
+                        else
+                        {
+                                <dl class="row">
+                                    <dt class="col-sm-4">Mã Khách hàng:</dt>
+                                    <dd class="col-sm-8">@Model.MaKh</dd>
+
+                                    <dt class="col-sm-4">Họ Tên:</dt>
+                                    <dd class="col-sm-8">@Model.HoTen</dd>
+
+                                    <dt class="col-sm-4">Số điện thoại:</dt>
+                                    <dd class="col-sm-8">@Model.SoDienThoai</dd>
+
+                                    <dt class="col-sm-4">Địa chỉ:</dt>
+                                    <dd class="col-sm-8">@Model.DiaChi</dd>
+
+                                    <dt class="col-sm-4">Giới tính:</dt>
+                                    <dd class="col-sm-8">@Model.GioiTinh</dd>
+
+                                @if (!string.IsNullOrEmpty(Model.Image))
+                                {
+                                            <dt class="col-sm-4">Ảnh đại diện:</dt>
+                                            <dd class="col-sm-8">
+                                                <img src="@Url.Content(Model.Image)" alt="Ảnh đại diện khách hàng" class="img-fluid rounded-full w-24 h-24 object-cover">
+                                            </dd>
+                                }
+
+                                    <h6 class="card-title mt-4">Thông tin Tài khoản (nếu có)</h6>
+
+                                @if (Model.NguoiDungs != null)
+                                {
+                                            <dt class="col-sm-4">Tên đăng nhập:</dt>
+                                            <dd class="col-sm-8">@Model.NguoiDungs.TenDangNhap</dd>
+
+                                            <dt class="col-sm-4">Email tài khoản:</dt>
+                                            <dd class="col-sm-8">@Model.NguoiDungs.Email</dd>
+
+                                            <dt class="col-sm-4">Vai trò:</dt>
+                                            <dd class="col-sm-8">@Model.NguoiDungs.VaiTro</dd>
+
+                                            <dt class="col-sm-4">Ngày tạo tài khoản:</dt>
+                                            <dd class="col-sm-8">@(Model.NguoiDungs.NgayTao.HasValue ? Model.NguoiDungs.NgayTao.Value.ToString("dd/MM/yyyy HH:mm") : "N/A")</dd>
+
+                                            <dt class="col-sm-4">Trạng thái tài khoản:</dt>
+                                            <dd class="col-sm-8">@Model.NguoiDungs.status</dd>
+                                }
+                                else
+                                {
+                                            <div class="col-sm-12 alert alert-info" role="alert">
+                                                Khách hàng này không liên kết với một tài khoản người dùng.
+                                            </div>
+                                }
+                                </dl>
+
+                                <div class="mt-4">
+                                    <a asp-area="Admin" asp-controller="Customer" asp-action="Edit" asp-route-id="@Model.MaKh" class="btn btn-warning">Sửa</a>
+                                    <a asp-area="Admin" asp-controller="Customer" asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+                                </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+        <!-- Các script cần thiết khác nếu có -->
+}

@@ -1,0 +1,68 @@
+﻿@model Shop.Application.DTOs.UpdateCustomerDTO;
+@{
+    ViewData["Title"] = "Chỉnh sửa khách hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<main id="main" class="main">
+<h2>Chỉnh sửa thông tin khách hàng</h2>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="MaKh" />
+    <input type="hidden" asp-for="CurrentImagePath" />
+
+    <div class="form-group">
+        <label asp-for="HoTen"></label>
+        <input asp-for="HoTen" class="form-control" />
+        <span asp-validation-for="HoTen" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SoDienThoai"></label>
+        <input asp-for="SoDienThoai" class="form-control" />
+        <span asp-validation-for="SoDienThoai" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DiaChi"></label>
+        <input asp-for="DiaChi" class="form-control" />
+        <span asp-validation-for="DiaChi" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="GioiTinh"></label>
+        <select asp-for="GioiTinh" class="form-control">
+            <option value="">--Chọn giới tính--</option>
+            <option value="Nam">Nam</option>
+            <option value="Nữ">Nữ</option>
+        </select>
+        <span asp-validation-for="GioiTinh" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Ảnh hiện tại:</label><br />
+        @if (!string.IsNullOrEmpty(Model.CurrentImagePath))
+        {
+            <img src="@Model.CurrentImagePath" alt="Ảnh khách hàng" width="150" class="img-thumbnail" />
+        }
+        else
+        {
+            <span>Chưa có ảnh</span>
+        }
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewImageFile">Chọn ảnh mới</label>
+        <input asp-for="NewImageFile" type="file" class="form-control-file" />
+        <span asp-validation-for="NewImageFile" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</form>
+</main>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

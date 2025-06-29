@@ -1,19 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Shop.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddTest : Migration
+    public partial class addDatatimeSANPHAMSUA : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "sex",
-                table: "DangKyTuVan",
-                type: "nvarchar(max)",
+            migrationBuilder.AddColumn<DateTime>(
+                name: "NgayTao",
+                table: "SanPhamSua",
+                type: "datetime2",
                 nullable: true);
         }
 
@@ -21,8 +22,8 @@ namespace Shop.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "sex",
-                table: "DangKyTuVan");
+                name: "NgayTao",
+                table: "SanPhamSua");
         }
     }
 }

@@ -14,6 +14,8 @@ public partial class KhachHang
     public string? SoDienThoai { get; set; }
 
     public string? DiaChi { get; set; }
+    public string? GioiTinh { get; set; }
+    public string? Image { get; set; }
 
     public virtual ICollection<DangKyTuVan> DangKyTuVans { get; set; } = new List<DangKyTuVan>();
 

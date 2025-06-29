@@ -20,7 +20,7 @@ namespace Shop.Application.DTOs
 
         public DateTime? NgayTao { get; set; }
 
-        public string? avata { get; set; }
+        //public string? avata { get; set; }
         public string? status { get; set; }
     }
 }

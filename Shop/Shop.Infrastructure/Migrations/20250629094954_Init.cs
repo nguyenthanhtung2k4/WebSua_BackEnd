@@ -35,7 +35,6 @@ namespace Shop.Infrastructure.Migrations
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     VaiTro = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     NgayTao = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())"),
-                    avata = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     status = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -75,7 +74,9 @@ namespace Shop.Infrastructure.Migrations
                     MaND = table.Column<int>(type: "int", nullable: false),
                     HoTen = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     SoDienThoai = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    DiaChi = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                    DiaChi = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    GioiTinh = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -123,6 +124,7 @@ namespace Shop.Infrastructure.Migrations
                     HoTen = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     SoDienThoai = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    sex = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NoiDungTuVan = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     NgayDangKy = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())"),
                     TrangThai = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),

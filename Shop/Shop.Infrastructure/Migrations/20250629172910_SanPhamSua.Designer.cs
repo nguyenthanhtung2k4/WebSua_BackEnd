@@ -12,8 +12,8 @@ using Shop.Infrastructure.Data;
 namespace Shop.Infrastructure.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    [Migration("20250624092042_Init")]
-    partial class Init
+    [Migration("20250629172910_SanPhamSua")]
+    partial class SanPhamSua
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,6 +92,9 @@ namespace Shop.Infrastructure.Migrations
                     b.Property<string>("TrangThai")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("sex")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MaTuVan")
                         .HasName("PK__DangKyTu__AE2543CA7C7338C4");
@@ -214,9 +217,15 @@ namespace Shop.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<string>("GioiTinh")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("HoTen")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MaNd")
                         .HasColumnType("int")
@@ -284,9 +293,6 @@ namespace Shop.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("avata")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("status")
                         .HasColumnType("nvarchar(max)");
 
@@ -320,6 +326,9 @@ namespace Shop.Infrastructure.Migrations
 
                     b.Property<int?>("SoLuong")
                         .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TenSua")
                         .HasMaxLength(100)
