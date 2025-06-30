@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Shop.Infrastructure;
+﻿using Shop.Infrastructure;
 
 public partial class SanPhamSua
 {
@@ -17,10 +14,12 @@ public partial class SanPhamSua
 
     public int? SoLuong { get; set; }
 
-    public string? HinhAnh { get; set; }
+    public string? HinhAnh { get; set; } // có thể là ảnh đại diện chính
 
     public string? Status { get; set; }
+
     public DateTime? NgayTao { get; set; }
+
     public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; } = new List<ChiTietDonHang>();
 
     public virtual ICollection<DanhGium> DanhGia { get; set; } = new List<DanhGium>();
@@ -28,4 +27,6 @@ public partial class SanPhamSua
     public virtual ICollection<GioHang> GioHangs { get; set; } = new List<GioHang>();
 
     public virtual LoaiSua? MaLoaiNavigation { get; set; }
+
+    public virtual ICollection<HinhAnhSanPham> HinhAnhSanPhams { get; set; } = new List<HinhAnhSanPham>();
 }

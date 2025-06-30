@@ -99,7 +99,7 @@ namespace Shop.Web.Areas.Admin.Controllers
             if (dto.NewImageFile != null)
             {
                 // Thư mục lưu ảnh
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "asset", "admin", "imgCustomer");
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images", "imgCustomer");
                 if (!Directory.Exists(uploadsFolder))
                 {
                     Directory.CreateDirectory(uploadsFolder);
@@ -128,7 +128,7 @@ namespace Shop.Web.Areas.Admin.Controllers
                 }
 
                 // Đường dẫn lưu vào DB (dùng khi hiển thị ảnh)
-                newImagePath = Path.Combine("/asset/admin/imgCustomer", fileName).Replace("\\", "/");
+                newImagePath = Path.Combine("/images/imgCustomer", fileName).Replace("\\", "/");
             }
 
             // Cập nhật thông tin khách hàng

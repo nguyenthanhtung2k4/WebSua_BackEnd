@@ -13,7 +13,7 @@ namespace Shop.Application.Interfaces
         //Task<GetUserAdminDTO> GetUserById(int userId);
         //Task<bool> UpdateUser(UpdateUserDTO updateDto); // Update user details/roles
         //Task<bool> DeleteUser(int userId);
-        //Task<bool> AddUser(AddUserAdminDTO addUserDTO);
+        Task<bool> AddProduct(AddProductsAdminDTO addUserDTO);
 
         //Task<bool> DeleteUser(int userId);
         //Task<bool> AssignRoleToUser(int userId, string roleName);
