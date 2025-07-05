@@ -1,10 +1,7 @@
-﻿
-/* Reset Remiixicon content if it's causing issues */
-/* :where([class^="ri-"])::before { content: initial; } */
-
-body {
+﻿body {
     font-family: 'Montserrat', sans-serif;
     scroll-behavior: smooth;
+    color: #333; /* Màu chữ mặc định */
 }
 
 .scroll-to-top {
@@ -14,7 +11,6 @@ body {
     width: 40px;
     height: 40px;
     background-color: #4EADD3;
-    /* Primary color */
     color: white;
     border-radius: 50%;
     display: flex;
@@ -22,7 +18,6 @@ body {
     justify-content: center;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    /* Mượt mà hơn */
     opacity: 0;
     z-index: 999;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -33,126 +28,174 @@ body {
         opacity: 1;
     }
 
-.fade-up {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    /* Mượt mà hơn */
+.video-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 0;
+    transform: translateX(-50%) translateY(-50%);
+    background-size: cover;
 }
-
-    .fade-up.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
+/* Hero Section - KẾT HỢP */
 .hero-section {
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.9) 40%, rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 0.4) 80%, rgba(255, 255, 255, 0) 100%), url('https://readdy.ai/api/search-image?query=A%20glass%20of%20fresh%20milk%20being%20poured%20with%20splashes%2C%20bright%20and%20clean%20white%20background%2C%20soft%20blue%20accents%2C%20dairy%20product%20photography%2C%20high-key%20lighting%2C%20fresh%20and%20pure%20feeling%2C%20professional%20product%20shot%2C%20ultra%20high%20resolution&width=1600&height=800&seq=milk-hero&orientation=landscape');
+    position: relative;
+    min-height: 670px;
+    display: flex;
+    align-items: center;
+    /* Căn giữa dọc nội dung chính */
+    background-image: url('./bg.mp4'); /* **ĐƯỜNG DẪN ẢNH CHÍNH CỦA BẠN** */
     background-size: cover;
     background-position: center;
-}
-
-.slider-container {
+    background-repeat: no-repeat;
     overflow: hidden;
+    color: white; /* Màu chữ mặc định trắng */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Bóng chữ nhẹ */
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Lớp phủ tối nhẹ */
+    z-index: 0;
+}
+
+.hero-content {
     position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 2rem;
+    max-width: 1200px; /* Tăng max-width để có không gian bên trái */
+    margin: 0 auto;
+    display: flex; /* Dùng flexbox cho bố cục */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: flex-start; /* Đẩy nội dung status sang trái */
 }
 
-.slider {
+/* Styles cho phần hiển thị status */
+#status-carousel {
+    position: relative;
+    width: 55%; /* Chiếm 55% chiều rộng hero-content */
+    min-height: 350px; /* Đảm bảo đủ không gian cho status */
+    overflow: hidden;
     display: flex;
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    /* Smooth cubic-bezier */
+    align-items: center; /* Căn giữa dọc nội dung status bên trong */
 }
 
-.slider-item {
-    min-width: 100%;
-    flex-shrink: 0;
-    /* Ensures items don't shrink */
-    transition: opacity 0.5s;
-}
-
-.product-card {
-    transition: all 0.4s ease-out;
-    /* Mượt mà hơn */
-}
-
-    .product-card:hover {
-        transform: translateY(-8px);
-        /* Nhấc nhẹ lên thay vì scale */
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        /* Bóng đổ rõ hơn */
-    }
-
-        .product-card:hover .product-img {
-            transform: scale(1.03);
-            /* Phóng to nhẹ ảnh */
-        }
-
-.product-img {
-    transition: transform 0.4s ease-out;
-    /* Mượt mà hơn */
-}
-
-.dot {
-    height: 10px;
-    width: 10px;
-    margin: 0 5px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    /* Thêm hiệu ứng transform */
-    cursor: pointer;
-}
-
-    .dot.active {
-        background-color: #4EADD3;
-        /* Primary color */
-        transform: scale(1.2);
-        /* Phóng to nhẹ khi active */
-    }
-
-input,
-textarea {
-    transition: border-color 0.3s;
-}
-
-    input:focus,
-    textarea:focus {
-        border-color: #4EADD3;
-        /* Primary color */
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(78, 173, 211, 0.2);
-        /* Thêm shadow khi focus */
-    }
-
-.fade-in {
+.status-item {
+    position: absolute; /* Để các status chồng lên nhau */
+    width: 100%;
     opacity: 0;
-    transform: translateY(30px);
-    /* Đổi từ translateX sang translateY cho hiệu ứng đồng bộ hơn */
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    transform: translateY(30px); /* Hiệu ứng fade-in-up cho mỗi status */
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+    text-align: left; /* Căn chữ sang trái */
+    padding-right: 2rem; /* Tạo khoảng trống bên phải để nội dung không quá rộng */
+    box-sizing: border-box;
 }
 
-    .fade-in.visible {
+    .status-item.active {
         opacity: 1;
         transform: translateY(0);
     }
 
-/* Header specific styles for dynamic padding */
-/* .header-compact {
-        padding-top: 0.7rem !important;
-        padding-bottom: 0.5rem !important;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); 
-    } 
-    */
-.header-compact {
-    padding-top: 0.70rem;
-    padding-bottom: 0.70rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    /* Thêm bóng đổ nhẹ khi cuộn */
+    .status-item h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+        color: white; /* Đảm bảo màu chữ trắng */
+        text-shadow: 0 2px 6px rgba(0,0,0,0.6); /* Bóng chữ đậm hơn */
+    }
+
+    .status-item p {
+        font-size: 1.25rem;
+        line-height: 1.6;
+        color: #f0f0f0; /* Màu chữ hơi nhạt hơn cho đoạn văn */
+        max-width: 600px; /* Giới hạn chiều rộng của đoạn văn */
+        margin-bottom: 2rem;
+    }
+
+    .status-item .cta-buttons {
+        display: flex;
+        flex-wrap: wrap; /* Cho phép các nút xuống dòng trên màn hình nhỏ */
+        gap: 1rem;
+        justify-content: flex-start; /* Căn các nút sang trái */
+    }
+
+/* Global Animations */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
+    .fade-in-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-/*  Style  bo  sung  */
+.delay-100 {
+    transition-delay: 0.1s;
+}
 
+.delay-200 {
+    transition-delay: 0.2s;
+}
+
+.delay-300 {
+    transition-delay: 0.3s;
+}
+
+.delay-400 {
+    transition-delay: 0.4s;
+}
+
+/* Feature Card Section */
+.feature-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease-out;
+    border: 1px solid #eee;
+    text-align: center;
+}
+
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+    }
+
+    .feature-card i {
+        font-size: 3rem;
+        color: #4EADD3;
+        margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+        color: #333;
+    }
+
+    .feature-card p {
+        color: #666;
+        line-height: 1.6;
+    }
+
+/* Header */
+.header-compact {
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
 
 header {
     transition: transform 0.3s ease-out, padding 0.3s ease-out;
@@ -167,3 +210,336 @@ header {
     transform: translateX(0);
     transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
+
+.product-card {
+    transition: all 0.4s ease-out;
+}
+
+    .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+        .product-card:hover .product-img {
+            transform: scale(1.03);
+        }
+
+.product-img {
+    transition: transform 0.4s ease-out;
+}
+
+input,
+textarea {
+    transition: border-color 0.3s;
+}
+
+    input:focus,
+    textarea:focus {
+        border-color: #4EADD3;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(78, 173, 211, 0.2);
+    }
+
+/* Responsive adjustments */
+@media (max-width: 1024px) { /* Lg breakpoint */
+    .hero-content {
+        flex-direction: column; /* Chuyển về cột trên màn hình nhỏ */
+        text-align: center;
+    }
+
+    #status-carousel {
+        width: 100%; /* Chiếm toàn bộ chiều rộng */
+        min-height: 250px;
+        margin-bottom: 2rem;
+    }
+
+    .status-item {
+        padding-right: 0;
+        text-align: center; /* Căn giữa văn bản status */
+    }
+
+        .status-item .cta-buttons {
+            justify-content: center; /* Căn giữa các nút */
+        }
+
+        .status-item h1 {
+            font-size: 2.25rem;
+        }
+
+        .status-item p {
+            font-size: 1rem;
+        }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 550px;
+    }
+}
+/* ------------------------------------- */
+/* RESPONSIVE CSS Adjustments */
+/* ------------------------------------- */
+
+/* Small screens (Mobiles, default Tailwind `sm` breakpoint up to 767px) */
+@media (max-width: 767px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    /* Header on mobile */
+    #nav_header .md\:flex, #nav_header .relative.hidden.md\:block, #nav_header .flex.items-center.space-x-2 {
+        display: none; /* Hide desktop menu, search, login/register */
+    }
+
+    #nav_header .md\:hidden {
+        display: flex !important; /* Ensure mobile menu button is visible */
+    }
+
+    .nav_header .flex.items-center.space-x-4 {
+        gap: 0.5rem; /* Reduce gap between cart and menu button */
+    }
+
+    /* Mobile menu overlay */
+    #mobile-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.98); /* Slightly transparent white overlay */
+        z-index: 60; /* Above header */
+        transform: translateX(100%);
+        transition: transform 0.3s ease-out;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-top: 4rem; /* Space for close button */
+    }
+
+        #mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        #mobile-menu .nav-item {
+            font-size: 1.5rem;
+            padding: 0.75rem 0;
+            width: 80%;
+            text-align: center;
+        }
+
+        #mobile-menu .search-input-mobile {
+            width: 80%;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        #mobile-menu .auth-buttons-mobile {
+            flex-direction: column;
+            gap: 0.75rem;
+            width: 80%;
+        }
+
+            #mobile-menu .auth-buttons-mobile button {
+                width: 100%;
+            }
+
+    .mobile-menu-close {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        font-size: 2rem;
+        color: #333;
+        cursor: pointer;
+    }
+
+    /* Hero Section on mobile */
+    .hero-section {
+        min-height: 500px; /* Giảm chiều cao trên di động */
+        padding-top: 5rem; /* Đảm bảo nội dung không bị che bởi header */
+    }
+
+    .hero-content {
+        flex-direction: column; /* Xếp cột nội dung */
+        align-items: center; /* Căn giữa các mục */
+        text-align: center; /* Căn giữa văn bản */
+        padding: 1.5rem;
+    }
+
+    #status-carousel {
+        width: 100%; /* Chiếm toàn bộ chiều rộng khả dụng */
+        min-height: 280px; /* Giữ đủ chiều cao cho carousel */
+        margin-bottom: 1.5rem;
+    }
+
+    .status-item {
+        padding-right: 0; /* Bỏ padding phải */
+        text-align: center; /* Căn giữa văn bản trên mobile */
+    }
+
+        .status-item h1 {
+            font-size: 2rem; /* Giảm kích thước chữ H1 */
+            margin-bottom: 0.8rem;
+        }
+
+        .status-item p {
+            font-size: 1rem; /* Giảm kích thước chữ P */
+            margin-bottom: 1.5rem;
+            max-width: 100%; /* Không giới hạn chiều rộng trên mobile */
+        }
+
+        .status-item .cta-buttons {
+            flex-direction: column; /* Xếp nút thành cột */
+            gap: 0.8rem;
+            justify-content: center; /* Căn giữa các nút */
+            width: 100%; /* Các nút chiếm toàn bộ chiều rộng */
+        }
+
+            .status-item .cta-buttons a {
+                width: 100%; /* Các nút chiếm toàn bộ chiều rộng */
+                padding-left: 1rem; /* Adjust padding for full width buttons */
+                padding-right: 1rem;
+            }
+
+    /* Feature Cards & Product Cards */
+    .grid-cols-1 {
+        grid-template-columns: 1fr; /* Mặc định là 1 cột */
+    }
+
+    .feature-card, .product-card {
+        padding: 1.5rem;
+    }
+
+        .feature-card i {
+            font-size: 2.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+        }
+
+        .product-card h3 {
+            font-size: 1.1rem;
+        }
+
+        .product-card span.text-2xl {
+            font-size: 1.5rem; /* Giảm kích thước giá */
+        }
+
+        .product-card button {
+            padding: 0.6rem 1rem; /* Giảm padding nút */
+            font-size: 0.9rem;
+        }
+
+    /* About Section */
+    #about .md\:flex-row {
+        flex-direction: column; /* Xếp cột */
+    }
+
+    #about .md\:w-1\/2 {
+        width: 100%;
+    }
+
+    #about img {
+        margin-bottom: 1.5rem;
+    }
+
+    #about h2 {
+        font-size: 2rem;
+    }
+
+    #about p {
+        font-size: 1rem;
+    }
+}
+
+/* Medium screens (Tablets, default Tailwind `md` breakpoint up to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .hero-content {
+        flex-direction: column; /* Chuyển về cột trên màn hình trung bình */
+        text-align: center;
+    }
+
+    #status-carousel {
+        width: 100%; /* Chiếm toàn bộ chiều rộng */
+        min-height: 300px;
+        margin-bottom: 2rem;
+    }
+
+    .status-item {
+        padding-right: 0;
+        text-align: center;
+    }
+
+        .status-item .cta-buttons {
+            justify-content: center;
+        }
+
+        .status-item h1 {
+            font-size: 2.5rem; /* Tinh chỉnh kích thước chữ */
+        }
+
+        .status-item p {
+            font-size: 1.1rem;
+        }
+
+    .grid-cols-1.md\:grid-cols-3 {
+        grid-template-columns: repeat(2, 1fr); /* 2 cột cho feature/product cards */
+    }
+
+    .feature-card, .product-card {
+        margin-bottom: 1rem; /* Khoảng cách giữa các card khi 2 cột */
+    }
+
+    #products .lg\:grid-cols-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Large screens (Laptops/Desktops, default Tailwind `lg` breakpoint and above) */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1200px; /* Giữ max-width cho container */
+    }
+    /* Đảm bảo các style Hero Section cho desktop được áp dụng */
+    .hero-content {
+        flex-direction: row; /* Trở lại hàng ngang */
+        text-align: left;
+        padding-right: 2rem; /* Thêm padding tổng thể cho hero content */
+    }
+
+    #status-carousel {
+        width: 55%; /* Trở lại chiếm 55% */
+        min-height: 350px;
+        margin-bottom: 0;
+    }
+
+    .status-item {
+        text-align: left;
+        padding-right: 2rem;
+    }
+
+        .status-item .cta-buttons {
+            justify-content: flex-start;
+        }
+
+        .status-item h1 {
+            font-size: 3rem;
+        }
+
+        .status-item p {
+            font-size: 1.25rem;
+        }
+}
+
+
+#btn-11 #btn-12 #btn13 {
+    background-color: #bd7b00;
+    text-align: center;
+    font-size: large;
+}
+
+    #btn-11 #btn-12 #btn13 :hover {
+        background: #000;
+    }

@@ -49,7 +49,12 @@
                                             <td>@user.TenDangNhap</td> 
                                             <td>@user.Email</td>    
                                             <td>@user.VaiTro</td>
-                                            <td>@user.status</td>
+                                            <td>
+                                                <span class="badge @(user.status == "active" ? "bg-success" : "bg-secondary")">
+                                                    @user.status
+                                                </span>
+
+                                            </td>
                                             <td>@(user.NgayTao.HasValue ? user.NgayTao.Value.ToString("dd/MM/yyyy HH:mm") : "N/A")</td> 
                                             <td>
                                                 <a href="~/Admin/User/Edit/@user.MaNd" class="btn btn-warning btn-sm">Sửa</a>

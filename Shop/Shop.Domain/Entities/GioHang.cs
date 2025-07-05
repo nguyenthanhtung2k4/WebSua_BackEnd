@@ -13,6 +13,9 @@ public partial class GioHang
 
     public int? SoLuong { get; set; }
 
+    public DateTime? NgayTao { get; set; }  
+
+
     public virtual KhachHang? MaKhNavigation { get; set; }
 
     public virtual SanPhamSua? MaSuaNavigation { get; set; }

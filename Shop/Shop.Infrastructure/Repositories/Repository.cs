@@ -42,6 +42,31 @@ namespace Shop.Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
+        public async Task<T?> FirstOrDefaultIncludingAsync(
+           Expression<Func<T, bool>> predicate,
+           params Expression<Func<T, object>>[] includes)
+            {
+                IQueryable<T> query = _dbSet;
+
+                // Include các navigation properties
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+
+                return await query.FirstOrDefaultAsync(predicate);
+            }
+
+        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.Where(predicate).ToListAsync();
+        }
+        public async Task<T?> Find(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.FirstOrDefaultAsync(predicate);
+        }
+
+
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();
@@ -67,5 +92,7 @@ namespace Shop.Infrastructure.Repositories
             // Trả về số lượng bản ghi đã được lưu
             return await _context.SaveChangesAsync();
         }
+
+
     }
 }

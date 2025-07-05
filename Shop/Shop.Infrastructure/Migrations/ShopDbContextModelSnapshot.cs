@@ -231,6 +231,9 @@ namespace Shop.Infrastructure.Migrations
                     b.Property<int?>("MaSua")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("NgayTao")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("SoLuong")
                         .HasColumnType("int");
 

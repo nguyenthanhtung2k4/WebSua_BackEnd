@@ -1,2 +1,2 @@
-Lam tiep  tuc phan san pham  cho xong +  copy code trong Chat lam lan luot 
-- tiep den lam cline   phat trien cho xong  toi  nay
+Fix  model  tra  ve  khong chi  la  ID cua  no  ma con   lay  dc cac sam pham khac cua no  nua 
+- fix  bug  ( Ket  hop  ViewModels  se duoc )

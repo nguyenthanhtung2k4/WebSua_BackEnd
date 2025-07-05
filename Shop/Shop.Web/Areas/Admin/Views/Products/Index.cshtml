@@ -42,18 +42,31 @@
 
                                 @if (Model != null && Model.Any())
                                 {
-                                    @foreach (var user in Model)
+                                    @foreach (var user in Model.OrderByDescending(x => x.NgayTao))
                                     {
                                         <tr>
                                             <th scope="row">@user.MaSua</th>
                                             <td>@user.TenSua</td>
-                                            <td>@user.Gia</td>
+                                            <td class="text-success fw-bold">
+                                                @(user.Gia?.ToString("N0") ?? "0") VNĐ
+                                            </td>
                                             <td>@user.SoLuong</td>
-                                            <td>@(user.NgayTao.HasValue ? user.NgayTao.Value.ToString("dd/MM/yyyy HH:mm") : "N/A")</td>
+                                            
                                             <td>
-                                                <a href="~/Admin/User/Edit/@user.MaSua" class="btn btn-warning btn-sm">Sửa</a>
-                                                @* <a href="~/Admin/User/Details/@user.MaNd" class="btn btn-info btn-sm">Chi tiết</a> *@
-                                                @* <a href="~/Admin/User/Delete/@user.MaNd" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?');">Xóa</a> *@
+                                                @(
+                                                    user.NgayTao.HasValue
+                                                    ? user.NgayTao.Value.ToString("dd/MM/yyyy HH:mm")
+                                                    : "Chưa có ngày tạo"
+                                                    )
+
+                                            </td>
+
+
+
+                                            <td>
+                                                <a asp-area="Admin" asp-controller="Products" asp-action="Details" asp-route-id="@user.MaSua" class="btn btn-primary btn-sm">Chi tiết</a>
+                                                <a href="~/Admin/Products/Edit/@user.MaSua" class="btn btn-warning btn-sm">Sửa</a>
+                                               
                                                 <form asp-area="Admin" asp-controller="Products" asp-action="Delete" method="post" style="display:inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa người dùng này?');">
                                                     <input type="hidden" name="id" value="@user.MaSua" />
                                                     <button type="submit" class="btn btn-danger btn-sm">Xóa</button>

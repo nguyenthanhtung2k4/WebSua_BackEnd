@@ -33,7 +33,8 @@ namespace Shop.Application.Services
                 NguoiDungs= new GetUserAdminDTO
                 {
                     Email=x.MaNdNavigation.Email,
-                    NgayTao=x.MaNdNavigation.NgayTao
+                    NgayTao=x.MaNdNavigation.NgayTao,
+                    status=x.MaNdNavigation.status
                 }
             }).ToList();
         }

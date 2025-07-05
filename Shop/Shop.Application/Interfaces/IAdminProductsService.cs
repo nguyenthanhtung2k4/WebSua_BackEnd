@@ -10,12 +10,12 @@ namespace Shop.Application.Interfaces
     public interface IAdminProductsService
     {
         Task<IEnumerable<GetProductsAdminDTO>> GetAllProducts(); // Assuming UserDTO exists
-        //Task<GetUserAdminDTO> GetUserById(int userId);
-        //Task<bool> UpdateUser(UpdateUserDTO updateDto); // Update user details/roles
+        Task<GetProductsAdminDTO?> GetIdProduct(int userId);
+        Task<bool> UpdateProduct(UpdateProductsAdminDTO updateDto); // Update user details/roles
         //Task<bool> DeleteUser(int userId);
         Task<bool> AddProduct(AddProductsAdminDTO addUserDTO);
 
-        //Task<bool> DeleteUser(int userId);
+        Task<bool> DeleteUser(int userId);
         //Task<bool> AssignRoleToUser(int userId, string roleName);
         //Task<bool> RemoveRoleFromUser(int userId, string roleName);
 

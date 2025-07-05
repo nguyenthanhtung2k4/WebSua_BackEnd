@@ -12,16 +12,22 @@ namespace Shop.Application.DTOs
 
         public string? TenSua { get; set; }
 
-        public int? MaLoai { get; set; }
+        public string? TenLoai { get; set; }
 
         public decimal? Gia { get; set; }
 
         public string? MoTa { get; set; }
 
         public int? SoLuong { get; set; }
+        public string?  Status { get; set; }
 
-        public string? HinhAnh { get; set; }
+        public List<string>? HinhAnhs { get; set; }
         public DateTime? NgayTao { get; set; }
+
+        //public GetImageProductsAdminDTO?  LoaiSuas { get; set; }
+        //public GetImageProductsAdminDTO? ImgProducts { get; set; }
+
+
 
     }
 }

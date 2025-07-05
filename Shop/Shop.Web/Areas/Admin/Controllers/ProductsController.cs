@@ -38,59 +38,184 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View(new AddProductsAdminDTO());
+            return View();
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(AddProductsAdminDTO dto)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(dto);
-        //    }
 
-        //    // Xử lý ảnh nếu có
-        //    if (dto.NewImageFile != null && dto.MaLoai.HasValue)
-        //    {
-        //        // Tạo đường dẫn thư mục lưu ảnh
-        //        string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images", "imgProducts");
-        //        if (!Directory.Exists(uploadFolder))
-        //            Directory.CreateDirectory(uploadFolder);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(AddProductsAdminDTO dto)
+        {
+            if (!ModelState.IsValid) //  check  form 
+            {
+                return View(dto);
+            }
 
-        //        // Tạo tên file: TenSua_MaLoai.jpg
-        //        string extension = Path.GetExtension(dto.NewImageFile.FileName);
-        //        string fileName = $"{Guid.NewGuid()}_SanPham_{dto.MaLoai}{extension}";
-        //        string filePath = Path.Combine(uploadFolder, fileName);
-        //        // Nếu có ảnh cũ thì xóa
-        //        if (!string.IsNullOrEmpty(dto.))
-        //        {
-        //            // Tách tên file từ đường dẫn
-        //            string oldFileName = Path.GetFileName(dto.HinhAnh);
-        //            string oldFilePath = Path.Combine(uploadsFolder, oldFileName);
-        //            if (System.IO.File.Exists(oldFilePath))
-        //            {
-        //                System.IO.File.Delete(oldFilePath); // Xóa ảnh cũ
-        //            }
-        //        }
-        //        using (var stream = new FileStream(filePath, FileMode.Create))
-        //        {
-        //            await dto.NewImageFile.CopyToAsync(stream);
-        //        }
+            var imagePaths = new List<string>();
 
-        //        dto.HinhAnh = $"/images/imgProducts/{fileName}".Replace("\\", "/");
-        //    }
+            if (dto.NewImageFiles != null && dto.NewImageFiles.Any() && dto.MaLoai.HasValue)
+            {
+                string folder = Path.Combine(_webHostEnvironment.WebRootPath, "images", "imgProducts");
+                if (!Directory.Exists(folder))
+                {
+                    Directory.CreateDirectory(folder);
+                }
 
-        //    var result = await _adminCustomerService.AddProduct(dto);
-        //    if (result)
-        //    {
-        //        TempData["SuccessMessage"] = "Thêm sản phẩm thành công.";
-        //        return RedirectToAction("Index");
-        //    }
-        //    else
-        //    {
-        //        TempData["ErrorMessage"] = "Tên sản phẩm đã tồn tại hoặc lỗi hệ thống.";
-        //        return View(dto);
-        //    }
-        //}
-    } 
+                foreach (var file in dto.NewImageFiles)
+                {
+                    string extension = Path.GetExtension(file.FileName);
+                    string fileName = $"{Guid.NewGuid()}_SanPham_ID{dto.MaLoai}{extension}";
+                    string filePath = Path.Combine(folder, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    string relativePath = $"/images/imgProducts/{fileName}".Replace("\\", "/");
+                    imagePaths.Add(relativePath);
+                }
+
+                dto.HinhAnhs = imagePaths;
+            }
+
+            var result = await _adminCustomerService.AddProduct(dto);
+
+            if (result)
+            {
+                TempData["SuccessMessage"] = "Thêm sản phẩm thành công.";
+                return RedirectToAction("Index");
+            }
+
+            // ❌ Nếu thêm thất bại → xóa ảnh vừa lưu để tránh rác
+            if (imagePaths.Any())
+            {
+                foreach (var path in imagePaths)
+                {
+                    string absolutePath = Path.Combine(_webHostEnvironment.WebRootPath, path.TrimStart('/').Replace("/", Path.DirectorySeparatorChar.ToString()));
+                    if (System.IO.File.Exists(absolutePath))
+                    {
+                        System.IO.File.Delete(absolutePath);
+                    }
+                }
+            }
+
+            TempData["ErrorMessage"] = "Thêm sản phẩm thất bại! Sản phẩm đã tồn tại hoặc có lỗi.";
+            return View(dto);
+        }
+
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy ID người dùng.";
+                return RedirectToAction("Index"); // Chuyển hướng về trang danh sách
+            }
+
+            var userDto = await _adminCustomerService.GetIdProduct(id.Value);
+            if (userDto == null)
+            {
+                TempData["ErrorMessage"] = "Người dùng không tồn tại.";
+                return RedirectToAction("Index"); // Chuyển hướng về trang danh sách
+            }
+
+
+            return View(userDto);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var product = await _adminCustomerService.GetIdProduct(id);
+            if (product == null)
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy sản phẩm.";
+                return RedirectToAction("Index");
+            }
+
+            var dto = new UpdateProductsAdminDTO
+            {
+                MaSua = product.MaSua,
+                TenSua = product.TenSua,
+                Gia = product.Gia,
+                MoTa = product.MoTa,
+                SoLuong = product.SoLuong,
+                NgayTao = product.NgayTao,
+                Status = product.Status,
+                HinhAnhs = product.HinhAnhs
+                // Gán thêm các trường nếu cần
+            };
+
+            return View(dto); // Trả về DTO cho View Edit
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(UpdateProductsAdminDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(dto);
+            }
+
+            var imagePaths = new List<string>();
+
+            if (dto.NewImageFiles != null && dto.NewImageFiles.Any())
+            {
+                string folder = Path.Combine(_webHostEnvironment.WebRootPath, "images", "imgProducts");
+                if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+
+                foreach (var file in dto.NewImageFiles)
+                {
+                    string extension = Path.GetExtension(file.FileName);
+                    string fileName = $"{Guid.NewGuid()}_EditSanPham_ID{dto.MaSua}{extension}";
+                    string filePath = Path.Combine(folder, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    string relativePath = $"/images/imgProducts/{fileName}".Replace("\\", "/");
+                    imagePaths.Add(relativePath);
+                }
+
+                dto.HinhAnhs = imagePaths;
+            }
+
+            var result = await _adminCustomerService.UpdateProduct(dto);
+            if (result)
+            {
+                TempData["SuccessMessage"] = "Cập nhật sản phẩm thành công.";
+                return RedirectToAction("Index");
+            }
+
+            TempData["ErrorMessage"] = "Cập nhật sản phẩm thất bại.";
+            return View(dto);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            // SỬA LỖI Ở ĐÂY: Thay đổi .Remove(id) thành .DeleteUser(id)
+            var deleted = await _adminCustomerService.DeleteUser(id);
+
+            if (deleted)
+            {
+                TempData["SuccessMessage"] = "Vô hiệu hóa người dùng thành công.";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Vô hiệu hóa người dùng thất bại. Có thể người dùng không tồn tại.";
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
+    }
 }
+

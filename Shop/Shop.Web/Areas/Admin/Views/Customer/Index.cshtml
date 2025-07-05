@@ -34,7 +34,7 @@
                                     <th scope="col">Họ tên</th>
                                     <th scope="col">Giới tính</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Ngày tạo</th>
+                                    <th scope="col">Trạng thái</th>
                                     <th scope="col">Hành động</th>
                                 </tr>
                             </thead>
@@ -48,7 +48,12 @@
                                             <td>@user.HoTen</td>
                                             <td>@user.GioiTinh</td>
                                             <td>@user.NguoiDungs?.Email</td>
-                                            <td>@(user.NguoiDungs?.NgayTao?.ToString("dd/MM/yyyy HH:mm") ?? "N/A")</td>
+                                            <td>
+                                                <span class="badge @(user.NguoiDungs?.status == "active" ? "bg-success" : "bg-secondary")">
+                                                    @user.NguoiDungs?.status
+                                                </span>
+                                            </td>
+                                            @* <td>@(user.NguoiDungs?.NgayTao?.ToString("dd/MM/yyyy HH:mm") ?? "N/A")</td> *@
                                             <td>
                                                 <a asp-area="Admin" asp-controller="Customer" asp-action="Detalis" asp-route-id="@user.MaKh" class="btn btn-primary btn-sm">Chi tiết</a>
                                                 <a asp-area="Admin" asp-controller="Customer" asp-action="Edit" asp-route-id="@user.MaKh" class="btn btn-warning btn-sm">Sửa</a>

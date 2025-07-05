@@ -1,0 +1,108 @@
+﻿/* Product Image Gallery Thumbnails */
+.product-image-thumbnail {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease-out;
+}
+
+    .product-image-thumbnail.active {
+        border-color: #4EADD3;
+    }
+
+/* Custom Scrollbar for Reviews */
+.reviews-container {
+    max-height: 400px;
+    /* Giới hạn chiều cao */
+    overflow-y: auto;
+    /* Thêm thanh cuộn khi nội dung tràn */
+    padding-right: 15px;
+    /* Khoảng trống cho thanh cuộn */
+}
+
+    .reviews-container::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .reviews-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    .reviews-container::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+
+        .reviews-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+/* Toggle Sections (Accordion) */
+.toggle-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1.5rem;
+    background-color: #f0f8ff;
+    /* Light blue background for toggle button */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 1rem;
+    /* Space before content */
+    border: 1px solid #e0f7fa;
+}
+
+    .toggle-button:hover {
+        background-color: #e0f7fa;
+    }
+
+.toggle-content {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.7s ease-out, opacity 0.5s ease-out, padding 0.7s ease-out;
+    padding: 0 3rem;
+    /* padding for content, will be adjusted by JS */
+}
+
+    .toggle-content.active {
+        max-height: 2500px;
+        /* Increased max-height for content */
+        opacity: 1;
+        transition: max-height 1s ease-in-out, opacity 0.8s ease-in, padding 1s ease-in-out;
+        padding: 2rem 3rem;
+        /* Apply padding when active */
+    }
+
+.toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.toggle-button.active .toggle-icon {
+    transform: rotate(180deg);
+}
+
+/* Styles for navigation buttons */
+.nav-link-btn {
+    background-color: #EDF8FB;
+    color: #4EADD3;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    /* Pill shape */
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 1px solid #4EADD3;
+}
+
+    .nav-link-btn:hover {
+        background-color: #4EADD3;
+        color: white;
+        box-shadow: 0 4px 10px rgba(78, 173, 211, 0.4);
+    }
+
+    .nav-link-btn.active {
+        background-color: #4EADD3;
+        color: white;
+    }

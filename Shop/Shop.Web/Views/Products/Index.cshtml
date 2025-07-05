@@ -1,0 +1,164 @@
+﻿@model List<Shop.Application.DTOs.GetProductsAdminDTO>
+@{
+    ViewData["Title"] = "Trang Chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--  Status -->
+<section id="home" class="hero-section pt-24">
+    <video autoplay loop muted playsinline class="video-background">
+        <source src="~/Video/bg.mp4" type="video/mp4">
+        Trình duyệt của bạn không hỗ trợ thẻ video.
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div id="status-carousel" class="relative">
+            <div class="status-item">
+                <h1>Sữa tươi sạch từ <span class="text-primary-lighter">thiên nhiên</span></h1>
+                <p>
+                    Chúng tôi cung cấp các sản phẩm sữa tươi nguyên chất, giàu dinh dưỡng từ những trang trại được
+                    chứng nhận hữu cơ.
+                </p>
+                <div class="cta-buttons">
+                    <a id="btn-11" href="#products"
+                       class="bg-primary text-white px-8 py-4 rounded-button font-semibold text-lg hover:bg-accent transition-all duration-300 text-center whitespace-nowrap shadow-lg hover:shadow-xl">
+                        Khám
+                        phá ngay
+                    </a>
+                    <a id="btn-2" href="#contact"
+                       class="border-2 border-primary text-primary-lighter px-8 py-4 rounded-button font-semibold text-lg hover:bg-primary hover:text-white transition-all duration-300 text-center whitespace-nowrap shadow-lg hover:shadow-xl">
+                        Tư
+                        vấn miễn phí
+                    </a>
+                </div>
+            </div>
+            <div class="status-item">
+                <h1>Dinh dưỡng hoàn hảo cho <span class="text-primary-lighter">mọi lứa tuổi</span></h1>
+                <p>
+                    Sản phẩm của chúng tôi được kiểm định chất lượng nghiêm ngặt, đảm bảo an toàn và tốt cho sức khỏe
+                    gia đình bạn.
+                </p>
+                <div class="cta-buttons">
+                    <a id="btn-12" href="#products"
+                       class="bg-primary text-white px-8 py-4 rounded-button font-semibold text-lg hover:bg-accent transition-all duration-300 text-center whitespace-nowrap shadow-lg hover:shadow-xl">
+                        Tìm
+                        hiểu thêm
+                    </a>
+                    <a id="btn-2" href="#about"
+                       class="border-2 border-primary text-primary-lighter px-8 py-4 rounded-button font-semibold text-lg hover:bg-primary hover:text-white transition-all duration-300 text-center whitespace-nowrap shadow-lg hover:shadow-xl">
+                        Về
+                        chúng tôi
+                    </a>
+                </div>
+            </div>
+            <div class="status-item">
+                <h1>Cam kết chất lượng <span class="text-primary-lighter">từ trang trại</span></h1>
+                <p>
+                    Chúng tôi tự hào mang đến những giọt sữa tươi ngon nhất, trực tiếp từ những đàn bò khỏe mạnh được
+                    chăm sóc đặc biệt.
+                </p>
+                <div class="cta-buttons">
+                    <a id="btn-13" href="#contact"
+                       class="bg-primary text-white px-8 py-4 rounded-button font-semibold text-lg hover:bg-accent transition-all duration-300 text-center whitespace-nowrap shadow-lg hover:shadow-xl">
+                        Liên
+                        hệ ngay
+                    </a>
+                    <a id="btn-2" href="#products"
+                       class="border-2 border-primary text-primary-lighter px-8 py-4 rounded-button font-semibold text-lg hover:bg-primary hover:text-white transition-all duration-300 text-center whitespace-nowrap shadow-lg hover:shadow-xl">
+                        Xem
+                        sản phẩm
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Tai sao lai lựa chọn -->
+<section id="features" class="py-16 md:py-24 bg-light-blue">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-center text-dark-blue mb-12 fade-in-up">
+            Tại Sao Chọn MilkCo.?
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="feature-card fade-in-up delay-100">
+                <i class="ri-leaf-line"></i>
+                <h3>Nguồn Gốc Hữu Cơ</h3>
+                <p>
+                    Sữa được thu hoạch từ những trang trại đạt chuẩn hữu cơ, không hóa chất độc hại, đảm bảo an toàn
+                    tuyệt đối.
+                </p>
+            </div>
+            <div class="feature-card fade-in-up delay-200">
+                <i class="ri-heart-pulse-line"></i>
+                <h3>Giàu Dinh Dưỡng</h3>
+                <p>
+                    Mỗi ly sữa cung cấp protein, canxi và vitamin dồi dào, hỗ trợ phát triển thể chất và tăng cường
+                    miễn dịch.
+                </p>
+            </div>
+            <div class="feature-card fade-in-up delay-300">
+                <i class="ri-award-line"></i>
+                <h3>Chất Lượng Đỉnh Cao</h3>
+                <p>
+                    Quy trình kiểm soát chất lượng nghiêm ngặt từ trang trại đến tay người tiêu dùng, giữ trọn hương
+                    vị tự nhiên.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sp noi bat -->
+<section id="products" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <h2 class="fade-in-up delay-100 text-4xl font-bold text-gray-800 text-center mb-6 fade-up">
+            Sản phẩm nổi bật
+        </h2>
+        <p class="fade-in-up delay-100 text-lg text-gray-600 text-center mb-12 fade-up">
+            Khám phá những sản phẩm sữa
+            chất lượng cao, được
+            yêu thích nhất của chúng tôi.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="featuredProducts">
+            @if (Model != null && Model.Any())
+            {
+                var i = 0;
+                foreach (var pro in Model)
+                {
+                    if (i <= 3)
+                    {
+                        var mota = pro.MoTa?.Split("\\n")[0] ?? "";
+
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden product-card fade-up fade-in-up delay-100">
+                            <img src="https://cdn-merchant.vinid.net/images/gallery/vinshop-seo/1742615894_2.jpg"
+                                 alt="imgMilk" class="w-full h-48 object-cover product-img">
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold text-gray-800 mb-2">@pro.TenSua</h3>
+                                <p class="text-gray-600 mb-4">@mota</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-2xl font-bold text-primary">@pro.Gia VNĐ</span>
+                                    <button class="bg-primary text-white px-6 py-2 rounded-button hover:bg-accent transition-all duration-300">
+                                        Mua ngay
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        i += 1;
+                    }
+                }
+            }
+
+
+
+
+
+        </div>
+        <div class="fade-in-up delay-100 text-center mt-12 fade-up">
+            <a href="#all-products"
+               class="inline-block bg-primary text-white px-8 py-3 rounded-button hover:bg-accent transition-all duration-300 text-lg shadow-md hover:shadow-lg">
+                Xem
+                tất cả sản phẩm
+            </a>
+        </div>
+    </div>
+</section>
