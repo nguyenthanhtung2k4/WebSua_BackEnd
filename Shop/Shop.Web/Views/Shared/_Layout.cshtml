@@ -56,16 +56,16 @@
                     <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                 </div> -->
                 <div class="flex items-center space-x-2">
-                    <button class="px-4 py-2 text-sm text-gray-700 hover:text-primary transition-colors duration-300 whitespace-nowrap font-medium">
+                    <a href="~/Auth/" class="px-4 py-2 text-sm text-gray-700 hover:text-primary transition-colors duration-300 whitespace-nowrap font-medium">
                         Đăng
                         nhập
-                    </button>
-                    <button class="px-4 py-2 text-sm bg-primary text-white rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap font-medium">
+                    </a>
+                    <a href="~/Auth/" class="px-4 py-2 text-sm bg-primary text-white rounded-button hover:bg-accent transition-all duration-300 whitespace-nowrap font-medium">
                         Đăng
                         ký
-                    </button>
+                    </a>
                 </div>
-                <a href="#"
+                <a href="~/Home/Cart"
                    class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary transition-colors duration-300 relative">
                     <i class="ri-shopping-cart-line ri-lg"></i>
                     <span class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full font-bold">3</span>
@@ -236,7 +236,11 @@
                         '3xl': '32px',
                         'full': '9999px',
                         'button': '8px'
-                    }
+                    },
+                    fontFamily: {
+                    sans: ['Roboto', 'sans-serif'],
+                    pacifico: ['Pacifico', 'cursive'],
+                }
                 }
             }
         }
@@ -245,4 +249,5 @@
     <script src="~/js/Home.js"></script>
     <script src="~/js/Detail.js"></script>
     @RenderSection("Scripts", required: false)
+    @RenderSection("Style", required: false)
 </body>

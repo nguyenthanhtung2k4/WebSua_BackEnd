@@ -220,4 +220,7 @@
 
     // Khởi tạo: Mở 'Thông Tin Sản Phẩm' và kích hoạt nút điều hướng của nó khi tải trang
     openSection(sections[0]);
+
+
+
 })

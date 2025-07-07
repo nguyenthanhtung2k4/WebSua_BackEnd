@@ -1,2 +1,1 @@
-Fix  model  tra  ve  khong chi  la  ID cua  no  ma con   lay  dc cac sam pham khac cua no  nua 
-- fix  bug  ( Ket  hop  ViewModels  se duoc )
+Tao  trang  Cart .  Giai quyet  logic ve trang  thanh  toan  nua 

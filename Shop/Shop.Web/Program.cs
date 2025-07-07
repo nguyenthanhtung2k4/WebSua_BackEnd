@@ -11,6 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+//  Sessiom 
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(1);  // 1 tieng het  han 
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 
 
@@ -23,6 +30,7 @@ builder.Services.AddDbContext<ShopDbContext>(options =>
 );
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAdminUserService, AdminUserService>();
 builder.Services.AddScoped<IAdminUserService, AdminUserService>();
@@ -38,7 +46,8 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
 }
 app.UseRouting();
-
+/// session
+app.UseSession();
 app.UseAuthorization();
 
 app.MapStaticAssets();

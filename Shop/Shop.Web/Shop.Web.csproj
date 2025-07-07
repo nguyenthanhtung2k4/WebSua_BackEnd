@@ -31,7 +31,6 @@
     <Folder Include="Data\" />
     <Folder Include="Models\" />
     <Folder Include="Pages\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="wwwroot\images\imgCustomer\" />
     <Folder Include="wwwroot\images\imgProducts\" />
     <Folder Include="wwwroot\lib\bootstrap\" />

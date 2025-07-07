@@ -71,3 +71,54 @@
             // Gọi hàm showWelcomeMessage khi trang được tải lần đầu
             showWelcomeMessage(); 
         });
+
+// JavaScript thông báo đăng nhập
+document.addEventListener('DOMContentLoaded', function () {
+    const loginNotification = document.getElementById('login-notification');
+    const closeLoginNotificationButton = document.getElementById('close-login-notification');
+    const showLoginNotificationButton = document.getElementById('show-login-notification');
+    const body = document.body; // Reference to the body element
+
+    // Function to show the notification
+    function showNotification() {
+        loginNotification.classList.remove('hidden');
+        body.classList.add('no-scroll'); // Add class to body to prevent scrolling
+
+        // Focus on the first interactive element inside the modal for accessibility
+        // This is typically the close button or the primary action button
+        setTimeout(() => {
+            loginNotification.classList.add('show');
+            closeLoginNotificationButton.focus(); // Focus on the close button when opened
+        }, 10);
+    }
+
+    // Function to hide the notification
+    function hideNotification() {
+        loginNotification.classList.remove('show');
+        loginNotification.addEventListener('transitionend', function handler() {
+            loginNotification.classList.add('hidden');
+            body.classList.remove('no-scroll'); // Remove class from body to re-enable scrolling
+            loginNotification.removeEventListener('transitionend', handler);
+        }, { once: true });
+    }
+
+    // Close when clicking the "Đóng" button
+    closeLoginNotificationButton.addEventListener('click', hideNotification);
+
+    // Close when clicking outside the modal content
+    loginNotification.addEventListener('click', function (event) {
+        if (event.target === loginNotification) {
+            hideNotification();
+        }
+    });
+
+    // Close with Escape key for accessibility
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && !loginNotification.classList.contains('hidden')) {
+            hideNotification();
+        }
+    });
+
+    // Example trigger: When the "Add to cart" button is clicked
+    body.addEventListener('click', showNotification);
+});

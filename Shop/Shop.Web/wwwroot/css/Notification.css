@@ -81,7 +81,21 @@
         }
 
 
+/* Dành cho phần thông báo đăng nhập
+*/
 
+#login-notification > div {
+    transition: all 0.3s ease-out;
+}
+
+#login-notification.show > div {
+    transform: scale(1);
+    opacity: 1;
+}
+/* Prevent body scrolling when modal is open */
+.no-scroll {
+    overflow: hidden;
+}
 
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Shop.Application.DTOs;
 using Shop.Application.Interfaces;
 using Shop.Domain.Interfaces;
@@ -15,15 +16,20 @@ namespace Shop.Application.Services
         private readonly IRepository<SanPhamSua> _repository;
         private readonly IRepository<HinhAnhSanPham> _imageRepository;
         private readonly IRepository<LoaiSua> _loaiRepository;
+        // gio hang
+        private readonly ICartRepository    _gioHangRepo;
+
 
         public HomeService(
-            IRepository<SanPhamSua> repository,
-            IRepository<HinhAnhSanPham> imageRepository,
-            IRepository<LoaiSua> loaiRepository) 
+                IRepository<SanPhamSua> repository,
+                IRepository<HinhAnhSanPham> imageRepository,
+                IRepository<LoaiSua> loaiRepository,
+                ICartRepository gioHangRepo)
         {
             _repository = repository;
             _imageRepository = imageRepository;
             _loaiRepository = loaiRepository;
+            _gioHangRepo = gioHangRepo;
         }
 
         public async Task<IEnumerable<GetProductsAdminDTO>> GetAllProducts()
@@ -50,7 +56,7 @@ namespace Shop.Application.Services
                 {
                     MaSua = x.MaSua,
                     TenSua = x.TenSua,
-                    TenLoai=idLoai ,
+                    TenLoai = idLoai,
                     Gia = x.Gia,
                     SoLuong = x.SoLuong,
                     NgayTao = x.NgayTao,
@@ -69,7 +75,7 @@ namespace Shop.Application.Services
             if (product == null || product.Status?.ToLower() == "deleted")
                 return null;
 
-            var images = (await _imageRepository.FindAsync(x => x.MaSanPham == productId)).ToList(); 
+            var images = (await _imageRepository.FindAsync(x => x.MaSanPham == productId)).ToList();
             var loai = await _loaiRepository.FirstOrDefaultAsync(x => x.MaLoai == product.MaLoai);
 
             return new GetProductsAdminDTO
@@ -86,7 +92,47 @@ namespace Shop.Application.Services
             };
         }
 
+        //  San pham de  xuat
+        public async Task<List<GetProductsAdminDTO>> ProductSuggester(int id)
+        {
+            var product = await _repository.FirstOrDefaultAsync(x => x.MaSua == id);
+            if (product == null || product.Status?.ToLower() == "deleted") return new();
 
+            var allImages = await _imageRepository.GetAllAsync();
+            var goiY = (await _repository.FindAsync(x => x.MaLoai == product.MaLoai && x.MaSua != id && x.Status != "deleted"))
+                        .Take(4)
+                        .Select(x => new GetProductsAdminDTO
+                        {
+                            MaSua = x.MaSua,
+                            TenSua = x.TenSua,  
+                            Gia = x.Gia,
+                            SoLuong = x.SoLuong,
+                            MoTa = x.MoTa,
+                            Status = x.Status,
+                            NgayTao = x.NgayTao,
+                            HinhAnhs = allImages.Where(i => i.MaSanPham == x.MaSua).Select(i => i.DuongDan).ToList()
+                        }).ToList();
+            return goiY;
+        }
+
+
+        public async Task AddproductToCart(string email, AddToCartDTO dto)
+        {
+            var maKh = await _gioHangRepo.LayMaKhachHangTheoEmailAsync(email);
+            if (maKh == null)
+                throw new Exception("Không tìm thấy khách hàng.");
+
+            var gioHang = new GioHang
+            {
+                MaKh = maKh,
+                MaSua = dto.MaSua,
+                SoLuong = dto.SoLuong,
+                NgayTao = DateTime.Now
+            };
+
+            await _gioHangRepo.AddAsync(gioHang);
+            await _gioHangRepo.SaveChangesAsync();
+        }
 
     }
 }

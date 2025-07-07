@@ -11,7 +11,10 @@ namespace Shop.Application.Interfaces
     {
         Task<IEnumerable<GetProductsAdminDTO>> GetAllProducts(); // Assuming UserDTO exists
         Task<GetProductsAdminDTO?> GetIdProduct(int userId);
-
+        //  SP de xuat
+        Task<List<GetProductsAdminDTO>> ProductSuggester(int id);
+        //  Add Cart 
+        Task AddproductToCart(string email, AddToCartDTO dto);
 
 
 

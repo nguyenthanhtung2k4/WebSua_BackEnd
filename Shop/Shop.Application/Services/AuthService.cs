@@ -10,15 +10,17 @@ namespace Shop.Application.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly IRepository<NguoiDung> _repository; 
+        private readonly IRepository<NguoiDung> _repository;
+        private readonly IRepository<KhachHang> _CustomerRepository;
         public readonly PasswordHasher<string> _hashPass = new();
 
-        public AuthService(IRepository<NguoiDung> repository)
+        public AuthService(IRepository<NguoiDung> repository, IRepository<KhachHang> customerRepository)
         {
             _repository = repository;
+            _CustomerRepository = customerRepository;
         }
 
-        
+
         public async Task<bool> Register(RegisterDTOs dtos)
         {
            
@@ -44,8 +46,35 @@ namespace Shop.Application.Services
                 status = dtos.status,
                 //avata = dtos.avata,
             };
+
+        //     public int MaNd { get; set; }
+
+        //public string? HoTen { get; set; }
+
+        //public string? SoDienThoai { get; set; }
+
+        //public string? DiaChi { get; set; }
+        //public string? GioiTinh { get; set; }
+        //public string? Image { get; set; }
+
             await _repository.AddAsync(newUser);
             int savedChanges  = await _repository.SaveChangesAsync();
+
+            var customer = await _repository.FirstOrDefaultAsync(x => x.Email == dtos.Email);
+            if (customer != null)
+            {
+                var newCustomer = new KhachHang
+                {
+                    MaNd = customer.MaNd,
+                    HoTen = customer.TenDangNhap
+                };
+
+
+                 await _CustomerRepository.AddAsync(newCustomer);
+                await _CustomerRepository.SaveChangesAsync();
+                
+            }
+
             return savedChanges > 0; 
         }
 

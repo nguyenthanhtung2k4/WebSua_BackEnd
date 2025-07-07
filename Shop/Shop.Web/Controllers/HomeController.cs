@@ -2,22 +2,25 @@
 using Shop.Application.DTOs;
 using Shop.Application.Interfaces;
 using Shop.Application.Services;
+using Shop.Web.ViewModels;
 
 namespace Shop.Web.Controllers
 {
     public class HomeController : Controller
     {
   
-            private readonly IHomeService _home;
-            private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IHomeService _home;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
 
-            public HomeController(IHomeService home, IWebHostEnvironment webHostEnvironment)
-            {
+        public HomeController(
+                IHomeService home, 
+                IWebHostEnvironment webHostEnvironment)
+        {
                 _home = home;
                 _webHostEnvironment = webHostEnvironment;
-            }
-            public async Task<IActionResult> Index()
+        }
+        public async Task<IActionResult> Index()
             {
                 var customers = await _home.GetAllProducts();
 
@@ -32,28 +35,64 @@ namespace Shop.Web.Controllers
             }
 
 
-        public async Task<IActionResult> Detail(int? id)
+        public async Task<IActionResult> Cart()
         {
-            if (id == null)
+           
+
+            return View();
+        }
+
+
+        public async Task<IActionResult> Detail(int id)
+        {
+            var product = await _home.GetIdProduct(id);
+            if (product == null) return NotFound();
+
+            var suggested = await _home.ProductSuggester(id);
+            var viewModel = new ProductDetailViewModel
             {
-                TempData["ErrorMessage"] = "Không tìm thấy ID người dùng.";
-                return RedirectToAction("Index"); // Chuyển hướng về trang danh sách
+                Product = product,
+                ProductSugGester = suggested
+            };
+            return View(viewModel);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddBag(AddToCartDTO dto)
+        {
+            var email = HttpContext.Session.GetString("Email");
+            if (string.IsNullOrEmpty(email))
+            {
+                TempData["Error"] = "Vui lòng đăng nhập để thêm vào giỏ hàng.";
+                return RedirectToAction("Detail", "Home", new { id = dto.MaSua });
             }
 
-            var userDto = await _home.GetIdProduct(id.Value);
-            if (userDto == null)
+            try
             {
-                TempData["ErrorMessage"] = "Người dùng không tồn tại.";
-                return RedirectToAction("Index"); // Chuyển hướng về trang danh sách
+                await _home.AddproductToCart(email, dto);
+                TempData["Success"] = "Thêm vào giỏ hàng thành công!";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Lỗi: " + ex.Message;
             }
 
-
-            return View(userDto);
+            return RedirectToAction("Detail", "Home", new { id = dto.MaSua });
         }
 
 
 
 
+
+
+        // LogOut 
+        public IActionResult LogOut()
+        {
+
+            return View("Index", "Auth");
+        }
 
     }
 }

@@ -1,8 +1,64 @@
 ﻿@model List<Shop.Application.DTOs.GetProductsAdminDTO>
+
+
+
 @{
     ViewData["Title"] = "Trang Chủ";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    var checkSession =  Context.Session.GetString("Email");
+    if( checkSession != null)
+    {
+        Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        
+    }
+
 }
+
+@section Style {
+    <style>
+        /* Styles for login notification animation */
+        #login-notification > div {
+            transition: all 0.3s ease-out;
+        }
+
+        #login-notification.show > div {
+            transform: scale(1);
+            opacity: 1;
+        }
+        /* Prevent body scrolling when modal is open */
+        .no-scroll {
+            overflow: hidden;
+        }
+    </style>
+}
+
+  <!--Thong bao chua dang nhap -->
+
+        <div id="login-notification" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="login-notification-title" aria-describedby="login-notification-description">
+            <div class="bg-white p-8 rounded-lg shadow-2xl max-w-sm w-full text-center transform scale-95 opacity-0 transition-all duration-300 ease-out">
+                <div class="mb-4">
+                    <svg class="mx-auto text-red-500 w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 id="login-notification-title" class="text-2xl font-bold text-dark-blue mb-2">Bạn chưa đăng nhập!</h3>
+                <p id="login-notification-description" class="text-gray-600 mb-6">Vui lòng đăng nhập vào với tư cách là khách hàng.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a  href="~/Auth/" class="bg-primary text-white px-6 py-3 rounded-button font-semibold hover:bg-accent transition-colors duration-300">
+                        Đăng nhập
+                    </a>
+                    <button id="close-login-notification" class="border-2 border-primary text-primary px-6 py-3 rounded-button font-semibold hover:bg-primary hover:text-white transition-colors duration-300">
+                        Đóng
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
 <!--  Status -->
 <section id="home" class="hero-section pt-24">
     <video autoplay loop muted playsinline class="video-background">
@@ -128,23 +184,26 @@
                     {
                         var mota = pro.MoTa?.Split("\\n")[0] ?? "";
                         var url = pro.HinhAnhs?.FirstOrDefault() ?? "";
+                        
                         <div class="bg-white rounded-lg shadow-lg overflow-hidden product-card fade-up fade-in-up delay-100">
-                        <a href="~/Home/Detail/@pro.MaSua" >
                            
-                            <img src="@Url.Content(url)"
-                            alt="imgMilk" class="w-full h-48 object-cover product-img">
-                            <div class="p-6">
-                                <h3 class="text-xl font-semibold text-gray-800 mb-2">@pro.TenSua</h3>
-                                <p class="text-gray-600 mb-4">@mota</p>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-2xl font-bold text-primary">@($"{pro.Gia:N0} VNĐ")</span>
+                                <a href="~/Home/Detail/@pro.MaSua">
+                                    <img src="@Url.Content(url)"
+                                         alt="imgMilk" class="w-full h-48 object-cover product-img">
+                                    <div class="p-6">
+                                        <h3 class="text-xl font-semibold text-gray-800 mb-2">@pro.TenSua</h3>
+                                        <p class="text-gray-600 mb-4">@mota</p>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-2xl font-bold text-primary">@($"{pro.Gia:N0} VNĐ")</span>
 
-                                    <a href="~/Home/Cart/@pro.MaSua" class="bg-primary text-white px-6 py-2 rounded-button hover:bg-accent transition-all duration-300">
-                                        Mua ngay
-                                    </a>
-                                </div>
-                            </div>
-                        </a>
+                                            <a href="~/Home/Cart/@pro.MaSua" class="bg-primary text-white px-6 py-2 rounded-button hover:bg-accent transition-all duration-300">
+                                                Mua ngay
+                                            </a>
+                                        </div>
+                                    </div>
+                                </a>
+                            
+                            
                         </div>
                         i += 1;
 
@@ -422,3 +481,65 @@
         </div>
     </div>
 </section>
+
+@section Scripts{ 
+    <script>
+
+        // Thong bao chua dang nhap
+                document.addEventListener('DOMContentLoaded', function() {
+                        const loginNotification = document.getElementById('login-notification');
+                        const closeLoginNotificationButton = document.getElementById('close-login-notification');
+                        const body = document.body;
+
+                        function showNotification() {
+                            loginNotification.classList.remove('hidden');
+                            body.classList.add('no-scroll');
+
+
+                            setTimeout(() => {
+                                loginNotification.classList.add('show');
+                                closeLoginNotificationButton.focus();
+                            }, 10);
+                        }
+
+
+                        function hideNotification() {
+                            loginNotification.classList.remove('show');
+                            loginNotification.addEventListener('transitionend', function handler() {
+                                loginNotification.classList.add('hidden');
+                                body.classList.remove('no-scroll');
+                                loginNotification.removeEventListener('transitionend', handler);
+                            }, { once: true });
+                        }
+
+
+                        closeLoginNotificationButton.addEventListener('click', hideNotification);
+
+
+                        loginNotification.addEventListener('click', function(event) {
+                            if (event.target === loginNotification) {
+                                hideNotification();
+                            }
+                        });
+
+
+                        document.addEventListener('keydown', function(event) {
+                            if (event.key === 'Escape' && !loginNotification.classList.contains('hidden')) {
+                                hideNotification();
+                            }
+                        });
+
+                        ///////////////////////////////// Check  SEsssuon
+                        const checkSession = '@Context.Session.GetString("Email")';
+                        if (!checkSession) {
+
+                           body.addEventListener('click' ,  showNotification)
+                           showNotification();
+
+                        }
+
+                    });
+    </script>
+}
+
+
