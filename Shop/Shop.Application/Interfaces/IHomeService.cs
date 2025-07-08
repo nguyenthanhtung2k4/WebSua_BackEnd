@@ -15,6 +15,8 @@ namespace Shop.Application.Interfaces
         Task<List<GetProductsAdminDTO>> ProductSuggester(int id);
         //  Add Cart 
         Task AddproductToCart(string email, AddToCartDTO dto);
+        //Feed back
+        Task FeedBack(int? maNd, FeedbackDTO model);
 
 
 

@@ -16,6 +16,7 @@ namespace Shop.Application.Services
         private readonly IRepository<SanPhamSua> _repository;
         private readonly IRepository<HinhAnhSanPham> _imageRepository;
         private readonly IRepository<LoaiSua> _loaiRepository;
+        private readonly IRepository<DanhGium> _FeedBackRepository;
         // gio hang
         private readonly ICartRepository    _gioHangRepo;
 
@@ -122,17 +123,50 @@ namespace Shop.Application.Services
             if (maKh == null)
                 throw new Exception("Không tìm thấy khách hàng.");
 
-            var gioHang = new GioHang
-            {
-                MaKh = maKh,
-                MaSua = dto.MaSua,
-                SoLuong = dto.SoLuong,
-                NgayTao = DateTime.Now
-            };
+            // Kiểm tra sản phẩm đã có trong giỏ hàng chưa
+            var existingItem = await _gioHangRepo.FirstOrDefaultAsync(x => x.MaKh == maKh && x.MaSua == dto.MaSua);
 
-            await _gioHangRepo.AddAsync(gioHang);
+            if (existingItem != null)
+            {
+                // Nếu đã tồn tại, cập nhật số lượng
+                existingItem.SoLuong += dto.SoLuong;
+                existingItem.NgayTao = DateTime.Now;
+                _gioHangRepo.Update(existingItem);
+            }
+            else
+            {
+                // Nếu chưa có, thêm mới
+                var gioHang = new GioHang
+                {
+                    MaKh = maKh,
+                    MaSua = dto.MaSua,
+                    SoLuong = dto.SoLuong,
+                    NgayTao = DateTime.Now
+                };
+                await _gioHangRepo.AddAsync(gioHang);
+            }
+
             await _gioHangRepo.SaveChangesAsync();
         }
+
+        ////  Feeed back
+        public async  Task FeedBack(int? maNd, FeedbackDTO model)
+        {
+          
+            
+            var review = new DanhGium
+            {
+                MaNd = maNd,
+                MaSua = model.MaSua,
+                NoiDung = model.NoiDung,
+                Star = model.Star,
+                NgayDanhGia = DateTime.Now
+            };
+
+            await _FeedBackRepository.AddAsync(review);
+            await _FeedBackRepository.SaveChangesAsync();
+        }
+
 
     }
 }

@@ -28,9 +28,7 @@ namespace Shop.Web.Controllers
 
             if (result)
             {
-                // Luu session 
-                HttpContext.Session.SetString("Email", email);
-                HttpContext.Session.SetString("Pass", password);
+               
 
                 TempData["Success"] = "Đăng nhập thành công!";
                 return RedirectToAction("Index", "Home");

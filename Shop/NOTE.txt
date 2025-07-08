@@ -1,1 +1,6 @@
-Tao  trang  Cart .  Giai quyet  logic ve trang  thanh  toan  nua 
+fix binhf luan danh  gia. 
+-  sau  do    hien cac binh  luan ra  ngoai man  hinh
+
+
+
+Sau do  lam tiep  phan : Gio hang 

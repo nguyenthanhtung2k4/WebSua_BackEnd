@@ -57,7 +57,7 @@ namespace Shop.Web.Controllers
             return View(viewModel);
         }
 
-
+        /// Them  vao  gio  hang
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddBag(AddToCartDTO dto)
@@ -82,6 +82,23 @@ namespace Shop.Web.Controllers
             return RedirectToAction("Detail", "Home", new { id = dto.MaSua });
         }
 
+        // Feeb Back   danh  gia  san pham
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SubmitReview(FeedbackDTO model)
+        {
+            var maNd = HttpContext.Session.GetInt32("MaND");
+            if (maNd == null)
+            {
+                TempData["Error"] = "Bạn cần đăng nhập để đánh giá.";
+                return RedirectToAction("Detail", new { id = model.MaSua });
+            }
+
+            await _home.FeedBack(maNd, model);
+            TempData["Success"] = "Cảm ơn bạn đã đánh giá!";
+            return RedirectToAction("Detail", new { id = model.MaSua });
+        }
 
 
 

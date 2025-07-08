@@ -18,7 +18,8 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-
+/////   Dang ky  lay  seesion  trong  Service
+builder.Services.AddHttpContextAccessor();
 
 
 builder.Services.AddDbContext<ShopDbContext>(options =>
