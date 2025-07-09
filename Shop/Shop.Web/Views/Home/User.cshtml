@@ -1,0 +1,253 @@
+﻿@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+    var checkSession = Context.Session.GetString("Email");
+    Layout = checkSession != null ? "~/Views/Shared/_LayoutCart.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<main class="container mx-auto px-4 py-28 md:py-32">
+    <h1 class="text-4xl font-bold text-dark-blue mb-8 text-center">Hồ Sơ Của Tôi</h1>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div class="lg:col-span-1 bg-white rounded-lg shadow-xl p-6">
+            <div class="flex flex-col items-center mb-6">
+                <img src="https://via.placeholder.com/100/4EADD3/FFFFFF?text=User" alt="Ảnh đại diện"
+                     class="w-24 h-24 rounded-full mx-auto object-cover border-3 border-primary mb-3 shadow-sm">
+                <h2 class="text-xl font-semibold text-dark-blue">Nguyễn Thị Y</h2>
+                <p class="text-gray-600 text-sm">nguyenthiy@example.com</p>
+            </div>
+
+            <nav class="space-y-2">
+                <a href="#" id="nav-account"
+                   class="sidebar-nav-item active" data-target="account-content">
+                    <i class="ri-user-line ri-icon"></i> Thông Tin Tài Khoản
+                </a>
+                <a href="#" id="nav-orders"
+                   class="sidebar-nav-item" data-target="orders-content">
+                    <i class="ri-shopping-bag-line ri-icon"></i> Đơn Hàng Của Tôi
+                </a>
+                <a href="#" id="nav-addresses"
+                   class="sidebar-nav-item" data-target="addresses-content">
+                    <i class="ri-map-pin-line ri-icon"></i> Địa Chỉ Giao Hàng
+                </a>
+                <a href="#" id="nav-settings"
+                   class="sidebar-nav-item" data-target="settings-content">
+                    <i class="ri-settings-line ri-icon"></i> Cài Đặt Khác
+                </a>
+                <a href="#" class="sidebar-nav-item text-red-500 hover:bg-red-50 hover:text-red-700">
+                    <i class="ri-logout-box-line ri-icon !text-red-500"></i> Đăng Xuất
+                </a>
+            </nav>
+        </div>
+
+        <div class="lg:col-span-3">
+            <div id="account-content" class="user-content-section active">
+                <h2 class="text-3xl font-bold text-dark-blue mb-6">Thông Tin Tài Khoản</h2>
+                <form id="account-form" class="max-w-3xl space-y-6">
+                    <div>
+                        <label for="full-name" class="block text-gray-700 font-medium mb-2">Họ và Tên:</label>
+                        <input type="text" id="full-name" name="full-name" value="Nguyễn Thị Y"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
+                               required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-700 font-medium mb-2">Email:</label>
+                        <input type="email" id="email" name="email" value="nguyenthiy@example.com"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100 cursor-not-allowed"
+                               readonly>
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-gray-700 font-medium mb-2">Số điện thoại:</label>
+                        <input type="tel" id="phone" name="phone" value="0912345678"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
+                    </div>
+                    <div class="border-t pt-6 mt-6">
+                        <h3 class="text-xl font-semibold text-dark-blue mb-4">Thay Đổi Mật Khẩu</h3>
+                        <div>
+                            <label for="current-password" class="block text-gray-700 font-medium mb-2">
+                                Mật khẩu
+                                hiện tại:
+                            </label>
+                            <input type="password" id="current-password" name="current-password"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
+                        </div>
+                        <div class="mt-4">
+                            <label for="new-password" class="block text-gray-700 font-medium mb-2">
+                                Mật khẩu
+                                mới:
+                            </label>
+                            <input type="password" id="new-password" name="new-password"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
+                        </div>
+                        <div class="mt-4">
+                            <label for="confirm-new-password" class="block text-gray-700 font-medium mb-2">
+                                Xác nhận
+                                mật khẩu mới:
+                            </label>
+                            <input type="password" id="confirm-new-password" name="confirm-new-password"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
+                        </div>
+                    </div>
+                    <button type="submit"
+                            class="bg-primary text-white px-8 py-3 rounded-button font-semibold text-lg hover:bg-accent transition-all duration-300 shadow-lg w-full">
+                        Lưu Thay Đổi
+                    </button>
+                </form>
+            </div>
+
+            <div id="orders-content" class="user-content-section">
+                <h2 class="text-3xl font-bold text-dark-blue mb-6">Đơn Hàng Của Tôi</h2>
+                <div class="order-table-container">
+                    <table class="order-table">
+                        <thead>
+                            <tr>
+                                <th>Mã Đơn Hàng</th>
+                                <th>Ngày</th>
+                                <th>Tổng Tiền</th>
+                                <th>Trạng Thái</th>
+                                <th>Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#OR10001</td>
+                                <td>05/07/2025</td>
+                                <td>165.000 VNĐ</td>
+                                <td><span class="status-badge status-completed">Đã giao hàng</span></td>
+                                <td>
+                                    <button class="px-3 py-1 bg-light-blue text-primary rounded-md text-sm hover:bg-primary hover:text-white transition-colors">
+                                        Xem
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#OR10002</td>
+                                <td>01/07/2025</td>
+                                <td>55.000 VNĐ</td>
+                                <td><span class="status-badge status-shipping">Đang vận chuyển</span></td>
+                                <td>
+                                    <button class="px-3 py-1 bg-light-blue text-primary rounded-md text-sm hover:bg-primary hover:text-white transition-colors">
+                                        Xem
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#OR10003</td>
+                                <td>28/06/2025</td>
+                                <td>110.000 VNĐ</td>
+                                <td><span class="status-badge status-completed">Đã giao hàng</span></td>
+                                <td>
+                                    <button class="px-3 py-1 bg-light-blue text-primary rounded-md text-sm hover:bg-primary hover:text-white transition-colors">
+                                        Xem
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#OR10004</td>
+                                <td>20/06/2025</td>
+                                <td>220.000 VNĐ</td>
+                                <td><span class="status-badge status-cancelled">Đã hủy</span></td>
+                                <td>
+                                    <button class="px-3 py-1 bg-light-blue text-primary rounded-md text-sm hover:bg-primary hover:text-white transition-colors">
+                                        Xem
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#OR10005</td>
+                                <td>15/06/2025</td>
+                                <td>75.000 VNĐ</td>
+                                <td><span class="status-badge status-pending">Đang xử lý</span></td>
+                                <td>
+                                    <button class="px-3 py-1 bg-light-blue text-primary rounded-md text-sm hover:bg-primary hover:text-white transition-colors">
+                                        Xem
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="addresses-content" class="user-content-section">
+                <h2 class="text-3xl font-bold text-dark-blue mb-6">Địa Chỉ Giao Hàng</h2>
+                <div class="space-y-6">
+                    <div class="border border-gray-200 rounded-lg p-6 shadow-sm bg-gray-50">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="font-semibold text-xl text-dark-blue">Địa chỉ mặc định</h4>
+                            <span class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">Mặc định</span>
+                        </div>
+                        <p class="text-gray-700 mb-2"><span class="font-medium">Người nhận:</span> Nguyễn Thị Y</p>
+                        <p class="text-gray-700 mb-2"><span class="font-medium">Số điện thoại:</span> 0912345678</p>
+                        <p class="text-gray-700">123 Đường ABC, Phường X, Quận Y, Thành phố Hồ Chí Minh</p>
+                        <div class="flex justify-end space-x-3 mt-4">
+                            <button class="px-4 py-2 bg-light-blue text-primary rounded-button hover:bg-primary hover:text-white transition-colors duration-300">
+                                Chỉnh sửa
+                            </button>
+                            <button class="px-4 py-2 bg-red-100 text-red-600 rounded-button hover:bg-red-600 hover:text-white transition-colors duration-300">
+                                Xóa
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-6 shadow-sm">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="font-semibold text-xl text-dark-blue">Địa chỉ nhà riêng</h4>
+                        </div>
+                        <p class="text-gray-700 mb-2"><span class="font-medium">Người nhận:</span> Trần Văn Z</p>
+                        <p class="text-gray-700 mb-2"><span class="font-medium">Số điện thoại:</span> 0987654321</p>
+                        <p class="text-gray-700">456 Đường DEF, Xã G, Huyện I, Tỉnh Đồng Nai</p>
+                        <div class="flex justify-end space-x-3 mt-4">
+                            <button class="px-4 py-2 bg-light-blue text-primary rounded-button hover:bg-primary hover:text-white transition-colors duration-300">
+                                Chỉnh sửa
+                            </button>
+                            <button class="px-4 py-2 bg-red-100 text-red-600 rounded-button hover:bg-red-600 hover:text-white transition-colors duration-300">
+                                Xóa
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="w-full mt-6 px-8 py-3 bg-primary text-white rounded-button font-semibold text-lg hover:bg-accent transition-all duration-300 shadow-lg">
+                        <i class="ri-add-line mr-2"></i> Thêm Địa Chỉ Mới
+                    </button>
+                </div>
+            </div>
+
+            <div id="settings-content" class="user-content-section">
+                <h2 class="text-3xl font-bold text-dark-blue mb-6">Cài Đặt Khác</h2>
+                <div class="space-y-6">
+                    <div class="p-6 border border-gray-200 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-semibold text-dark-blue mb-4">Tùy Chọn Thông Báo</h3>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-gray-700">Nhận email khuyến mãi</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                                </div>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">Nhận thông báo đơn hàng qua SMS</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="" class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="p-6 border border-gray-200 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-semibold text-dark-blue mb-4">Quản Lý Bảo Mật</h3>
+                        <p class="text-gray-700 mb-4">
+                            Kích hoạt xác minh 2 bước để tăng cường bảo mật cho tài khoản
+                            của bạn.
+                        </p>
+                        <button class="px-6 py-2 bg-primary text-white rounded-button hover:bg-accent transition-colors duration-300 shadow-lg">
+                            <i class="ri-lock-line mr-2"></i> Kích hoạt 2FA
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

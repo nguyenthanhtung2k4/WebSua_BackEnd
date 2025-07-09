@@ -1,0 +1,101 @@
+﻿@model List<Shop.Application.DTOs.GetAllFeedbackAdminDTO> // Khai báo kiểu Model mà View này sẽ nhận
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Quản lý Đánh giá Sản phẩm"; // Đổi tiêu đề cho rõ ràng và cụ thể hơn
+}
+
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Quản lý Đánh giá Sản phẩm</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/Admin">Trang chủ</a></li>
+                <li class="breadcrumb-item active">Đánh giá sản phẩm</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section dashboard">
+        <div class="row">
+            <div class="col-12">
+                <div class="card recent-sales overflow-auto">
+                    <div class="card-body">
+                        <h5 class="card-title">Đánh giá Sản phẩm <span>| Quản trị</span></h5>
+
+                        @* Hiển thị thông báo (nếu có) *@
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="alert alert-success" role="alert">
+                                @TempData["SuccessMessage"]
+                            </div>
+                        }
+                        @if (TempData["ErrorMessage"] != null)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                @TempData["ErrorMessage"]
+                            </div>
+                        }
+
+                        <div class="container mx-auto p-4">
+                            @if (Model != null && Model.Any())
+                            {
+                                @foreach (var feedback in Model)
+                                {
+                                    <div class="card review-item">
+                                        <h2>
+                                            @feedback.TenNguoiDung @* Tên người dùng *@
+                                            @if (!string.IsNullOrEmpty(feedback.HinhAnhNguoiDung))
+                                            {
+                                                <img src="@feedback.HinhAnhNguoiDung" alt="Ảnh người dùng" class="rounded-circle" style="width: 30px; height: 30px; object-fit: cover; margin-left: 10px;">
+                                            }
+                                        </h2>
+                                        <p><strong>Sản phẩm:</strong> @feedback.TenSanPham</p>
+                                        @if (!string.IsNullOrEmpty(feedback.HinhAnhSanPham))
+                                        {
+                                            <p><img src="@feedback.HinhAnhSanPham" alt="Ảnh sản phẩm" style="max-width: 80px; height: auto; border-radius: 4px;"></p>
+                                        }
+                                        <p>
+                                            <strong>Đánh giá:</strong>
+                                            <span class="rating">
+                                                @for (int i = 0; i < feedback.Star; i++)
+                                                {
+                                                    <span>★</span>
+                                                }
+                                                @for (int i = 0; i < (5 - feedback.Star); i++)
+                                                {
+                                                    <span>☆</span>
+                                                }
+                                            </span>
+                                        </p>
+                                        <p><strong>Bình luận:</strong> @feedback.NoiDung</p>
+                                        <p><small class="text-muted">Ngày đánh giá: @(feedback.NgayDanhGia?.ToString("dd/MM/yyyy HH:mm"))</small></p>
+
+                                        <div class="review-actions">
+                                            @* Nút Duyệt và Từ chối (chưa có logic backend) *@
+                                            <button class="btn btn-approve">Duyệt</button>
+                                            <button class="btn btn-reject">Từ chối</button>
+
+                                            @* Form để gửi yêu cầu xóa *@
+                                            <form asp-area="Admin" asp-controller="Feedback" asp-action="Delete" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa đánh giá này?');">
+                                                <input type="hidden" name="id" value="@feedback.MaDg" />
+                                                @Html.AntiForgeryToken() @* Thêm Anti-Forgery Token cho bảo mật *@
+                                                <button type="submit" class="btn btn-delete">Xóa</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <p class="text-center text-muted">Chưa có đánh giá nào để hiển thị.</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

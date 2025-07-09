@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -15,6 +16,8 @@
     <!-- File  css  nhung vao -->
     <link rel="stylesheet" href="~/css/Home.css">
     <link href="~/css/Detail.css" rel="stylesheet" />
+    <link href="~/css/User.css" rel="stylesheet" />
+
 </head>
 <body>
     <!-- Header -->
@@ -22,27 +25,27 @@
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <a href="#home" class="text-3xl font-['Pacifico'] text-primary">MilkCo.</a>
             <nav id="menu" class="hidden md:flex space-x-8">
-                <a href="#home"
+                <a href="~/#home"
                    class="nav-item text-gray-800 hover:text-primary transition-colors duration-300 font-medium">
                     Trang
                     chủ
                 </a>
-                <a href="#features"
+                <a href="~/#features"
                    class="nav-item text-gray-800 hover:text-primary transition-colors duration-300 font-medium">
                     Ưu
                     điểm
                 </a>
-                <a href="#products"
+                <a href="~/#products"
                    class="nav-item text-gray-800 hover:text-primary transition-colors duration-300 font-medium">
                     Sản
                     phẩm
                 </a>
-                <a href="#about"
+                <a href="~/#about"
                    class="nav-item text-gray-800 hover:text-primary transition-colors duration-300 font-medium">
                     Về
                     chúng tôi
                 </a>
-                <a href="#contact"
+                <a href="~/#contact"
                    class="nav-item text-gray-800 hover:text-primary transition-colors duration-300 font-medium">
                     Liên
                     hệ
@@ -69,14 +72,25 @@
                 <a href="~/Home/Cart"
                    class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary transition-colors duration-300 relative">
                     <i class="ri-shopping-cart-line ri-lg"></i>
-                    <span class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full font-bold">3</span>
+
+
+                    <!--  Fix tthem  bao  so  luong o  gio  hang  |  Can them  thoi gian 
+                           
+                            Lam  cai khac truoc 
+
+                    -->
+                    @* <span class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full font-bold">@odel</span> *@
                 </a>
                 <a href="~/Home/User" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary transition-colors duration-300 relative" title="Cá nhân" aria-label="Trang cá nhân">
                     <i class="ri-user-line ri-lg"></i>
                 </a>
-                <a href="~/Home/LogOut" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary transition-colors duration-300 relative" title="Đăng xuất" aria-label="Đăng xuất">
-                    <i class="ri-logout-box-r-line ri-lg"></i>
-                </a>
+                <form asp-controller="Auth" asp-action="SignOut" method="post" asp-area="" class="p-0 m-0">
+                    @Html.AntiForgeryToken() <button type="submit" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary transition-colors duration-300 relative"
+                                                     title="Đăng xuất" aria-label="Đăng xuất"
+                                                     style="background: none; border: none; cursor: pointer;">
+                        <i class="ri-logout-box-r-line ri-lg"></i>
+                    </button>
+                </form>
                 <button class="md:hidden w-10 h-10 flex items-center justify-center">
                     <i class="ri-menu-line ri-lg"></i>
                 </button>
@@ -84,6 +98,8 @@
         </div>
     </header>
    
+
+
         @RenderBody()
     <!--  Footer-->
     <footer class="bg-gray-800 text-white pt-16 pb-8">
@@ -252,10 +268,13 @@
                 }
             }
         }
+
+
     </script>
     <!-- File nhung vao   -->
     <script src="~/js/Home.js"></script>
     <script src="~/js/Detail.js"></script>
+    <script src="~/js/User.js"></script>
     @RenderSection("Scripts", required: false)
     @RenderSection("Style", required: false)
 

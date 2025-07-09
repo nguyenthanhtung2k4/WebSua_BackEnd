@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Application.DTOs;
 using Shop.Application.Interfaces;
+using Shop.Application.Services;
 
 namespace Shop.Web.Controllers
 {
@@ -17,28 +19,44 @@ namespace Shop.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(); 
+            return View(new RegisterDTOs()); 
         }
 
         /// LOGIN
         [HttpPost]
         public async Task<IActionResult> Login(string email, string password)
         {
-            var result = await _nguoiDungService.Login(email, password);
 
-            if (result)
+
+            var loginResult = await _nguoiDungService.Login(email, password);
+
+            if (loginResult.Success)
             {
-               
-
-                TempData["Success"] = "Đăng nhập thành công!";
-                return RedirectToAction("Index", "Home");
+                if (loginResult.Role == "Admin")
+                {
+                    return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             else
             {
-                ViewBag.Error = "Sai tài khoản hoặc mật khẩu!";
-                return View("Index");
+                ModelState.AddModelError("", "Email hoặc mật khẩu không đúng.");
+                ViewBag.EmailValue = email;
+                TempData["LoginError"] = "Email hoặc mật khẩu không đúng.";
+                return View("Index" , new RegisterDTOs() );
             }
         }
+
+
+
+
+
+
+
+
 
 
         /// Register
@@ -67,6 +85,18 @@ namespace Shop.Web.Controllers
                 ViewBag.Error = "Tên đăng nhập đã tồn tại!";
                 return View("Index");
             }
+        }
+
+        [HttpPost] 
+        [ValidateAntiForgeryToken] 
+        public IActionResult SignOut()
+        {
+           
+           
+            HttpContext.Session.Clear();
+
+           
+            return RedirectToAction("Index", "Auth");
         }
     }
 }

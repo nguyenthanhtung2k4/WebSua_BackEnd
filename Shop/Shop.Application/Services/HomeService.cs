@@ -17,20 +17,32 @@ namespace Shop.Application.Services
         private readonly IRepository<HinhAnhSanPham> _imageRepository;
         private readonly IRepository<LoaiSua> _loaiRepository;
         private readonly IRepository<DanhGium> _FeedBackRepository;
+        private readonly IRepository<NguoiDung> _NguoidungRepository;
+        private readonly IRepository<GioHang> _giohangRepository;
+        private readonly IRepository<KhachHang> _khachHangRepository;
         // gio hang
-        private readonly ICartRepository    _gioHangRepo;
+        private readonly ICartRepository _gioHangRepo;
 
 
         public HomeService(
                 IRepository<SanPhamSua> repository,
                 IRepository<HinhAnhSanPham> imageRepository,
                 IRepository<LoaiSua> loaiRepository,
-                ICartRepository gioHangRepo)
+                ICartRepository gioHangRepo,
+                IRepository<DanhGium> feedback,
+                IRepository<NguoiDung> nguoiDung,
+                IRepository<KhachHang> khachHangRepository,
+                IRepository<GioHang> gioHangRepository
+            )
         {
             _repository = repository;
             _imageRepository = imageRepository;
             _loaiRepository = loaiRepository;
             _gioHangRepo = gioHangRepo;
+            _FeedBackRepository = feedback;
+            _NguoidungRepository = nguoiDung;
+            _khachHangRepository = khachHangRepository;
+            _giohangRepository = gioHangRepository;
         }
 
         public async Task<IEnumerable<GetProductsAdminDTO>> GetAllProducts()
@@ -105,7 +117,7 @@ namespace Shop.Application.Services
                         .Select(x => new GetProductsAdminDTO
                         {
                             MaSua = x.MaSua,
-                            TenSua = x.TenSua,  
+                            TenSua = x.TenSua,
                             Gia = x.Gia,
                             SoLuong = x.SoLuong,
                             MoTa = x.MoTa,
@@ -150,10 +162,9 @@ namespace Shop.Application.Services
         }
 
         ////  Feeed back
-        public async  Task FeedBack(int? maNd, FeedbackDTO model)
+        public async Task FeedBack(int? maNd, FeedbackDTO model)
         {
-          
-            
+
             var review = new DanhGium
             {
                 MaNd = maNd,
@@ -166,6 +177,113 @@ namespace Shop.Application.Services
             await _FeedBackRepository.AddAsync(review);
             await _FeedBackRepository.SaveChangesAsync();
         }
+        ////  Feeed Id 
+        public async Task<List<FeedbackDTO>> GetIDFeedbackDTOs(int maSua)
+        {
+            var danhGiaList = await _FeedBackRepository
+                .GetAllIncludingAsync(dg => dg.MaNdNavigation);
+
+            var danhGiaTheoSanPham = danhGiaList
+                .Where(dg => dg.MaSua == maSua)
+                .Select(dg => new FeedbackDTO
+                {
+                    MaNd = dg.MaNd,
+                    MaSua = dg.MaSua,
+                    NoiDung = dg.NoiDung,
+                    Star = dg.Star,
+                    NgayDanhGia = dg.NgayDanhGia,
+                    TenNguoiDung = dg.MaNdNavigation?.TenDangNhap // Giả sử lấy từ bảng NguoiDung
+                })
+                .ToList();
+
+            return danhGiaTheoSanPham;
+        }
+
+
+        /// <summary>
+        /// Lấy danh sách giỏ hàng theo MaND (người dùng)
+        /// </summary>
+        public async Task<List<GetAllCartDTO>> GetCartItemsByMaNd(int maNd)
+        {
+            var khachHang = await _khachHangRepository.FirstOrDefaultAsync(kh => kh.MaNd == maNd);
+
+            if (khachHang == null)
+                return new List<GetAllCartDTO>();
+
+            var gioHangs = await _giohangRepository.GetAllIncludingAsync(x => x.MaSuaNavigation);
+            var allImages = await _imageRepository.GetAllAsync(); 
+
+            var carts = gioHangs
+                .Where(gh => gh.MaKh == khachHang.MaKh)
+                .Select(gh =>
+                {
+                    var hinhAnh = allImages
+                        .Where(img => img.MaSanPham == gh.MaSua)
+                        .Select(img => img.DuongDan)
+                        .FirstOrDefault();
+                    return new GetAllCartDTO
+                    {
+                        MaGh = gh.MaGh,
+                        MaSua = gh.MaSua ?? 0,
+                        TenSua = gh.MaSuaNavigation?.TenSua,
+                        HinhAnh = hinhAnh ?? "/images/no-image.png", 
+                        Gia = gh.MaSuaNavigation?.Gia ?? 0,
+                        SoLuong = gh.SoLuong ?? 1,
+                        NgayTao = gh.NgayTao
+                    };
+                })
+                .ToList();
+
+            return carts;
+        }
+
+
+        public async Task RemoveItemFromCart(int maNd, int maSua)
+        {
+            var khachHang = await _khachHangRepository
+                .FirstOrDefaultAsync(kh => kh.MaNd == maNd);
+
+            if (khachHang == null) return;
+
+            var item = (await _giohangRepository
+                .FindAsync(x => x.MaKh == khachHang.MaKh && x.MaSua == maSua))
+                .FirstOrDefault();
+
+            if (item != null)
+            {
+                _giohangRepository.Delete(item);
+                await _giohangRepository.SaveChangesAsync();
+            }
+        }
+
+
+        /// Update  Cart
+        public async Task UpdateCartQuantity(int maNd, int maSua, string action)
+        {
+            var khachHang = await _khachHangRepository.FirstOrDefaultAsync(k => k.MaNd == maNd);
+            if (khachHang == null) throw new Exception("Không tìm thấy khách hàng.");
+
+            var gioHang = await _giohangRepository.FirstOrDefaultAsync(g => g.MaKh == khachHang.MaKh && g.MaSua == maSua);
+            if (gioHang == null) throw new Exception("Không tìm thấy sản phẩm trong giỏ hàng.");
+
+            if (action == "increase")
+            {
+                gioHang.SoLuong += 1;
+            }
+            else if (action == "decrease")
+            {
+                if (gioHang.SoLuong > 1)
+                    gioHang.SoLuong -= 1;
+                else
+                    throw new Exception("Không thể giảm thấp hơn 1.");
+            }
+
+            gioHang.NgayTao = DateTime.Now;
+            _giohangRepository.Update(gioHang);
+            await _giohangRepository.SaveChangesAsync();
+        }
+
+
 
 
     }

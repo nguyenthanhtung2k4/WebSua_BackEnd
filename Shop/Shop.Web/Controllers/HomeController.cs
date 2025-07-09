@@ -1,47 +1,41 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using Shop.Application.DTOs;
 using Shop.Application.Interfaces;
 using Shop.Application.Services;
+using Shop.Infrastructure;
 using Shop.Web.ViewModels;
 
 namespace Shop.Web.Controllers
 {
     public class HomeController : Controller
     {
-  
         private readonly IHomeService _home;
+        private readonly IPayService _pay;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-
         public HomeController(
-                IHomeService home, 
+                IHomeService home,
+                IPayService pay,
                 IWebHostEnvironment webHostEnvironment)
         {
-                _home = home;
-                _webHostEnvironment = webHostEnvironment;
+            _home = home;
+            _pay = pay;
+            _webHostEnvironment = webHostEnvironment;
         }
+
         public async Task<IActionResult> Index()
+        {
+            var products = await _home.GetAllProducts();
+
+            if (products == null)
             {
-                var customers = await _home.GetAllProducts();
-
-                // Kiểm tra null để tránh lỗi nếu dữ liệu chưa có
-                if (customers == null)
-                {
-                    TempData["ErrorMessage"] = "Không tìm thấy khách hàng nào.";
-                    return View(new List<GetCustomerAdminDTO>()); // Trả về danh sách rỗng
-                }
-
-                return View(customers);
+                TempData["ErrorMessage"] = "Không tìm thấy sản phẩm nào.";
+                return View(new List<GetProductsAdminDTO>()); // Trả về danh sách rỗng
             }
 
-
-        public async Task<IActionResult> Cart()
-        {
-           
-
-            return View();
+            return View(products);
         }
-
 
         public async Task<IActionResult> Detail(int id)
         {
@@ -49,15 +43,19 @@ namespace Shop.Web.Controllers
             if (product == null) return NotFound();
 
             var suggested = await _home.ProductSuggester(id);
+            if (suggested == null) return NotFound();
+            var GetIdFeedBack = await _home.GetIDFeedbackDTOs(id);
+
             var viewModel = new ProductDetailViewModel
             {
                 Product = product,
-                ProductSugGester = suggested
+                ProductSugGester = suggested,
+                Reviews = GetIdFeedBack
             };
             return View(viewModel);
         }
 
-        /// Them  vao  gio  hang
+        /// Them vao gio hang
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddBag(AddToCartDTO dto)
@@ -82,8 +80,7 @@ namespace Shop.Web.Controllers
             return RedirectToAction("Detail", "Home", new { id = dto.MaSua });
         }
 
-        // Feeb Back   danh  gia  san pham
-
+        // Feeb Back danh gia san pham
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitReview(FeedbackDTO model)
@@ -100,16 +97,145 @@ namespace Shop.Web.Controllers
             return RedirectToAction("Detail", new { id = model.MaSua });
         }
 
+        // gio Hang cart
+        public async Task<IActionResult> Cart()
+        {
+            var maNd = HttpContext.Session.GetInt32("MaND");
+            if (maNd == null)
+            {
+                TempData["Error"] = "Bạn cần đăng nhập để xem giỏ hàng.";
+                return RedirectToAction("Index", "Auth"); // Chuyển hướng về trang đăng nhập
+            }
+
+            var carts = await _home.GetCartItemsByMaNd(maNd.Value);
+            return View("Cart", carts);
+        }
+        
+        /// Update Cart
+        [HttpPost]
+        public async Task<IActionResult> UpdateQuantity(int maSua, string action)
+        {
+            var maNd = HttpContext.Session.GetInt32("MaND");
+
+            if (maNd == null)
+            {
+                TempData["Error"] = "Bạn cần đăng nhập để chỉnh sửa giỏ hàng.";
+                return RedirectToAction("Cart");
+            }
+
+            try
+            {
+                await _home.UpdateCartQuantity(maNd.Value, maSua, action);
+                TempData["Success"] = "Cập nhật giỏ hàng thành công.";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Lỗi: " + ex.Message;
+            }
+
+            return RedirectToAction("Cart");
+        }
+        //  Remote Cart
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart(int maSua)
+        {
+            var maNd = HttpContext.Session.GetInt32("MaND");
+
+            if (maNd == null)
+            {
+                TempData["Error"] = "Bạn cần đăng nhập để xóa sản phẩm.";
+                return RedirectToAction("Cart");
+            }
+
+            try
+            {
+                await _home.RemoveItemFromCart(maNd.Value, maSua);
+                TempData["Success"] = "Xóa sản phẩm khỏi giỏ hàng thành công.";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Lỗi: " + ex.Message;
+            }
+
+            return RedirectToAction("Cart");
+        }
+
+        /// CheckOut
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Checkout()
+        {
+            // 1. Kiểm tra đăng nhập
+            var maNd = HttpContext.Session.GetInt32("MaND");
+            if (maNd == null)
+            {
+                TempData["Error"] = "Bạn cần đăng nhập để thanh toán.";
+                return RedirectToAction("Cart");
+            }
+
+            // 2. Tìm mã khách hàng tương ứng với người dùng hiện tại
+            var khachHang = await _pay.GetKhachHangByMaND(maNd.Value);
+            if (khachHang == null)
+            {
+                TempData["Error"] = "Không tìm thấy thông tin khách hàng.";
+                return RedirectToAction("Cart");
+            }
+
+            int maKh = khachHang.MaKh;
+
+            // 3. Lấy giỏ hàng
+            var cartItems = await _home.GetCartItemsByMaNd(maNd.Value);
+            if (cartItems == null || !cartItems.Any())
+            {
+                TempData["Error"] = "Giỏ hàng của bạn đang trống.";
+                return RedirectToAction("Cart");
+            }
+
+            // 4. Tính tổng tiền
+            decimal tongTien = cartItems.Sum(item => item.Gia * item.SoLuong);
+
+            // 5. Tạo đơn hàng
+            var donHang = new DonHang
+            {
+                MaKh = maKh,
+                NgayDat = DateTime.Now,
+                TongTien = tongTien,
+                TrangThai = "Chờ xác nhận"
+            };
+            await _pay.CreateDonHangAsync(donHang);
+
+            // 6. Tạo chi tiết đơn hàng
+            foreach (var item in cartItems)
+            {
+                var chiTiet = new ChiTietDonHang
+                {
+                    MaDh = donHang.MaDh,
+                    MaSua = item.MaSua,
+                    SoLuong = item.SoLuong,
+                    DonGia = item.Gia
+                };
+                await _pay.CreateChiTietDonHangAsync(chiTiet);
+            }
+
+            // 7. Xoá giỏ hàng
+            await _pay.ClearCartAsync(maKh);
+
+            TempData["Success"] = "Thanh toán thành công! Đơn hàng đã được ghi nhận.";
+            return RedirectToAction("Index", "Home");
+        }
 
 
-
+        /// User
+        public IActionResult User ()
+        {
+            return View();
+        }
 
         // LogOut 
         public IActionResult LogOut()
         {
-
-            return View("Index", "Auth");
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Auth");
         }
-
     }
 }

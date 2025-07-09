@@ -1,11 +1,12 @@
-﻿using System; 
+﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Shop.Application.DTOs;
 using Shop.Application.Interfaces;
 using Shop.Domain.Interfaces;
-using Shop.Infrastructure; 
+using Shop.Infrastructure;
+using Shop.Infrastructure.Data; // Thêm namespace này nếu NguoiDung nằm trong đây
 
 namespace Shop.Application.Services
 {
@@ -23,70 +24,58 @@ namespace Shop.Application.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-
         public async Task<bool> Register(RegisterDTOs dtos)
         {
-           
             var existingUser = await _repository.FirstOrDefaultAsync(x => x.Email == dtos.Email);
 
             if (existingUser != null)
             {
-                
+            
                 return false;
             }
 
-          
             string hashedPassword = _hashPass.HashPassword(null, dtos.MatKhau);
-
 
             var newUser = new NguoiDung
             {
                 TenDangNhap = dtos.TenDangNhap,
-                // HASH MẬT KHẨU TRƯỚC KHI LƯU
                 MatKhau = hashedPassword,
                 Email = dtos.Email,
-                VaiTro = dtos.VaiTro,
+                VaiTro = dtos.VaiTro, 
                 status = dtos.status,
-                //avata = dtos.avata,
+               
             };
 
-        //     public int MaNd { get; set; }
-
-        //public string? HoTen { get; set; }
-
-        //public string? SoDienThoai { get; set; }
-
-        //public string? DiaChi { get; set; }
-        //public string? GioiTinh { get; set; }
-        //public string? Image { get; set; }
-
             await _repository.AddAsync(newUser);
-            int savedChanges  = await _repository.SaveChangesAsync();
+            int savedChanges = await _repository.SaveChangesAsync();
 
-            var customer = await _repository.FirstOrDefaultAsync(x => x.Email == dtos.Email);
-            if (customer != null)
-            {
-                var newCustomer = new KhachHang
+            
+            if (newUser.VaiTro == "KhachHang")
+            { 
+                var customer = await _repository.FirstOrDefaultAsync(x => x.Email == dtos.Email);
+                if (customer != null)
                 {
-                    MaNd = customer.MaNd,
-                    HoTen = customer.TenDangNhap
-                };
-
-
-                 await _CustomerRepository.AddAsync(newCustomer);
-                await _CustomerRepository.SaveChangesAsync();
-                
+                    var newCustomer = new KhachHang
+                    {
+                        MaNd = customer.MaNd,
+                        HoTen = customer.TenDangNhap
+                    };
+                    await _CustomerRepository.AddAsync(newCustomer);
+                    await _CustomerRepository.SaveChangesAsync();
+                }
             }
 
-            return savedChanges > 0; 
+            return savedChanges > 0;
         }
 
-
-        public async Task<bool> Login(string email, string password)
+        // Thay đổi kiểu trả về để bao gồm VaiTro
+        public async Task<LoginResultDTO> Login(string email, string password)
         {
             var user = await _repository.FirstOrDefaultAsync(x => x.Email == email);
             if (user == null)
-                return false;
+            {
+                return new LoginResultDTO { Success = false, Role = null }; // Không tìm thấy người dùng
+            }
 
             var result = _hashPass.VerifyHashedPassword(null, user.MatKhau, password);
             if (result == PasswordVerificationResult.Success)
@@ -95,13 +84,13 @@ namespace Shop.Application.Services
                 if (session != null)
                 {
                     session.SetString("Email", user.Email!);
-                    session.SetInt32("MaND", user.MaNd); // dùng khi cần ID người dùng
+                    session.SetInt32("MaND", user.MaNd); // Dùng khi cần ID người dùng
+                    session.SetString("VaiTro", user.VaiTro!); // Lưu VaiTro vào session
                 }
-                return true;
+                return new LoginResultDTO { Success = true, Role = user.VaiTro }; // Đăng nhập thành công, trả về vai trò
             }
 
-            return false;
+            return new LoginResultDTO { Success = false, Role = null }; // Mật khẩu không đúng
         }
-
     }
 }

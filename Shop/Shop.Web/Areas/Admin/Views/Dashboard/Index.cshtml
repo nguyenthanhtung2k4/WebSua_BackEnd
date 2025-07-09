@@ -1,0 +1,193 @@
+﻿@model Shop.Application.DTOs.DashboardAdminDTO
+@{
+    ViewData["Title"] = "Bảng điều khiển";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* Custom Styles for Dashboard */
+    .dashboard-card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Softer, more pronounced shadow */
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        display: flex;
+        align-items: center;
+        gap: 1.25rem; /* Space between icon and text */
+    }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12); /* Enhanced shadow on hover */
+        }
+
+        .dashboard-card .icon-wrapper {
+            flex-shrink: 0; /* Prevent icon from shrinking */
+            width: 60px; /* Size of the icon circle */
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem; /* Size of the icon itself */
+            color: #ffffff;
+        }
+
+        .dashboard-card .card-content {
+            flex-grow: 1;
+        }
+
+        .dashboard-card .card-title {
+            font-size: 1rem;
+            color: #6c757d; /* Muted text for title */
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+        }
+
+        .dashboard-card .card-value {
+            font-size: 2.2rem; /* Larger, more impactful number */
+            font-weight: 700;
+            color: #343a40; /* Darker text for value */
+            line-height: 1.2;
+        }
+
+        /* Specific Icon Background Colors */
+        .dashboard-card.products .icon-wrapper {
+            background-color: #007bff; /* Blue */
+        }
+
+        .dashboard-card.customers .icon-wrapper {
+            background-color: #28a745; /* Green */
+        }
+
+        .dashboard-card.orders .icon-wrapper {
+            background-color: #ffc107; /* Orange (Warning) */
+        }
+
+        .dashboard-card.revenue-today .icon-wrapper {
+            background-color: #17a2b8; /* Cyan (Info) */
+        }
+
+        .dashboard-card.total-revenue .icon-wrapper {
+            background-color: #6f42c1; /* Purple */
+        }
+
+        .dashboard-card.sold-items .icon-wrapper {
+            background-color: #fd7e14; /* Dark Orange */
+        }
+
+    /* Page Title */
+    .pagetitle h1 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #343a40;
+        margin-bottom: 1.5rem;
+    }
+
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0.5rem 0;
+    }
+
+    .breadcrumb-item a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .breadcrumb-item.active {
+        color: #6c757d;
+    }
+
+   
+
+    }
+</style>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Bảng điều khiển</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/Admin">Trang chủ</a></li>
+                <li class="breadcrumb-item active">Bảng điều khiển</li>
+            </ol>
+        </nav>
+    </div><section class="section dashboard">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="dashboard-card products">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-box-seam"></i> @* Example Bootstrap Icon *
+                        @* Or use Font Awesome: <i class="fas fa-boxes"></i> *@
+                    </div>
+                    <div class="card-content">
+                        <h5 class="card-title">Tổng sản phẩm</h5>
+                        <p class="card-value">@Model.TotalProducts</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="dashboard-card customers">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <div class="card-content">
+                        <h5 class="card-title">Tổng khách hàng</h5>
+                        <p class="card-value">@Model.TotalCustomers</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="dashboard-card orders">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-cart-check"></i>
+                    </div>
+                    <div class="card-content">
+                        <h5 class="card-title">Tổng đơn hàng</h5>
+                        <p class="card-value">@Model.TotalOrders</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="dashboard-card revenue-today">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-currency-dollar"></i>
+                    </div>
+                    <div class="card-content">
+                        <h5 class="card-title">Doanh thu hôm nay</h5>
+                        <p class="card-value">@Model.RevenueToday.ToString("N0") VNĐ</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="dashboard-card total-revenue">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <div class="card-content">
+                        <h5 class="card-title">Tổng doanh thu</h5>
+                        <p class="card-value">@Model.RevenueAllTime.ToString("N0") VNĐ</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="dashboard-card sold-items">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-bag-check"></i>
+                    </div>
+                    <div class="card-content">
+                        <h5 class="card-title">Sản phẩm đã bán</h5>
+                        <p class="card-value">@Model.TotalSoldItems</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

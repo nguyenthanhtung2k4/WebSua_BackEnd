@@ -1,101 +1,176 @@
-﻿
+﻿@model List<Shop.Application.DTOs.GetAllCartDTO>
+
 @{
-    ViewData["Title"] = "Cart";
-    Layout = "~/Views/Shared/_LayoutCart.cshtml";
+    ViewData["Title"] = "Giỏ hàng của bạn";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    int totalQuantity = Model?.Sum(item => item.SoLuong) ?? 0;
+    decimal totalAmount = Model?.Sum(item => item.Gia * item.SoLuong) ?? 0;
 }
+
 <main class="container mx-auto px-4 py-28 md:py-32">
-    <h1 class="text-4xl font-bold text-dark-blue text-center mb-12">Giỏ Hàng Của Bạn</h1>
+    <h1 class="text-4xl font-bold text-dark-blue text-center mb-12 animate-fade-in-down">Giỏ Hàng Của Bạn</h1>
 
-    <div id="cart-items-container" class="bg-white rounded-lg shadow-xl p-8 lg:p-12 mb-8">
-        <div id="empty-cart-message" class="text-center text-gray-600 py-10" style="display: none;">
-            Giỏ hàng của bạn đang trống. Hãy thêm sản phẩm vào giỏ nhé!
-        </div>
+    <div class="bg-white rounded-xl shadow-2xl p-8 lg:p-12 mb-8 animate-fade-in-up">
+        @if (Model == null || !Model.Any())
+        {
+            <div class="text-center text-gray-600 py-10">
+                <i class="ri-shopping-cart-line text-6xl text-gray-400 mb-4"></i>
+                <p class="text-xl font-medium">Giỏ hàng của bạn đang trống.</p>
+                <p class="text-lg">Hãy thêm sản phẩm vào giỏ để bắt đầu mua sắm nhé!</p>
+                <a href="~/Home/Index" class="mt-8 inline-block bg-primary text-white px-8 py-3 rounded-button font-semibold text-lg hover:bg-dark-blue transition duration-300 shadow-md">
+                    Tiếp tục mua sắm ngay
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gradient-to-r from-light-blue to-blue-200">
+                        <tr>
+                            <th scope="col" class="px-3 py-4 text-left text-sm font-bold text-gray-700 uppercase tracking-wider rounded-tl-lg">Ảnh</th>
+                            <th scope="col" class="px-3 py-4 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">Tên sản phẩm</th>
+                            <th scope="col" class="px-3 py-4 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">Giá</th>
+                            <th scope="col" class="px-3 py-4 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">Số lượng</th>
+                            <th scope="col" class="px-3 py-4 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">Thành tiền</th>
+                            <th scope="col" class="px-3 py-4 text-left text-sm font-bold text-gray-700 uppercase tracking-wider rounded-tr-lg">Xóa</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach (var item in Model)
+                        {
+                            <tr class="hover:bg-gray-50 transition-colors duration-200">
+                                <td class="px-3 py-4 whitespace-nowrap">
+                                    <img src="@item.HinhAnh" alt="@item.TenSua" class="h-16 w-16 rounded-lg object-cover shadow-md" />
+                                </td>
+                                <td class="px-3 py-4 whitespace-nowrap text-dark-blue font-medium">@item.TenSua</td>
+                                <td class="px-3 py-4 whitespace-nowrap text-gray-700">@item.Gia.ToString("N0") VNĐ</td>
+                                <td class="px-3 py-4 whitespace-nowrap">
+                                    <form asp-action="UpdateQuantity" asp-controller="Home" method="post" class="inline-flex items-center border border-gray-300 rounded-full overflow-hidden shadow-sm bg-white">
+                                        <input type="hidden" name="MaSua" value="@item.MaSua" />
 
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200" id="cart-table" style="display: none;">
-                <thead class="bg-light-blue">
-                    <tr>
-                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Chọn
-                        </th>
-                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            ID
-                        </th>
-                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Sản phẩm
-                        </th>
-                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Giá
-                        </th>
-                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Số lượng
-                        </th>
-                        <th scope="col" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Thành tiền
-                        </th>
-                        <th scope="col" class="relative px-3 py-3">
-                            <span class="sr-only">Xóa</span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200"></tbody>
-            </table>
-        </div>
+                                        <button type="submit" name="action" value="decrease"
+                                                class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all duration-200 rounded-l-full focus:outline-none focus:ring-2 focus:ring-blue-300">
+                                            <i class="ri-subtract-line text-lg"></i>
+                                        </button>
+
+                                        <input type="text" readonly value="@item.SoLuong"
+                                               class="w-16 text-center border-x border-gray-300 font-semibold text-gray-800 bg-white focus:outline-none" />
+
+                                        <button type="submit" name="action" value="increase"
+                                                class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all duration-200 rounded-r-full focus:outline-none focus:ring-2 focus:ring-blue-300">
+                                            <i class="ri-add-line text-lg"></i>
+                                        </button>
+                                    </form>
+                                </td>
+
+                                <td class="px-3 py-4 whitespace-nowrap font-bold text-primary text-lg">
+                                    @((item.Gia * item.SoLuong).ToString("N0")) VNĐ
+                                </td>
+
+                                <td class="px-3 py-4 whitespace-nowrap">
+                                    <form asp-action="RemoveFromCart" asp-controller="Home" method="post">
+                                        <input type="hidden" name="MaSua" value="@item.MaSua" />
+                                        <button type="submit" class="text-red-500 hover:text-red-700 transition-colors duration-200 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-red-300 rounded-full p-2">
+                                            <i class="ri-delete-bin-line ri-lg"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
     </div>
 
-    <div id="cart-summary" class="bg-white rounded-lg shadow-xl p-8 lg:p-12 mb-12">
-        <h2 class="text-3xl font-bold text-dark-blue mb-6">Tóm Tắt Đơn Hàng</h2>
-        <div class="flex justify-between items-center text-lg mb-4">
-            <span>Tổng số lượng sản phẩm được chọn:</span>
-            <span id="total-items-selected" class="font-semibold">0</span>
-        </div>
-        <div class="flex justify-between items-center text-lg mb-6">
-            <span>Tổng tiền các sản phẩm được chọn:</span>
-            <span id="cart-total-selected" class="text-primary text-3xl font-bold">0 VNĐ</span>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-4">
-            <a href="#" class="border-2 border-primary text-primary px-8 py-4 rounded-button font-semibold text-lg hover:bg-primary hover:text-white transition-all duration-300 shadow-lg flex-grow sm:flex-none text-center">
-                Tiếp tục mua sắm
-            </a>
-            <button id="checkout-btn" class="bg-dark-blue text-white px-8 py-4 rounded-button font-semibold text-lg hover:bg-accent transition-all duration-300 shadow-lg flex-grow sm:flex-none">
-                Tiến hành thanh toán
-            </button>
-        </div>
-    </div>
+    @if (Model != null && Model.Any())
 
-    <section class="mb-12">
-        <h2 class="text-3xl font-bold text-dark-blue text-center mb-8">Sản Phẩm Được Đề Xuất</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="bg-white rounded-lg shadow-md p-6 text-center">
-                <img src="https://via.placeholder.com/200x200/4EADD3/FFFFFF?text=Sữa+Hộp+Lớn" alt="Sữa Hộp Lớn" class="mx-auto mb-4 rounded-lg">
-                <h3 class="text-xl font-semibold text-dark-blue mb-2">Sữa Tươi Nguyên Kem 1 Lít</h3>
-                <p class="text-gray-600 mb-3">Dung tích: Lớn</p>
-                <p class="text-lg font-bold text-primary">60.000 VNĐ</p>
-                <button class="add-to-cart-btn mt-4 bg-primary text-white px-6 py-3 rounded-button hover:bg-accent transition-all duration-300" data-id="SP003" data-name="Sữa Tươi Nguyên Kem 1 Lít" data-price="60000" data-image="https://via.placeholder.com/200x200/4EADD3/FFFFFF?text=Sữa+Hộp+Lớn">Thêm vào giỏ</button>
-            </div>
-            <div class="bg-white rounded-lg shadow-md p-6 text-center">
-                <img src="https://via.placeholder.com/200x200/4EADD3/FFFFFF?text=Sữa+Hộp+Vừa" alt="Sữa Hộp Vừa" class="mx-auto mb-4 rounded-lg">
-                <h3 class="text-xl font-semibold text-dark-blue mb-2">Sữa Tươi Ít Béo 500ml</h3>
-                <p class="text-gray-600 mb-3">Dung tích: Vừa</p>
-                <p class="text-lg font-bold text-primary">35.000 VNĐ</p>
-                <button class="add-to-cart-btn mt-4 bg-primary text-white px-6 py-3 rounded-button hover:bg-accent transition-all duration-300" data-id="SP004" data-name="Sữa Tươi Ít Béo 500ml" data-price="35000" data-image="https://via.placeholder.com/200x200/4EADD3/FFFFFF?text=Sữa+Hộp+Vừa">Thêm vào giỏ</button>
-            </div>
-            <div class="bg-white rounded-lg shadow-md p-6 text-center">
-                <img src="https://via.placeholder.com/200x200/4EADD3/FFFFFF?text=Sữa+Hộp+Nhỏ" alt="Sữa Hộp Nhỏ" class="mx-auto mb-4 rounded-lg">
-                <h3 class="text-xl font-semibold text-dark-blue mb-2">Sữa Chua Uống 180ml</h3>
-                <p class="text-gray-600 mb-3">Dung tích: Nhỏ</p>
-                <p class="text-lg font-bold text-primary">15.000 VNĐ</p>
-                <button class="add-to-cart-btn mt-4 bg-primary text-white px-6 py-3 rounded-button hover:bg-accent transition-all duration-300" data-id="SP005" data-name="Sữa Chua Uống 180ml" data-price="15000" data-image="https://via.placeholder.com/200x200/4EADD3/FFFFFF?text=Sữa+Hộp+Nhỏ">Thêm vào giỏ</button>
-            </div>
-        </div>
-    </section>
+    {
 
-    <section id="purchase-history" class="bg-white rounded-lg shadow-xl p-8 lg:p-12">
-        <h2 class="text-3xl font-bold text-dark-blue text-center mb-8">Lịch Sử Mua Hàng</h2>
-        <div id="history-list" class="space-y-6">
-            <div class="text-center text-gray-600 py-4" id="empty-history-message">
-                Bạn chưa có giao dịch nào trong lịch sử mua hàng.
+        <div class="bg-white rounded-lg shadow-xl p-8 lg:p-12 mb-12">
+
+            <h2 class="text-3xl font-bold text-dark-blue mb-6">Tóm Tắt Đơn Hàng</h2>
+
+            <div class="flex justify-between items-center text-lg mb-4">
+
+                <span>Tổng số lượng sản phẩm:</span>
+
+                <span class="font-semibold">@totalQuantity</span>
+
             </div>
+
+            <div class="flex justify-between items-center text-lg mb-6">
+
+                <span>Tổng tiền:</span>
+
+                <span class="text-primary text-3xl font-bold">@(totalAmount.ToString("N0")) VNĐ</span>
+
+
+
+            </div>
+
+            <div class="flex gap-4">
+
+                <a href="~/Home/Index" class="border-2 border-primary text-primary px-8 py-4 rounded-button font-semibold text-lg hover:bg-primary hover:text-white transition duration-300 shadow-md text-center">
+
+                    Tiếp tục mua sắm
+
+                </a>
+
+                <form asp-action="Checkout" asp-controller="Home" method="post">
+
+                    <button type="submit" class="bg-dark-blue text-white px-8 py-4 rounded-button font-semibold text-lg hover:bg-accent transition duration-300 shadow-md w-full">
+
+                        Tiến hành thanh toán
+
+                    </button>
+
+                </form>
+
+            </div>
+
         </div>
-    </section>
+
+    }
 </main>
+
+<style>
+    /* Custom animations */
+    @@keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in-down {
+        animation: fadeInDown 0.8s ease-out forwards;
+    }
+
+    .animate-fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    /* Custom button styling if needed for specific effects not covered by Tailwind */
+    .rounded-button {
+        border-radius: 9999px; /* This makes it fully rounded like a pill button */
+    }
+</style>

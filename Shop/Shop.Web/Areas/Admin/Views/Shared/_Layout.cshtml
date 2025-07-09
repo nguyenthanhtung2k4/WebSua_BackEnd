@@ -1,4 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var role = Context.Session.GetString("VaiTro");
+    var email = Context.Session.GetString("Email");
+
+    if (string.IsNullOrEmpty(email) || role?.ToLower() != "admin")
+    {
+        Context.Response.Redirect("/Auth");
+    }
+}
+
+
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -28,6 +40,7 @@
 
     <!-- Template Main CSS File -->
     <link href="~/asset/admin/css/style.css" rel="stylesheet">
+    <link href="~/asset/admin/css/Feedback.css" rel="stylesheet">
 
     <!-- =======================================================
     * Template Name: NiceAdmin
@@ -255,10 +268,18 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            @* <a class="dropdown-item d-flex align-items-center" href="~/Auth/">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Sign Out</span>
-                            </a>
+                            </a> *@
+
+                            <form asp-controller="Auth" asp-action="SignOut" method="post" asp-area="Admin" class="d-flex align-items-center p-0">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="dropdown-item d-flex align-items-center"
+                                        style="background: none; border: none; padding: 0.5rem 1rem; width: 100%; text-align: left; color: #212529; /* Match text color */">
+                                    <i class="bi bi-box-arrow-right me-2"></i> <span>Sign Out</span>
+                                </button>
+                            </form>
                         </li>
 
                     </ul><!-- End Profile Dropdown Items -->
@@ -274,59 +295,52 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link" href="/Admin/Dasboard/Index">
-                    <i class="bi bi-grid"></i>
-                    <span>Tổng quan</span>
+                <a class="nav-link" href="/Admin/Dashboard/Index">
+                    <i class="bi bi-speedometer2"></i> <span>Tổng quan</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/Admin/User/Index">
-                    <i class="bi bi-grid"></i>
-                    <span>Người dùng</span>
+                    <i class="bi bi-person-badge"></i> <span>Người dùng</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/Admin/Customer/Index">
-                    <i class="bi bi-grid"></i>
-                    <span>Khách hàng</span>
+                    <i class="bi bi-people"></i> <span>Khách hàng</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/Admin/Products/Index">
-                    <i class="bi bi-grid"></i>
-                    <span>Sản phẩm</span>
+                    <i class="bi bi-box-seam"></i> <span>Sản phẩm</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/Admin/Orders/Index">
-                    <i class="bi bi-grid"></i>
-                    <span>Đơn hàng</span>
+                    <i class="bi bi-cart4"></i> <span>Đơn hàng</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/Admin/Feedback/Index">
-                    <i class="bi bi-grid"></i>
-                    <span>Đánh giá</span>
+                    <i class="bi bi-chat-left-text"></i> <span>Đánh giá</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/Admin/Advison/Index">
-                    <i class="bi bi-grid"></i>
-                    <span>Tư vấn</span>
-                </a>
-            </li>
-            
-            
-            
-            
-            <!-- End Dashboard Nav -->
-            
+            @*
+   KHOONG LAM KIP  LEN  DE AN THAM THOI.   
 
-            
+
+   <li class="nav-item">
+          <a class="nav-link" href="/Admin/Advison/Index">
+              <i class="bi bi-headset"></i> <span>Tư vấn</span>
+          </a>
+     </li>
+
+     *@
+
 
         </ul>
 
     </aside><!-- End Sidebar-->
+  
     @RenderBody()
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">

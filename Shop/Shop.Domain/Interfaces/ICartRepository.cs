@@ -9,6 +9,7 @@ namespace Shop.Domain.Interfaces
 {
     public interface ICartRepository: IRepository<GioHang>
     {
+        Task<List<GioHang>> GetCartByCustomerAsync(int maKh);
         Task<int?> LayMaKhachHangTheoEmailAsync(string email);
     }
 }

@@ -1,0 +1,156 @@
+﻿
+body {
+    font-family: 'Montserrat', sans-serif;
+    scroll-behavior: smooth;
+    color: #333;
+    background-color: #f8f8f8;
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    right: 20px;
+    bottom: -60px;
+    width: 40px;
+    height: 40px;
+    background-color: #4EADD3;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    opacity: 0;
+    z-index: 999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+    .scroll-to-top.visible {
+        bottom: 20px;
+        opacity: 1;
+    }
+
+/* Header Compact Effect */
+.header-compact {
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+header {
+    transition: transform 0.3s ease-out, padding 0.3s ease-out;
+}
+
+/* User Sidebar Navigation */
+.sidebar-nav-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+    .sidebar-nav-item:hover {
+        background-color: #E0F7FA;
+        color: #4EADD3;
+    }
+
+    .sidebar-nav-item.active {
+        background-color: #4EADD3;
+        color: white;
+        box-shadow: 0 4px 10px rgba(78, 173, 211, 0.3);
+    }
+
+        .sidebar-nav-item.active .ri-icon {
+            color: white;
+        }
+
+    .sidebar-nav-item .ri-icon {
+        font-size: 1.25rem;
+        margin-right: 0.75rem;
+        color: #4EADD3;
+        transition: color 0.3s ease;
+    }
+
+/* Content Sections */
+.user-content-section {
+    display: none;
+    /* Hidden by default */
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+    .user-content-section.active {
+        display: block;
+    }
+
+/* Order List specific styling */
+.order-table-container {
+    overflow-x: auto;
+    /* Allows horizontal scrolling for tables on small screens */
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .order-table th,
+    .order-table td {
+        padding: 0.75rem;
+        border-bottom: 1px solid #eee;
+        text-align: left;
+    }
+
+    .order-table th {
+        background-color: #EDF8FB;
+        font-weight: 600;
+        color: #2D5B73;
+        white-space: nowrap;
+    }
+
+    .order-table tbody tr:hover {
+        background-color: #f5fafd;
+    }
+
+.status-badge {
+    padding: 0.3em 0.6em;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-completed {
+    background-color: #dcfce7;
+    /* green-100 */
+    color: #16a34a;
+    /* green-600 */
+}
+
+.status-pending {
+    background-color: #ffedd5;
+    /* orange-100 */
+    color: #ea580c;
+    /* orange-600 */
+}
+
+.status-cancelled {
+    background-color: #fee2e2;
+    /* red-100 */
+    color: #dc2626;
+    /* red-600 */
+}
+
+.status-shipping {
+    background-color: #dbeafe;
+    /* blue-100 */
+    color: #2563eb;
+    /* blue-600 */
+}
+

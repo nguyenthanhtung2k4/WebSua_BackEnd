@@ -45,10 +45,11 @@
                 @if (TempData["Success"] != null)
                 {
                     <div class="message success">@TempData["Success"]</div>
+                   
                 }
-                @if (TempData["RegisterSuccess"] != null) // Added for register success message
+                @if (TempData["LoginError"] != null) // Added for register success message
                 {
-                    <div class="message success">@TempData["RegisterSuccess"]</div>
+                    <div class="message error">@TempData["LoginError"]</div>
                 }
                 <button type="submit" class="submit-button submit-login">Đăng nhập</button>
                 <p class="switch-text">Chưa có tài khoản? <a href="#" id="switchToRegister">Đăng ký ngay</a></p>

@@ -12,7 +12,13 @@ public class CartRepository : Repository<GioHang>, ICartRepository
     {
         _context = context;
     }
-
+    public async Task<List<GioHang>> GetCartByCustomerAsync(int maKh)
+    {
+        return await _context.GioHangs
+            .Include(g => g.MaSuaNavigation) // load thông tin sản phẩm
+            .Where(g => g.MaKh == maKh)
+            .ToListAsync();
+    }
     public async Task<int?> LayMaKhachHangTheoEmailAsync(string email)
     {
         var nguoiDung = await _context.NguoiDungs.FirstOrDefaultAsync(nd => nd.Email == email);

@@ -1,0 +1,149 @@
+﻿/* Tổng thể */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa; /* Màu nền nhẹ nhàng */
+}
+
+/* Thẻ chính */
+.card {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Đổ bóng mạnh hơn một chút */
+    margin-bottom: 1.5rem; /* Khoảng cách giữa các card */
+    border: 1px solid #e0e0e0; /* Viền nhẹ */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+    .card:hover {
+        transform: translateY(-3px); /* Hiệu ứng nổi nhẹ khi di chuột */
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+/* Tiêu đề card */
+.card-title {
+    font-size: 1.6rem; /* Kích thước tiêu đề lớn hơn */
+    font-weight: 600;
+    color: #343a40;
+    border-bottom: 1px solid #f0f0f0; /* Đường kẻ dưới tiêu đề */
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+    .card-title span {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #6c757d;
+        margin-left: 0.5rem;
+    }
+
+/* Tiêu đề trang */
+.pagetitle h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #343a40;
+}
+
+.breadcrumb {
+    background-color: transparent;
+    padding: 0.5rem 0;
+}
+
+.breadcrumb-item a {
+    color: #007bff; /* Màu liên kết breadcrumb */
+    text-decoration: none;
+}
+
+.breadcrumb-item.active {
+    color: #6c757d;
+}
+
+/* Chi tiết đánh giá trong mỗi card */
+.review-item {
+    margin-bottom: 1rem;
+}
+
+    .review-item h2 {
+        font-size: 1.3rem; /* Tên người đánh giá */
+        font-weight: 600;
+        color: #212529;
+        margin-bottom: 0.5rem;
+    }
+
+    .review-item p {
+        font-size: 1rem;
+        color: #495057;
+        margin-bottom: 0.4rem;
+    }
+
+    .review-item strong {
+        color: #343a40;
+    }
+
+/* Đánh giá sao */
+.rating {
+    color: #ffc107; /* Màu vàng cho sao */
+    font-size: 1.2rem; /* Kích thước sao */
+}
+
+/* Các nút hành động */
+.review-actions {
+    margin-top: 1rem;
+    border-top: 1px solid #f8f9fa; /* Đường kẻ phân cách */
+    padding-top: 1rem;
+    display: flex; /* Dùng flexbox để căn chỉnh nút */
+    gap: 0.5rem; /* Khoảng cách giữa các nút */
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-approve {
+    background-color: #28a745; /* Màu xanh lá cây */
+    color: white;
+    border: none;
+}
+
+    .btn-approve:hover {
+        background-color: #218838;
+    }
+
+.btn-reject {
+    background-color: #dc3545; /* Màu đỏ */
+    color: white;
+    border: none;
+}
+
+    .btn-reject:hover {
+        background-color: #c82333;
+    }
+
+.btn-delete {
+    background-color: #6c757d; /* Màu xám */
+    color: white;
+    border: none;
+}
+
+    .btn-delete:hover {
+        background-color: #5a6268;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .pagetitle h1 {
+        font-size: 1.8rem;
+    }
+
+    .card-title {
+        font-size: 1.4rem;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+}

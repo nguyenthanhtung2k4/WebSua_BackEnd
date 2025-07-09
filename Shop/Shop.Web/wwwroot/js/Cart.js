@@ -8,68 +8,11 @@
     const emptyHistoryMessage = document.getElementById('empty-history-message');
     const toast = document.getElementById('toast');
 
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    let purchaseHistory = JSON.parse(localStorage.getItem('purchaseHistory')) || [];
+    // Khởi tạo giỏ hàng và lịch sử mua hàng là mảng rỗng (không dùng localStorage)
+    let cart = [];
+    let purchaseHistory = [];
 
-    // Initialize sample data
-    if (cart.length === 0) {
-        cart = [
-            {
-                id: 'SP001',
-                name: 'Sữa Tươi Nguyên Kem MilkCo.',
-                price: 55000,
-                image: 'https://via.placeholder.com/200x200/4EADD3/FFFFFF?text=Sữa+Hộp+Lớn',
-                quantity: 2,
-                selected: true
-            },
-            {
-                id: 'SP002',
-                name: 'Sữa Tươi Ít Béo MilkCo.',
-                price: 52000,
-                image: 'https://via.placeholder.com/200x200/4EADD3/FFFFFF?text=Sữa+Hộp+Vừa',
-                quantity: 1,
-                selected: false
-            }
-        ];
-        saveCart();
-    }
-
-    if (purchaseHistory.length === 0) {
-        purchaseHistory = [
-            {
-                orderId: 'DH001',
-                date: '01/07/2025',
-                total: 110000,
-                items: [{
-                    id: 'SP001',
-                    name: 'Sữa Tươi Nguyên Kem MilkCo.',
-                    price: 55000,
-                    quantity: 2
-                }]
-            },
-            {
-                orderId: 'DH002',
-                date: '05/06/2025',
-                total: 75000,
-                items: [{
-                    id: 'SP004',
-                    name: 'Bánh Quy Yến Mạch',
-                    price: 25000,
-                    quantity: 3
-                }]
-            }
-        ];
-        savePurchaseHistory();
-    }
-
-    function saveCart() {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
-
-    function savePurchaseHistory() {
-        localStorage.setItem('purchaseHistory', JSON.stringify(purchaseHistory));
-    }
-
+    // Loại bỏ hàm saveCart() và savePurchaseHistory() vì không cần lưu trữ cục bộ
     function showToast(message) {
         toast.textContent = message;
         toast.classList.add('show');
@@ -221,8 +164,7 @@
             } else if (change === 'decrease' && item.quantity > 1) {
                 item.quantity--;
             }
-            saveCart();
-            updateCartDisplay();
+            updateCartDisplay(); // Chỉ cập nhật hiển thị, không lưu vào localStorage
             showToast(`${change === 'increase' ? 'Tăng' : 'Giảm'} số lượng ${item.name}`);
         }
     }, 300);
@@ -241,16 +183,14 @@
             const item = cart.find(i => i.id === id);
             if (item && confirm(`Bạn có chắc muốn xóa "${item.name}" khỏi giỏ hàng?`)) {
                 cart = cart.filter(i => i.id !== id);
-                saveCart();
-                updateCartDisplay();
+                updateCartDisplay(); // Chỉ cập nhật hiển thị, không lưu vào localStorage
                 showToast(`Đã xóa ${item.name} khỏi giỏ hàng`);
             }
         } else if (target.classList.contains('product-checkbox')) {
             const item = cart.find(i => i.id === id);
             if (item) {
                 item.selected = target.checked;
-                saveCart();
-                updateCartSummary();
+                updateCartSummary(); // Chỉ cập nhật hiển thị, không lưu vào localStorage
             }
         }
     });
@@ -278,8 +218,7 @@
                 selected: true
             });
         }
-        saveCart();
-        updateCartDisplay();
+        updateCartDisplay(); // Chỉ cập nhật hiển thị, không lưu vào localStorage
         showToast(`Đã thêm ${name} vào giỏ hàng`);
     });
 
@@ -321,11 +260,10 @@
             };
 
             purchaseHistory.push(newOrder);
-            savePurchaseHistory();
+            // Không lưu purchaseHistory vào localStorage
             cart = cart.filter(item => !item.selected);
-            saveCart();
-            updateCartDisplay();
-            displayPurchaseHistory();
+            updateCartDisplay(); // Chỉ cập nhật hiển thị giỏ hàng
+            displayPurchaseHistory(); // Chỉ cập nhật hiển thị lịch sử mua hàng
             showToast(`Đơn hàng ${newOrderId} đã được thanh toán thành công với tổng số tiền ${totalAmountForCheckout.toLocaleString('vi-VN')} VNĐ!`);
             checkoutBtn.classList.remove('loading');
             checkoutBtn.disabled = false;

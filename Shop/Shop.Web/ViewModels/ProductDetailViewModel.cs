@@ -7,6 +7,7 @@ namespace Shop.Web.ViewModels
 
         public GetProductsAdminDTO? Product { get; set; } 
         public List<GetProductsAdminDTO> ProductSugGester { get; set; } = new();
+        public  List<FeedbackDTO> Reviews { get; set; } = new();
 
     }
 }

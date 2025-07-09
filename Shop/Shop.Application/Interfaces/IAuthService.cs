@@ -5,7 +5,7 @@ namespace Shop.Application.Interfaces
 {
     public interface IAuthService
     {
-        Task<bool> Login(string username, string password);
+        Task<LoginResultDTO> Login(string username, string password);
         Task<bool> Register(RegisterDTOs dtos);
     }
 }

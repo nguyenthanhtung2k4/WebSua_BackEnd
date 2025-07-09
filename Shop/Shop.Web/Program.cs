@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Shop.Application.DTOs;
 using Shop.Application.Interfaces;
 using Shop.Application.Services;
 using Shop.Domain.Interfaces;
@@ -37,6 +38,10 @@ builder.Services.AddScoped<IAdminUserService, AdminUserService>();
 builder.Services.AddScoped<IAdminUserService, AdminUserService>();
 builder.Services.AddScoped<IAdminCustomerService, AdminCustomerService>();
 builder.Services.AddScoped<IAdminProductsService, AdminProductsService>();
+builder.Services.AddScoped<IAdminFeedbackService, AdminFeedbackService>();
+builder.Services.AddScoped<IAdminOrderService, AdminOrderService>();
+builder.Services.AddScoped<IAdminDashboardService, AdminDashboardService>();
+builder.Services.AddScoped<IPayService, PayService>();
 builder.Services.AddScoped<IHomeService, HomeService>();
 
 var app = builder.Build();
@@ -58,7 +63,7 @@ app.MapStaticAssets();
 app.MapAreaControllerRoute(
     name: "Admin",
     areaName: "Admin",
-    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+    pattern: "Admin/{controller=Dasboard}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link href="~/css/User.css" rel="stylesheet" />
+    
 </head>
 <body>
     <!--Header  -->
@@ -21,9 +23,15 @@
                 <a href="~/Home/User" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary transition-colors duration-300 relative" title="Cá nhân" aria-label="Trang cá nhân">
                     <i class="ri-user-line ri-lg"></i>
                 </a>
-                <a href="~/Auth/" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary transition-colors duration-300 relative" title="Đăng xuất" aria-label="Đăng xuất">
-                    <i class="ri-logout-box-r-line ri-lg"></i>
-                </a>
+
+                <form asp-controller="Auth" asp-action="SignOut" method="post" class="p-0 m-0">
+                    @Html.AntiForgeryToken() <button type="submit" class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary transition-colors duration-300 relative"
+                                                     title="Đăng xuất" aria-label="Đăng xuất"
+                                                     style="background: none; border: none; cursor: pointer;">
+                        <i class="ri-logout-box-r-line ri-lg"></i>
+                    </button>
+                </form>
+
                 <button class="md:hidden w-10 h-10 flex items-center justify-center" aria-label="Mở menu">
                     <i class="ri-menu-line ri-lg"></i>
                 </button>
@@ -197,7 +205,8 @@
     </script>
     <!-- File nhung vao   -->
     <script src="~/js/Home.js"></script>
-    <script src="~/js/Cart.js"></script>
+    <script src="~/js/User.js"></script>
+    @* <script src="~/js/Cart.js"></script> *@
     @RenderSection("Scripts", required: false)
     @RenderSection("Style", required: false)
 </body>
