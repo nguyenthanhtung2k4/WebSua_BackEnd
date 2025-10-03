@@ -6,7 +6,7 @@ using Shop.Application.DTOs;
 using Shop.Application.Interfaces;
 using Shop.Domain.Interfaces;
 using Shop.Infrastructure;
-using Shop.Infrastructure.Data; // Thêm namespace này nếu NguoiDung nằm trong đây
+using Shop.Infrastructure.Data; 
 
 namespace Shop.Application.Services
 {
@@ -68,13 +68,13 @@ namespace Shop.Application.Services
             return savedChanges > 0;
         }
 
-        // Thay đổi kiểu trả về để bao gồm VaiTro
+ 
         public async Task<LoginResultDTO> Login(string email, string password)
         {
             var user = await _repository.FirstOrDefaultAsync(x => x.Email == email);
             if (user == null)
             {
-                return new LoginResultDTO { Success = false, Role = null }; // Không tìm thấy người dùng
+                return new LoginResultDTO { Success = false, Role = null }; 
             }
 
             var result = _hashPass.VerifyHashedPassword(null, user.MatKhau, password);
@@ -84,13 +84,13 @@ namespace Shop.Application.Services
                 if (session != null)
                 {
                     session.SetString("Email", user.Email!);
-                    session.SetInt32("MaND", user.MaNd); // Dùng khi cần ID người dùng
-                    session.SetString("VaiTro", user.VaiTro!); // Lưu VaiTro vào session
+                    session.SetInt32("MaND", user.MaNd);
+                    session.SetString("VaiTro", user.VaiTro!); 
                 }
-                return new LoginResultDTO { Success = true, Role = user.VaiTro }; // Đăng nhập thành công, trả về vai trò
+                return new LoginResultDTO { Success = true, Role = user.VaiTro }; 
             }
 
-            return new LoginResultDTO { Success = false, Role = null }; // Mật khẩu không đúng
+            return new LoginResultDTO { Success = false, Role = null }; 
         }
     }
 }
