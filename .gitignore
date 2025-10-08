@@ -7,7 +7,7 @@
 .env
 
 # *.mp4
-.mp4*
+
 
 # User-specific files
 *.rsuser
